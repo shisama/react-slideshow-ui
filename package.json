@@ -1,0 +1,86 @@
+{
+  "name": "react-slideshow",
+  "version": "0.0.1",
+  "author": "Masashi Hirano (@shisama)",
+  "license": "MIT",
+  "description": "react-slideshow allows you to include slideshow to your React apps.",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.8.2",
+    "flow-bin": "^0.44.2",
+    "nyc": "^10.3.2",
+    "power-assert": "^1.4.2",
+    "react-addons-test-utils": "^15.5.1",
+    "webpack": "^1.15.0",
+    "webpack-dev-server": "^1.16.4"
+  },
+  "scripts": {
+    "test": "nyc ava",
+    "typecheck": "flow"
+  },
+  "keywords": [
+    "react",
+    "slideshow"
+  ],
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "Chrome": 57
+              }
+            }
+          ],
+          "react"
+        ]
+      },
+      "production": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "browsers": [
+                  "last 2 versions"
+                ]
+              }
+            },
+            "react"
+          ]
+        ]
+      }
+    }
+  },
+  "ava": {
+    "files": "src/**/*.test.js",
+    "require": [
+      "babel-register"
+    ],
+    "babel": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ],
+        "react"
+      ]
+    }
+  }
+}
