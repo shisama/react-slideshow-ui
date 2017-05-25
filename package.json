@@ -6,13 +6,18 @@
   "description": "react-slideshow allows you to include slideshow to your React apps.",
   "main": "index.js",
   "dependencies": {
+    "next": "^2.3.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
     "ava": "^0.19.1",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
+    "babel-plugin-syntax-flow": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
@@ -21,10 +26,12 @@
     "nyc": "^10.3.2",
     "power-assert": "^1.4.2",
     "react-addons-test-utils": "^15.5.1",
-    "webpack": "^1.15.0",
-    "webpack-dev-server": "^1.16.4"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
+    "build:development": "NODE_ENV=development webpack",
+    "demo": "next",
     "test": "nyc ava",
     "typecheck": "flow"
   },
@@ -45,6 +52,11 @@
             }
           ],
           "react"
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "syntax-flow",
+          "transform-flow-strip-types"
         ]
       },
       "production": {
@@ -60,6 +72,11 @@
             },
             "react"
           ]
+        ],
+        "plugins": [
+          "transform-class-properties",
+          "syntax-flow",
+          "transform-flow-strip-types"
         ]
       }
     }
@@ -80,6 +97,11 @@
           }
         ],
         "react"
+      ],
+      "plugins": [
+        "transform-class-properties",
+        "syntax-flow",
+        "transform-flow-strip-types"
       ]
     }
   }
