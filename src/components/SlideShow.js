@@ -1,5 +1,6 @@
 // @flow
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from "prop-types"
 
 type Props = {
   style: ?Object,
@@ -19,6 +20,7 @@ export default class SlideShow extends React.Component {
   style: Object;
   static defaultProps: Object;
   static PropTypes: Object;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -79,6 +81,7 @@ export default class SlideShow extends React.Component {
         </div>
         <div className={"bar"} style={styles.bar}>
           <button className={"prevButton"} onClick={this.onClickPrevButton} style={styles.button}>{this.props.prevIcon}</button>
+          <span style={styles.pageView}>{`${this.state.index + 1} / ${this.props.src.length}`}</span>
           <button className={"nextButton"} onClick={this.onClickNextButton} style={styles.button}>{this.props.nextIcon}</button>
         </div>
       </div>
@@ -103,6 +106,9 @@ const styles = {
     textAlign: "center",
     margin: "auto",
     width: "90%"
+  },
+  pageView: {
+    color: "#fff"
   }
 };
 
@@ -126,7 +132,7 @@ SlideShow.defaultProps = {
 
 SlideShow.PropTypes = {
   style: PropTypes.object,
-  src: PropTypes.object.isRequired,
+  src: PropTypes.array.isRequired,
   prevIcon: PropTypes.node,
   nextIcon: PropTypes.node,
 };

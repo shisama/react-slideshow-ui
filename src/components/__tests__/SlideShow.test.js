@@ -3,7 +3,7 @@ import React from "react";
 import {shallow, mount} from "enzyme";
 import SlideShow from "../SlideShow";
 
-test("pass styles to SlideShow", t => {
+test("props style", t => {
   const wrapper = shallow(
     <SlideShow
        src={[
@@ -17,7 +17,7 @@ test("pass styles to SlideShow", t => {
   t.is(wrapper.props().style.width, 100);
 });
 
-test("pass src to SlideShow", t => {
+test("props src", t => {
   const wrapper = shallow(
     <SlideShow
       src={[
@@ -33,6 +33,23 @@ test("pass src to SlideShow", t => {
   t.is(wrapper.find(".content").type(), "img");
   t.is(wrapper.state().src, "static/test/page1");
   t.is(wrapper.state().index, 0);
+});
+
+test("props prevIcon", t => {
+  const wrapper = shallow(
+    <SlideShow
+      src={["static/test/page1"]}
+      prevIcon={"Left"}
+    />
+  )
+  t.is(wrapper.find(".prevButton").text(), "Left");
+});
+
+test("props nextIcon", t => {
+  const wrapper = shallow(
+    <SlideShow src={["static/test/page1"]} nextIcon="Right"/>
+  );
+  t.is(wrapper.find(".nextButton").text(), "Right");
 });
 
 test("onclick next page event", t => {
@@ -100,6 +117,24 @@ test("onclick prev page event", t => {
 test("componentWillMount props.src is undefined", t => {
   const wrapper = shallow(
     <SlideShow/>
+  );
+  t.is(wrapper.find(".content").props().src, "");
+  t.is(wrapper.state().src, "");
+});
+
+
+test("componentWillMount props.src is empty", t => {
+  const wrapper = shallow(
+    <SlideShow src={[]}/>
+  );
+  t.is(wrapper.find(".content").props().src, "");
+  t.is(wrapper.state().src, "");
+});
+
+
+test("componentWillMount props.src is null", t => {
+  const wrapper = shallow(
+    <SlideShow src={null}/>
   );
   t.is(wrapper.find(".content").props().src, "");
   t.is(wrapper.state().src, "");

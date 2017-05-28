@@ -6,7 +6,6 @@
   "description": "react-slideshow allows you to include slideshow to your React apps.",
   "main": "index.js",
   "dependencies": {
-    "next": "^2.3.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
@@ -23,15 +22,19 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.8.2",
     "flow-bin": "^0.44.2",
+    "flow-remove-types": "^1.2.1",
     "nyc": "^10.3.2",
     "power-assert": "^1.4.2",
+    "prop-types": "^15.5.10",
     "react-addons-test-utils": "^15.5.1",
+    "react-hot-loader": "next",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
+    "build": "NODE_ENV=production webpack",
     "build:development": "NODE_ENV=development webpack",
-    "demo": "next",
+    "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "typecheck": "flow"
   },
@@ -66,12 +69,13 @@
             {
               "targets": {
                 "browsers": [
-                  "last 2 versions"
+                  "last 2 versions",
+                  "IE 11"
                 ]
               }
-            },
-            "react"
-          ]
+            }
+          ],
+          "react"
         ],
         "plugins": [
           "transform-class-properties",
