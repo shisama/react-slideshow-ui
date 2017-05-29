@@ -4,20 +4,21 @@ import webpack from 'webpack';
 const PLUGINS = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-  }),
+  })
 ];
 
 export default {
-  entry: process.env.NODE_ENV === 'production' ?
-    [
-      'flow-remove-types',
-      path.resolve(__dirname, 'src/index.js'),
-    ]
-    : [
-      path.resolve(__dirname, 'src/demo.js')
-    ],
+  entry: {
+    'slideshow': process.env.NODE_ENV === 'production' ?
+      [
+        'flow-remove-types',
+        path.resolve(__dirname, 'src/index.js'),
+      ]
+      : [
+        path.resolve(__dirname, 'src/demo.js')
+      ]},
   output: {
-    filename: 'slideshow.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'public'),
     publicPath: '/'
   },
@@ -41,7 +42,12 @@ export default {
         }
       })
     ])
-    : PLUGINS,
+    : PLUGINS.concat([
+      new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require("./dll/vendor-manifest.json")
+      })
+    ]),
   module: {
     rules: [
       {

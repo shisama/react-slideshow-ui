@@ -1,1 +1,1 @@
-import "components/SlideShow";
+import "./components/SlideShow";

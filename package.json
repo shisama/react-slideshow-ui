@@ -34,9 +34,11 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "build:development": "NODE_ENV=development webpack",
+    "build:dll": "webpack --config webpack.dll.config.js",
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
-    "typecheck": "flow"
+    "typecheck": "flow",
+    "remove-types": "flow-remove-types --out-dir out/ src/"
   },
   "keywords": [
     "react",
