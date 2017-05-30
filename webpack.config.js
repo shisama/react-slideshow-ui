@@ -1,5 +1,5 @@
-import path from 'path';
-import webpack from 'webpack';
+const path = require('path');
+const webpack = require('webpack');
 
 const PLUGINS = [
   new webpack.DefinePlugin({
@@ -7,7 +7,7 @@ const PLUGINS = [
   })
 ];
 
-export default {
+module.exports = {
   entry: {
     'slideshow': process.env.NODE_ENV === 'production' ?
       [
@@ -29,20 +29,7 @@ export default {
     hot: true
   },
   plugins:
-    process.env.NODE_ENV === 'production' ?
-    PLUGINS.concat([
-      new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        sourceMap: true,
-        compressor: {
-          warnings: false
-        },
-        output: {
-          comments: false
-        }
-      })
-    ])
-    : PLUGINS.concat([
+    process.env.NODE_ENV === 'production' ? PLUGINS : PLUGINS.concat([
       new webpack.DllReferencePlugin({
         context: __dirname,
         manifest: require("./dll/vendor-manifest.json")
