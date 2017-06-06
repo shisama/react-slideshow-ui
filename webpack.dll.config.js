@@ -6,7 +6,7 @@ module.exports = {
     vendor: [path.join(__dirname, "src", "demo", "vendor.js")]
   },
   output: {
-    path: path.join(__dirname, "public"),
+    path: path.join(__dirname, "demo"),
     filename: "[name].dll.js",
     library: "[name]"
   },

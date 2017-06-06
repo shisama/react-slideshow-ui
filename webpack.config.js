@@ -19,11 +19,13 @@ module.exports = {
       ]},
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'public'),
+    path: process.env.NODE_ENV === 'production' ?
+        path.resolve(__dirname, 'public')
+      : path.resolve(__dirname, 'demo'),
     publicPath: '/'
   },
   devServer: {
-    contentBase: 'public/',
+    contentBase: 'demo/',
     historyApiFallback: true,
     port: 3355,
     hot: true
