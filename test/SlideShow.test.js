@@ -1,7 +1,7 @@
 import test from "ava";
 import React from "react";
-import {shallow, mount} from "enzyme";
-import SlideShow from "../SlideShow";
+import {shallow} from "enzyme";
+import SlideShow from "../src/SlideShow";
 
 test("props style", t => {
   const wrapper = shallow(
@@ -41,7 +41,7 @@ test("props prevIcon", t => {
       src={["static/test/page1"]}
       prevIcon={"Left"}
     />
-  )
+  );
   t.is(wrapper.find(".prevButton").text(), "Left");
 });
 

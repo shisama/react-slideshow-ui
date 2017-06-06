@@ -3,7 +3,7 @@ const webpack = require("webpack");
 
 module.exports = {
   entry: {
-    vendor: [path.join(__dirname, "src", "vendor.js")]
+    vendor: [path.join(__dirname, "src", "demo", "vendor.js")]
   },
   output: {
     path: path.join(__dirname, "public"),

@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 type Props = {
   style: ?Object,
-  src: Array<string>,
+  src: ?Array<string>,
   prevIcon: ?Node,
   nextIcon: ?Node,
 }
@@ -32,7 +32,7 @@ export default class SlideShow extends React.Component {
 
   componentWillMount() {
     const images = this.props.src;
-    if (images === undefined || images === null || images.length === 0) {
+    if (!images) {
       return;
     }
 
@@ -55,6 +55,10 @@ export default class SlideShow extends React.Component {
   };
 
   onClickNextButton = () => {
+    if (!this.props.src) {
+      return;
+    }
+
     if (this.state.index === this.props.src.length - 1) {
       return;
     }
@@ -81,7 +85,7 @@ export default class SlideShow extends React.Component {
         </div>
         <div className={"bar"} style={styles.bar}>
           <button className={"prevButton"} onClick={this.onClickPrevButton} style={styles.button}>{this.props.prevIcon}</button>
-          <span style={styles.pageView}>{`${this.state.index + 1} / ${this.props.src.length}`}</span>
+          <span style={styles.pageView}>{this.props.src ? `${this.state.index + 1} / ${this.props.src.length}` : ""}</span>
           <button className={"nextButton"} onClick={this.onClickNextButton} style={styles.button}>{this.props.nextIcon}</button>
         </div>
       </div>
@@ -122,6 +126,7 @@ const defaultProps = {
 
 SlideShow.defaultProps = {
   style: defaultProps.style,
+  src: [],
   prevIcon: (
     <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQ0MC4yNSA0NDAuMjUxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0NDAuMjUgNDQwLjI1MTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxwYXRoIGQ9Ik00MzYuNTM4LDAuODYxYy0yLjQ3MS0xLjE0My01LjUxMywwLjA5NC05LjEzNCwzLjcwOUwyMjQuNjkyLDIwNy4yNzNjLTEuNTIxLDEuNTI0LTIuNzYyLDMuMzMzLTMuNzExLDUuNDI0VjkuOTg5ICAgYzAtNC45NDgtMS4yMzctNy45OTQtMy43MTEtOS4xMzdjLTIuNDc0LTEuMTQxLTUuNTIsMC4wOTYtOS4xMzYsMy43MTFMNS40MjQsMjA3LjI3M0MxLjgwOSwyMTAuODkxLDAsMjE1LjE3MiwwLDIyMC4xMiAgIHMxLjgwOSw5LjIzMyw1LjQyNCwxMi44NDdsMjAyLjcxLDIwMi43MDljMy42MTYsMy42Miw2LjY2Miw0Ljg2Miw5LjEzNiwzLjcyYzIuNDc0LTEuMTQ0LDMuNzExLTQuMTg5LDMuNzExLTkuMTM4VjIyNy41NDYgICBjMC45NTMsMS45MDMsMi4xOSwzLjcxNywzLjcxMSw1LjQyNWwyMDIuNzEyLDIwMi43MTFjMy42MjEsMy42MTcsNi42NjMsNC44Niw5LjEzNCwzLjcxN2MyLjQ3OC0xLjE0MywzLjcxMy00LjE4OCwzLjcxMy05LjEzNyAgIFY5Ljk5NkM0NDAuMjQ4LDUuMDQ4LDQzOS4wMTUsMi4wMDIsNDM2LjUzOCwwLjg2MXoiIGZpbGw9IiNGRkZGRkYiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" style={{backgroundColor: "transparent"}}/>
   ),
@@ -132,7 +137,7 @@ SlideShow.defaultProps = {
 
 SlideShow.PropTypes = {
   style: PropTypes.object,
-  src: PropTypes.array.isRequired,
+  src: PropTypes.array,
   prevIcon: PropTypes.node,
   nextIcon: PropTypes.node,
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import {render} from "react-dom";
-import SlideShow from "./components/SlideShow";
+import SlideShow from "../SlideShow";
 
 class App extends React.Component {
   constructor(props) {

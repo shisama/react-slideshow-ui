@@ -15,7 +15,7 @@ module.exports = {
         path.resolve(__dirname, 'src/index.js'),
       ]
       : [
-        path.resolve(__dirname, 'src/demo.js')
+        path.resolve(__dirname, 'src/demo/index.js')
       ]},
   output: {
     filename: '[name].js',
