@@ -1,17 +1,18 @@
 // @flow
 import React from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 type Props = {
-  style: ?Object,
-  src: ?Array<string>,
-  prevIcon: ?Node,
-  nextIcon: ?Node,
+  style: Object,
+  src: Array<string>,
+  prevIcon: Node,
+  nextIcon: Node,
 }
 
 type State = {
   src: string,
-  index: number
+  index: number,
+  progress: number
 }
 
 export default class SlideShow extends React.Component {
@@ -25,31 +26,44 @@ export default class SlideShow extends React.Component {
     super(props);
     this.state = {
       src: "",
-      index: 0
+      index: 0,
+      progress: 0
     };
-    this.style = Object.assign({}, defaultProps.style, this.props.style);
   }
 
   componentWillMount() {
-    const images = this.props.src;
-    if (!images) {
+    const images: Array<string> = this.props.src;
+    if (this.isEmptyArray(this.props.src)) {
       return;
+    }
+    let progress = Math.ceil(100 / images.length);
+    if (progress > 100) {
+      progress = 100;
     }
 
     this.setState({
       src: images[0],
-      index: 0
+      index: 0,
+      progress: progress
     })
   }
 
   onClickPrevButton = () => {
+    if (this.isEmptyArray(this.props.src)) {
+      return;
+    }
+
     if (this.state.index === 0) {
       return;
     }
+
     const nextIndex = this.state.index - 1;
+    const nextProgress = this.calcProgress(nextIndex + 1);
+
     const nextState = {
       src: this.props.src[nextIndex],
-      index: nextIndex
+      index: nextIndex,
+      progress: nextProgress
     };
     this.setState(nextState);
   };
@@ -63,25 +77,67 @@ export default class SlideShow extends React.Component {
       return;
     }
     const nextIndex = this.state.index + 1;
+    let nextProgress = this.calcProgress(nextIndex + 1);
+    if (nextProgress > 100) {
+      nextProgress = 100;
+    }
+
     const nextState = {
       src: this.props.src[nextIndex],
-      index: nextIndex
+      index: nextIndex,
+      progress: nextProgress
     };
     this.setState(nextState);
   };
 
+  onClickProgressBar = (e: MouseEvent) => {
+    const barWidth = document.getElementsByClassName("progressBar")[0].offsetWidth;
+    const progressWidth = e.clientX;
+    const clickPosition = Math.floor((progressWidth / barWidth) * 100);
+    let nextIndex = 0;
+    for (var i = 0; i < this.props.src.length; i++) {
+      const checkWidth = this.calcProgress(i);
+      if (clickPosition >= checkWidth) {
+        nextIndex = i;
+      }
+    }
+    const nextProgress = this.calcProgress(nextIndex + 1);
+    const nextSrc = this.props.src[nextIndex];
+    this.setState({
+      src: nextSrc,
+      index: nextIndex,
+      progress: nextProgress
+    })
+  };
+
+  calcProgress = (page: number) : number => {
+    const base = 100 / this.props.src.length;
+    let progress = Math.ceil(base * page);
+    if (progress > 100) {
+      return 100;
+    }
+    return progress;
+  };
+
+  isEmptyArray = (arr: Array<string>) : boolean => {
+    return (arr === undefined || arr === null || arr.length === 0);
+  }
+
   render() {
     return (
-      <div style={this.style}>
+      <div style={this.props.style}>
         <div style={styles.bar}>
 
         </div>
         <div>
           <div style={styles.image}>
             <img className="content" src={this.state.src} style={{width: "100%"}}/>
-            <div className="prevOnContent" onClick={this.onClickPrevButton} style={{display: "block", width: "50%", height: "100%", top: 0, left: 0, position: "absolute"}}></div>
-            <div className="nextOnContent" onClick={this.onClickNextButton} style={{display: "block", width: "50%", height: "100%", top: 0, right: 0, position: "absolute"}}></div>
+            <div className="prevOnContent" onClick={this.onClickPrevButton} style={{display: "block", width: "40%", height: "100%", top: 0, left: 0, position: "absolute", cursor: "w-resize"}}></div>
+            <div className="nextOnContent" onClick={this.onClickNextButton} style={{display: "block", width: "40%", height: "100%", top: 0, right: 0, position: "absolute", cursor: "e-resize"}}></div>
           </div>
+        </div>
+        <div className="progressBar" style={{backgroundColor: "#000", height: 10, marginTop: -6, position: "relative", width: "100%"}} onClick={this.onClickProgressBar}>
+          <div className="progress" style={{backgroundColor: "#007bb6", height: "100%", width: `${this.state.progress}%`}}/>
         </div>
         <div className={"bar"} style={styles.bar}>
           <button className={"prevButton"} onClick={this.onClickPrevButton} style={styles.button}>{this.props.prevIcon}</button>
@@ -95,7 +151,6 @@ export default class SlideShow extends React.Component {
 
 const styles = {
   image: {
-    marginTop: "10px",
     position: "relative",
     width: "100%"
   },
@@ -106,9 +161,11 @@ const styles = {
     padding: 0,
   },
   bar: {
+    backgroundColor: "#323232",
     height: "30px",
     textAlign: "center",
     margin: "auto",
+    paddingTop: 5,
     width: "100%"
   },
   pageView: {
@@ -118,9 +175,6 @@ const styles = {
 
 const defaultProps = {
   style: {
-    backgroundColor: "#323232",
-    border: "1px solid #000",
-    borderRadius: "5px",
   }
 };
 

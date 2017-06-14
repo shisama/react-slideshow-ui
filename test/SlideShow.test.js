@@ -67,16 +67,19 @@ test("onclick next page event", t => {
   t.is(wrapper.find(".content").props().src, "static/test/page2");
   t.is(wrapper.state().src, "static/test/page2");
   t.is(wrapper.state().index, 1);
+  t.is(wrapper.state().progress, 67);
 
   wrapper.find(".nextButton").simulate("click");
   t.is(wrapper.find(".content").props().src, "static/test/page3");
   t.is(wrapper.state().src, "static/test/page3");
   t.is(wrapper.state().index, 2);
+  t.is(wrapper.state().progress, 100);
 
   wrapper.find(".nextButton").simulate("click");
   t.is(wrapper.find(".content").props().src, "static/test/page3");
   t.is(wrapper.state().src, "static/test/page3");
   t.is(wrapper.state().index, 2);
+  t.is(wrapper.state().progress, 100);
 });
 
 
@@ -95,6 +98,7 @@ test("onclick prev page event", t => {
   t.is(wrapper.find(".content").props().src, "static/test/page1");
   t.is(wrapper.state().src, "static/test/page1");
   t.is(wrapper.state().index, 0);
+  t.is(wrapper.state().progress, 34);
 
   wrapper.find(".nextButton").simulate("click");
   wrapper.find(".nextButton").simulate("click");
@@ -102,16 +106,19 @@ test("onclick prev page event", t => {
   t.is(wrapper.find(".content").props().src, "static/test/page2");
   t.is(wrapper.state().src, "static/test/page2");
   t.is(wrapper.state().index, 1);
+  t.is(wrapper.state().progress, 67);
 
   wrapper.find(".prevButton").simulate("click");
   t.is(wrapper.find(".content").props().src, "static/test/page1");
   t.is(wrapper.state().src, "static/test/page1");
   t.is(wrapper.state().index, 0);
+  t.is(wrapper.state().progress, 34);
 
   wrapper.find(".prevButton").simulate("click");
   t.is(wrapper.find(".content").props().src, "static/test/page1");
   t.is(wrapper.state().src, "static/test/page1");
   t.is(wrapper.state().index, 0);
+  t.is(wrapper.state().progress, 34);
 });
 
 test("componentWillMount props.src is undefined", t => {

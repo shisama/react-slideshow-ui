@@ -171,13 +171,21 @@ var SlideShow = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SlideShow.__proto__ || Object.getPrototypeOf(SlideShow)).call(this, props));
 
     _this.onClickPrevButton = function () {
+      if (_this.isEmptyArray(_this.props.src)) {
+        return;
+      }
+
       if (_this.state.index === 0) {
         return;
       }
+
       var nextIndex = _this.state.index - 1;
+      var nextProgress = _this.calcProgress(nextIndex + 1);
+
       var nextState = {
         src: _this.props.src[nextIndex],
-        index: nextIndex
+        index: nextIndex,
+        progress: nextProgress
       };
       _this.setState(nextState);
     };
@@ -191,18 +199,57 @@ var SlideShow = function (_React$Component) {
         return;
       }
       var nextIndex = _this.state.index + 1;
+      var nextProgress = _this.calcProgress(nextIndex + 1);
+      if (nextProgress > 100) {
+        nextProgress = 100;
+      }
+
       var nextState = {
         src: _this.props.src[nextIndex],
-        index: nextIndex
+        index: nextIndex,
+        progress: nextProgress
       };
       _this.setState(nextState);
     };
 
+    _this.onClickProgressBar = function (e) {
+      var barWidth = document.getElementsByClassName("progressBar")[0].offsetWidth;
+      var progressWidth = e.clientX;
+      var clickPosition = Math.floor(progressWidth / barWidth * 100);
+      var nextIndex = 0;
+      for (var i = 0; i < _this.props.src.length; i++) {
+        var checkWidth = _this.calcProgress(i);
+        if (clickPosition >= checkWidth) {
+          nextIndex = i;
+        }
+      }
+      var nextProgress = _this.calcProgress(nextIndex + 1);
+      var nextSrc = _this.props.src[nextIndex];
+      _this.setState({
+        src: nextSrc,
+        index: nextIndex,
+        progress: nextProgress
+      });
+    };
+
+    _this.calcProgress = function (page) {
+      var base = 100 / _this.props.src.length;
+      var progress = Math.ceil(base * page);
+      if (progress > 100) {
+        return 100;
+      }
+      return progress;
+    };
+
+    _this.isEmptyArray = function (arr) {
+      return arr === undefined || arr === null || arr.length === 0;
+    };
+
     _this.state = {
       src: "",
-      index: 0
+      index: 0,
+      progress: 0
     };
-    _this.style = Object.assign({}, defaultProps.style, _this.props.style);
     return _this;
   }
 
@@ -210,13 +257,18 @@ var SlideShow = function (_React$Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       var images = this.props.src;
-      if (!images) {
+      if (this.isEmptyArray(this.props.src)) {
         return;
+      }
+      var progress = Math.ceil(100 / images.length);
+      if (progress > 100) {
+        progress = 100;
       }
 
       this.setState({
         src: images[0],
-        index: 0
+        index: 0,
+        progress: progress
       });
     }
   }, {
@@ -224,7 +276,7 @@ var SlideShow = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        { style: this.style },
+        { style: this.props.style },
         _react2.default.createElement("div", { style: styles.bar }),
         _react2.default.createElement(
           "div",
@@ -233,9 +285,14 @@ var SlideShow = function (_React$Component) {
             "div",
             { style: styles.image },
             _react2.default.createElement("img", { className: "content", src: this.state.src, style: { width: "100%" } }),
-            _react2.default.createElement("div", { className: "prevOnContent", onClick: this.onClickPrevButton, style: { display: "block", width: "50%", height: "100%", top: 0, left: 0, position: "absolute" } }),
-            _react2.default.createElement("div", { className: "nextOnContent", onClick: this.onClickNextButton, style: { display: "block", width: "50%", height: "100%", top: 0, right: 0, position: "absolute" } })
+            _react2.default.createElement("div", { className: "prevOnContent", onClick: this.onClickPrevButton, style: { display: "block", width: "40%", height: "100%", top: 0, left: 0, position: "absolute", cursor: "w-resize" } }),
+            _react2.default.createElement("div", { className: "nextOnContent", onClick: this.onClickNextButton, style: { display: "block", width: "40%", height: "100%", top: 0, right: 0, position: "absolute", cursor: "e-resize" } })
           )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "progressBar", style: { backgroundColor: "#000", height: 10, marginTop: -6, position: "relative", width: "100%" }, onClick: this.onClickProgressBar },
+          _react2.default.createElement("div", { className: "progress", style: { backgroundColor: "#007bb6", height: "100%", width: this.state.progress + "%" } })
         ),
         _react2.default.createElement(
           "div",
@@ -268,7 +325,6 @@ exports.default = SlideShow;
 
 var styles = {
   image: {
-    marginTop: "10px",
     position: "relative",
     width: "100%"
   },
@@ -279,9 +335,11 @@ var styles = {
     padding: 0
   },
   bar: {
+    backgroundColor: "#323232",
     height: "30px",
     textAlign: "center",
     margin: "auto",
+    paddingTop: 5,
     width: "100%"
   },
   pageView: {
@@ -290,11 +348,7 @@ var styles = {
 };
 
 var defaultProps = {
-  style: {
-    backgroundColor: "#323232",
-    border: "1px solid #000",
-    borderRadius: "5px"
-  }
+  style: {}
 };
 
 SlideShow.defaultProps = {
