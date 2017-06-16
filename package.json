@@ -9,6 +9,7 @@
     "ava": "^0.19.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.1",
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -17,6 +18,10 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.8.2",
+    "eslint": "^4.0.0",
+    "eslint-config-google": "^0.8.0",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.44.2",
     "flow-remove-types": "^1.2.1",
     "nyc": "^10.3.2",
@@ -38,7 +43,8 @@
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "typecheck": "flow",
-    "remove-types": "flow-remove-types --out-dir out/ src/"
+    "remove-types": "flow-remove-types --out-dir out/ src/",
+    "lint": "eslint src --ext js --ext jsx"
   },
   "keywords": [
     "react",

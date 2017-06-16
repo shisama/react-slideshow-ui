@@ -1,0 +1,27 @@
+extends:
+  - google
+parser: babel-eslint
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 6
+  sourceType: module
+env:
+  browser: true
+  node: true
+  es6: true
+plugins:
+  - react
+  - flowtype
+rules:
+  no-invalid-this: off
+  react/jsx-uses-vars: warn
+  valid-jsdoc:
+    - warn
+    -
+      prefer:
+        return: returns
+      requireReturn: false
+      requireReturnType: true
+      requireParamDescription: false
+      requireReturnDescription: false

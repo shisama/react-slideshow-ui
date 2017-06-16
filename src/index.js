@@ -1,1 +1,1 @@
-import "./SlideShow";
+import './SlideShow';
