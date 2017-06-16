@@ -16,12 +16,4 @@ plugins:
 rules:
   no-invalid-this: off
   react/jsx-uses-vars: warn
-  valid-jsdoc:
-    - warn
-    -
-      prefer:
-        return: returns
-      requireReturn: false
-      requireReturnType: true
-      requireParamDescription: false
-      requireReturnDescription: false
+  valid-jsdoc: off

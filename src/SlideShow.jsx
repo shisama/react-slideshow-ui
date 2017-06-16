@@ -156,7 +156,7 @@ export default class SlideShow extends React.Component {
   /**
    *
    * @param {number} page
-   * @returnss {number}
+   * @returns {number}
    */
   calcProgress = (page: number): number => {
     const base = 100 / this.props.src.length;
@@ -173,7 +173,7 @@ export default class SlideShow extends React.Component {
 
   /**
    * render
-   * @returnss {XML}
+   * @returns {XML}
    */
   render() {
     return (
