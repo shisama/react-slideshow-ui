@@ -105,33 +105,41 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * entry point class for demo
+ */
 var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+	_inherits(App, _React$Component);
 
-  function App(props) {
-    _classCallCheck(this, App);
+	function App() {
+		_classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-  }
+		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	}
 
-  _createClass(App, [{
-    key: "render",
-    value: function render() {
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(_SlideShow2.default, {
-          style: { width: "50%" },
-          src: ["./img/example1.png", "./img/example2.png", "./img/example3.png"]
-        })
-      );
-    }
-  }]);
+	_createClass(App, [{
+		key: 'render',
 
-  return App;
+		/**
+   * rendering view
+   * @returns {XML}
+   */
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(_SlideShow2.default, {
+					style: { width: '50%' },
+					src: ['./img/example1.png', './img/example2.png', './img/example3.png']
+				})
+			);
+		}
+	}]);
+
+	return App;
 }(_react2.default.Component);
 
-(0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById("slideshow"));
+(0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('slideshow'));
 
 /***/ }),
 /* 3 */
@@ -162,9 +170,36 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * This class named SlideShow is the React component that allows you
+ * to develop slideshow like 'SlideShare' or 'SpeakerDeck' very easy!
+ * @class
+ */
+
+
+/**
+ * @typedef {Object} Props
+ * @property {Object} style
+ * @property {Array<string>} src,
+ * @property {Node} prevIcon,
+ * @property {Node} nextIcon
+ */
+
+
+/**
+ * @typedef {Object} State
+ * @property {string} src
+ * @property {number} index
+ * @property {number} progress
+ */
 var SlideShow = function (_React$Component) {
   _inherits(SlideShow, _React$Component);
 
+  /**
+   * constructor
+   * call super constructor and initialize states.
+   * @param {Props} props
+   */
   function SlideShow(props) {
     _classCallCheck(this, SlideShow);
 
@@ -213,7 +248,7 @@ var SlideShow = function (_React$Component) {
     };
 
     _this.onClickProgressBar = function (e) {
-      var barWidth = document.getElementsByClassName("progressBar")[0].offsetWidth;
+      var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
       var clickPosition = Math.floor(progressWidth / barWidth * 100);
       var nextIndex = 0;
@@ -246,15 +281,22 @@ var SlideShow = function (_React$Component) {
     };
 
     _this.state = {
-      src: "",
+      src: '',
       index: 0,
       progress: 0
     };
     return _this;
   }
 
+  /**
+   * componentWillMount
+   * updates states with props to render first view.
+   * updates image src, page, and progress.
+   */
+
+
   _createClass(SlideShow, [{
-    key: "componentWillMount",
+    key: 'componentWillMount',
     value: function componentWillMount() {
       var images = this.props.src;
       if (this.isEmptyArray(this.props.src)) {
@@ -271,45 +313,116 @@ var SlideShow = function (_React$Component) {
         progress: progress
       });
     }
+
+    /**
+     * event executed when previous button is clicked.
+     * updates image src and page to move previous page.
+     */
+
+
+    /**
+     * event executed when next button is clicked.
+     * updates image src and page to move next page.
+     */
+
+
+    /**
+     * event executed when progressBar is clicked.
+     * updates states to move page.
+     * @param {MouseEvent} e
+     */
+
+
+    /**
+     *
+     * @param {number} page
+     * @returns {number}
+     */
+
   }, {
-    key: "render",
+    key: 'render',
+
+
+    /**
+     * render
+     * @returns {XML}
+     */
     value: function render() {
       return _react2.default.createElement(
-        "div",
+        'div',
         { style: this.props.style },
-        _react2.default.createElement("div", { style: styles.bar }),
+        _react2.default.createElement('div', { style: styles.bar }),
         _react2.default.createElement(
-          "div",
+          'div',
           null,
           _react2.default.createElement(
-            "div",
+            'div',
             { style: styles.image },
-            _react2.default.createElement("img", { className: "content", src: this.state.src, style: { width: "100%" } }),
-            _react2.default.createElement("div", { className: "prevOnContent", onClick: this.onClickPrevButton, style: { display: "block", width: "40%", height: "100%", top: 0, left: 0, position: "absolute", cursor: "w-resize" } }),
-            _react2.default.createElement("div", { className: "nextOnContent", onClick: this.onClickNextButton, style: { display: "block", width: "40%", height: "100%", top: 0, right: 0, position: "absolute", cursor: "e-resize" } })
+            _react2.default.createElement('img', { className: 'content',
+              src: this.state.src,
+              style: { width: '100%' } }),
+            _react2.default.createElement('div', { className: 'prevOnContent',
+              onClick: this.onClickPrevButton,
+              style: {
+                display: 'block',
+                width: '40%',
+                height: '100%',
+                top: 0,
+                left: 0,
+                position: 'absolute',
+                cursor: 'w-resize'
+              } }),
+            _react2.default.createElement('div', { className: 'nextOnContent',
+              onClick: this.onClickNextButton,
+              style: {
+                display: 'block',
+                width: '40%',
+                height: '100%',
+                top: 0,
+                right: 0,
+                position: 'absolute',
+                cursor: 'e-resize'
+              } })
           )
         ),
         _react2.default.createElement(
-          "div",
-          { className: "progressBar", style: { backgroundColor: "#000", height: 10, marginTop: -6, position: "relative", width: "100%" }, onClick: this.onClickProgressBar },
-          _react2.default.createElement("div", { className: "progress", style: { backgroundColor: "#007bb6", height: "100%", width: this.state.progress + "%" } })
+          'div',
+          { className: 'progressBar',
+            style: {
+              backgroundColor: '#000',
+              height: 10,
+              marginTop: -6,
+              position: 'relative',
+              width: '100%'
+            },
+            onClick: this.onClickProgressBar },
+          _react2.default.createElement('div', { className: 'progress',
+            style: {
+              backgroundColor: '#007bb6',
+              height: '100%',
+              width: this.state.progress + '%'
+            } })
         ),
         _react2.default.createElement(
-          "div",
-          { className: "bar", style: styles.bar },
+          'div',
+          { className: 'bar', style: styles.bar },
           _react2.default.createElement(
-            "button",
-            { className: "prevButton", onClick: this.onClickPrevButton, style: styles.button },
+            'button',
+            { className: 'prevButton',
+              onClick: this.onClickPrevButton,
+              style: styles.button },
             this.props.prevIcon
           ),
           _react2.default.createElement(
-            "span",
+            'span',
             { style: styles.pageView },
-            this.props.src ? this.state.index + 1 + " / " + this.props.src.length : ""
+            this.props.src ? this.state.index + 1 + ' / ' + this.props.src.length : null
           ),
           _react2.default.createElement(
-            "button",
-            { className: "nextButton", onClick: this.onClickNextButton, style: styles.button },
+            'button',
+            { className: 'nextButton',
+              onClick: this.onClickNextButton,
+              style: styles.button },
             this.props.nextIcon
           )
         )
@@ -321,33 +434,33 @@ var SlideShow = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SlideShow;
-
+;
 
 var styles = {
   image: {
-    position: "relative",
-    width: "100%"
+    position: 'relative',
+    width: '100%'
   },
   button: {
-    backgroundColor: "transparent",
-    border: "none",
-    margin: "0 20px",
+    backgroundColor: 'transparent',
+    border: 'none',
+    margin: '0 20px',
     padding: 0
   },
   bar: {
-    backgroundColor: "#323232",
-    height: "30px",
-    textAlign: "center",
-    lineHeight: "30px",
-    margin: "auto",
-    width: "100%"
+    backgroundColor: '#323232',
+    height: '30px',
+    textAlign: 'center',
+    lineHeight: '30px',
+    margin: 'auto',
+    width: '100%'
   },
   pageView: {
-    color: "#fff"
+    color: '#fff'
   },
   arrowButtonStyle: {
-    backgroundColor: "transparent",
-    height: "15px"
+    backgroundColor: 'transparent',
+    height: '15px'
   }
 };
 
@@ -355,8 +468,18 @@ SlideShow.defaultProps = {
   arrowButtonStyle: styles.arrowButtonStyle,
   style: {},
   src: [],
-  prevIcon: _react2.default.createElement("img", { style: styles.arrowButtonStyle, src: "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQ0MC4yNSA0NDAuMjUxIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0NDAuMjUgNDQwLjI1MTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxwYXRoIGQ9Ik00MzYuNTM4LDAuODYxYy0yLjQ3MS0xLjE0My01LjUxMywwLjA5NC05LjEzNCwzLjcwOUwyMjQuNjkyLDIwNy4yNzNjLTEuNTIxLDEuNTI0LTIuNzYyLDMuMzMzLTMuNzExLDUuNDI0VjkuOTg5ICAgYzAtNC45NDgtMS4yMzctNy45OTQtMy43MTEtOS4xMzdjLTIuNDc0LTEuMTQxLTUuNTIsMC4wOTYtOS4xMzYsMy43MTFMNS40MjQsMjA3LjI3M0MxLjgwOSwyMTAuODkxLDAsMjE1LjE3MiwwLDIyMC4xMiAgIHMxLjgwOSw5LjIzMyw1LjQyNCwxMi44NDdsMjAyLjcxLDIwMi43MDljMy42MTYsMy42Miw2LjY2Miw0Ljg2Miw5LjEzNiwzLjcyYzIuNDc0LTEuMTQ0LDMuNzExLTQuMTg5LDMuNzExLTkuMTM4VjIyNy41NDYgICBjMC45NTMsMS45MDMsMi4xOSwzLjcxNywzLjcxMSw1LjQyNWwyMDIuNzEyLDIwMi43MTFjMy42MjEsMy42MTcsNi42NjMsNC44Niw5LjEzNCwzLjcxN2MyLjQ3OC0xLjE0MywzLjcxMy00LjE4OCwzLjcxMy05LjEzNyAgIFY5Ljk5NkM0NDAuMjQ4LDUuMDQ4LDQzOS4wMTUsMi4wMDIsNDM2LjUzOCwwLjg2MXoiIGZpbGw9IiNGRkZGRkYiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" }),
-  nextIcon: _react2.default.createElement("img", { style: styles.arrowButtonStyle, src: "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQ0MC4yNSA0NDAuMjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ0MC4yNSA0NDAuMjU7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNNDM0LjgyMywyMDcuMjc5TDIzMi4xMTEsNC41NzFjLTMuNjA5LTMuNjE3LTYuNjU1LTQuODU2LTkuMTMzLTMuNzEzYy0yLjQ3NSwxLjE0My0zLjcxMiw0LjE4OS0zLjcxMiw5LjEzN3YyMDIuNzA4ICAgYy0wLjk0OS0yLjA5MS0yLjE4Ny0zLjkwMS0zLjcxMS01LjQyNEwxMi44NDcsNC41NzFDOS4yMjksMC45NTQsNi4xODYtMC4yODUsMy43MTEsMC44NThDMS4yMzcsMi4wMDEsMCw1LjA0NywwLDkuOTk1djQyMC4yNjIgICBjMCw0Ljk0OCwxLjIzNyw3Ljk5NCwzLjcxMSw5LjEzOGMyLjQ3NCwxLjE0LDUuNTE4LTAuMSw5LjEzNS0zLjcyMWwyMDIuNzA4LTIwMi43MDFjMS41MjEtMS43MTEsMi43NjItMy41MjQsMy43MTEtNS40Mjh2MjAyLjcxMiAgIGMwLDQuOTQ4LDEuMjM3LDcuOTkxLDMuNzEyLDkuMTMxYzIuNDc4LDEuMTQzLDUuNTIzLTAuMDkzLDkuMTMzLTMuNzE0bDIwMi43MTItMjAyLjcwOGMzLjYxLTMuNjE3LDUuNDI4LTcuOTAxLDUuNDI4LTEyLjg0NyAgIEM0NDAuMjQ4LDIxNS4xNzgsNDM4LjQzMywyMTAuODk2LDQzNC44MjMsMjA3LjI3OXoiIGZpbGw9IiNGRkZGRkYiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" })
+  prevIcon: _react2.default.createElement(
+    'svg',
+    { style: styles.arrowButtonStyle, viewBox: '0 0 8 8' },
+    _react2.default.createElement('path', { fill: '#fff', d: 'M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z',
+      transform: 'translate(0 1)' })
+  ),
+  nextIcon: _react2.default.createElement(
+    'svg',
+    { style: styles.arrowButtonStyle, viewBox: '0 0 8 8' },
+    _react2.default.createElement('path', { fill: '#fff', d: 'M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z',
+      transform: 'translate(0 1)' })
+  )
 };
 
 SlideShow.PropTypes = {
