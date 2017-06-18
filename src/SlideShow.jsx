@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as styles from './styles';
 
 /**
  * @typedef {Object} Props
@@ -178,40 +179,24 @@ export default class SlideShow extends React.Component {
   render() {
     return (
       <div style={this.props.style}>
-        <div style={styles.bar}>
+        <div style={styles.BAR}>
 
         </div>
         <div>
-          <div style={styles.image}>
+          <div style={styles.IMAGE}>
             <img className="content"
                  src={this.state.src}
                  style={{width: '100%'}}/>
             <div className="prevOnContent"
                  onClick={this.onClickPrevButton}
                  style={
-                   {
-                     display: 'block',
-                     width: '40%',
-                     height: '100%',
-                     top: 0,
-                     left: 0,
-                     position: 'absolute',
-                     cursor: 'w-resize',
-                   }
+                   styles.PREV_ON_CONTENT
                  }>
             </div>
             <div className="nextOnContent"
                  onClick={this.onClickNextButton}
                  style={
-                   {
-                     display: 'block',
-                     width: '40%',
-                     height: '100%',
-                     top: 0,
-                     right: 0,
-                     position: 'absolute',
-                     cursor: 'e-resize',
-                   }
+                   styles.NEXT_ON_CONTENT
                  }>
             </div>
           </div>
@@ -236,20 +221,20 @@ export default class SlideShow extends React.Component {
                  }
                }/>
         </div>
-        <div className={'bar'} style={styles.bar}>
+        <div className={'bar'} style={styles.BAR}>
           <button className={'prevButton'}
                   onClick={this.onClickPrevButton}
-                  style={styles.button}>
+                  style={styles.BUTTON}>
             {this.props.prevIcon}
           </button>
-          <span style={styles.pageView}>
+          <span style={styles.PAGE_VIEW}>
             {this.props.src ? `${this.state.index
             + 1} / ${this.props.src.length}`
               : null}
           </span>
           <button className={'nextButton'}
                   onClick={this.onClickNextButton}
-                  style={styles.button}>
+                  style={styles.BUTTON}>
             {this.props.nextIcon}
           </button>
         </div>
@@ -258,46 +243,18 @@ export default class SlideShow extends React.Component {
   }
 };
 
-const styles = {
-  image: {
-    position: 'relative',
-    width: '100%',
-  },
-  button: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    margin: '0 20px',
-    padding: 0,
-  },
-  bar: {
-    backgroundColor: '#323232',
-    height: '30px',
-    textAlign: 'center',
-    lineHeight: '30px',
-    margin: 'auto',
-    width: '100%',
-  },
-  pageView: {
-    color: '#fff',
-  },
-  arrowButtonStyle: {
-    backgroundColor: 'transparent',
-    height: '15px',
-  },
-};
-
 SlideShow.defaultProps = {
-  arrowButtonStyle: styles.arrowButtonStyle,
+  arrowButtonStyle: styles.ARROW_BUTTON,
   style: {},
   src: [],
   prevIcon: (
-    <svg style={styles.arrowButtonStyle} viewBox="0 0 8 8">
+    <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
       <path fill="#fff" d="M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z"
             transform="translate(0 1)"/>
     </svg>
   ),
   nextIcon: (
-    <svg style={styles.arrowButtonStyle} viewBox="0 0 8 8">
+    <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
       <path fill="#fff" d="M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z"
             transform="translate(0 1)"/>
     </svg>

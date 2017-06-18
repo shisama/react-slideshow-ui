@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +91,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(6);
+var _reactDom = __webpack_require__(11);
 
 var _SlideShow = __webpack_require__(3);
 
@@ -109,34 +109,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * entry point class for demo
  */
 var App = function (_React$Component) {
-	_inherits(App, _React$Component);
+  _inherits(App, _React$Component);
 
-	function App() {
-		_classCallCheck(this, App);
+  function App() {
+    _classCallCheck(this, App);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+  }
 
-	_createClass(App, [{
-		key: 'render',
+  _createClass(App, [{
+    key: 'render',
 
-		/**
-   * rendering view
-   * @returns {XML}
-   */
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(_SlideShow2.default, {
-					style: { width: '50%' },
-					src: ['./img/example1.png', './img/example2.png', './img/example3.png']
-				})
-			);
-		}
-	}]);
+    /**
+     * rendering view
+     * @returns {XML}
+     */
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_SlideShow2.default, {
+          style: { width: 400 },
+          src: ['./img/example1.png', './img/example2.png', './img/example3.png']
+        })
+      );
+    }
+  }]);
 
-	return App;
+  return App;
 }(_react2.default.Component);
 
 (0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('slideshow'));
@@ -158,9 +158,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(4);
+var _propTypes = __webpack_require__(6);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styles = __webpack_require__(4);
+
+var styles = _interopRequireWildcard(_styles);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -351,38 +357,22 @@ var SlideShow = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { style: this.props.style },
-        _react2.default.createElement('div', { style: styles.bar }),
+        _react2.default.createElement('div', { style: styles.BAR }),
         _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
             'div',
-            { style: styles.image },
+            { style: styles.IMAGE },
             _react2.default.createElement('img', { className: 'content',
               src: this.state.src,
               style: { width: '100%' } }),
             _react2.default.createElement('div', { className: 'prevOnContent',
               onClick: this.onClickPrevButton,
-              style: {
-                display: 'block',
-                width: '40%',
-                height: '100%',
-                top: 0,
-                left: 0,
-                position: 'absolute',
-                cursor: 'w-resize'
-              } }),
+              style: styles.PREV_ON_CONTENT }),
             _react2.default.createElement('div', { className: 'nextOnContent',
               onClick: this.onClickNextButton,
-              style: {
-                display: 'block',
-                width: '40%',
-                height: '100%',
-                top: 0,
-                right: 0,
-                position: 'absolute',
-                cursor: 'e-resize'
-              } })
+              style: styles.NEXT_ON_CONTENT })
           )
         ),
         _react2.default.createElement(
@@ -405,24 +395,24 @@ var SlideShow = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'bar', style: styles.bar },
+          { className: 'bar', style: styles.BAR },
           _react2.default.createElement(
             'button',
             { className: 'prevButton',
               onClick: this.onClickPrevButton,
-              style: styles.button },
+              style: styles.BUTTON },
             this.props.prevIcon
           ),
           _react2.default.createElement(
             'span',
-            { style: styles.pageView },
+            { style: styles.PAGE_VIEW },
             this.props.src ? this.state.index + 1 + ' / ' + this.props.src.length : null
           ),
           _react2.default.createElement(
             'button',
             { className: 'nextButton',
               onClick: this.onClickNextButton,
-              style: styles.button },
+              style: styles.BUTTON },
             this.props.nextIcon
           )
         )
@@ -436,47 +426,19 @@ var SlideShow = function (_React$Component) {
 exports.default = SlideShow;
 ;
 
-var styles = {
-  image: {
-    position: 'relative',
-    width: '100%'
-  },
-  button: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    margin: '0 20px',
-    padding: 0
-  },
-  bar: {
-    backgroundColor: '#323232',
-    height: '30px',
-    textAlign: 'center',
-    lineHeight: '30px',
-    margin: 'auto',
-    width: '100%'
-  },
-  pageView: {
-    color: '#fff'
-  },
-  arrowButtonStyle: {
-    backgroundColor: 'transparent',
-    height: '15px'
-  }
-};
-
 SlideShow.defaultProps = {
-  arrowButtonStyle: styles.arrowButtonStyle,
+  arrowButtonStyle: styles.ARROW_BUTTON,
   style: {},
   src: [],
   prevIcon: _react2.default.createElement(
     'svg',
-    { style: styles.arrowButtonStyle, viewBox: '0 0 8 8' },
+    { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
     _react2.default.createElement('path', { fill: '#fff', d: 'M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z',
       transform: 'translate(0 1)' })
   ),
   nextIcon: _react2.default.createElement(
     'svg',
-    { style: styles.arrowButtonStyle, viewBox: '0 0 8 8' },
+    { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
     _react2.default.createElement('path', { fill: '#fff', d: 'M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z',
       transform: 'translate(0 1)' })
   )
@@ -494,6 +456,61 @@ SlideShow.PropTypes = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var IMAGE = exports.IMAGE = {
+  position: 'relative',
+  width: '100%'
+};
+var BUTTON = exports.BUTTON = {
+  backgroundColor: 'transparent',
+  border: 'none',
+  margin: '0 20px',
+  padding: 0
+};
+var BAR = exports.BAR = {
+  backgroundColor: '#323232',
+  height: '30px',
+  textAlign: 'center',
+  lineHeight: '30px',
+  margin: 'auto',
+  width: '100%'
+};
+var PAGE_VIEW = exports.PAGE_VIEW = {
+  color: '#fff'
+};
+var ARROW_BUTTON = exports.ARROW_BUTTON = {
+  backgroundColor: 'transparent',
+  height: '15px'
+};
+var PREV_ON_CONTENT = exports.PREV_ON_CONTENT = {
+  display: 'block',
+  width: '40%',
+  height: '100%',
+  top: 0,
+  left: 0,
+  position: 'absolute',
+  cursor: 'url(' + '"data:image/png;base64,' + 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/' + 'AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYREQ4Xdp3G0wAAAZ9JREFUWMPt' + '1z1rFFEUBuBnhEAaC1FBC1OlVKzFjyqNKY0oqGCddAHzAwS7/AELOwvBwlRpNCAhENME' + 'C7UTFFc0xKRJMEQxXpsTWMad3ZnZ3WyzLxwuc+/ce957PmcYYojqOIYZrGIbn3D3KAk8' + 'RcrJAa4dhfLLoXAPd1JKCQ9j7i2yfhOYC2WPUxPwJeZv1/FnHfzNPT+KcR6n+mmBybjp' + '+5QDlmPtZRcXM44F7LQItLzczBE4i++xNl9X+Y8Sig/lQwsrXMV+E4nRKgQWYuMrnEs1' + 'gSn8bkP8K663IrAbL4ylLhGWeNOGSONQaXPe7uB43L7Rq6jNssLSkOXTcCnGJ1mWjQ2i' + 'xo9jq53varqjSP4rRB9xKYJxtwXBtUF1v4mitOuFBcpgFJux6VY/XVCE/Wg28K0fHxdl' + '8DnGi4OKg6kw2xbO1HTBlZDKLoAXYf6TONFNXerGCqvB/F6HG9/H86j5fzqV4ip4EJs3' + 'cKNJ4QVMYxG/SnTRRlEzKpOOrzscfoAVzOI8RnodjCNx+Dp+RgN7h2dh+tPDv5YhquIf' + 'vGpAec8aptcAAAAASUVORK5CYII="' + '), auto'
+};
+var NEXT_ON_CONTENT = exports.NEXT_ON_CONTENT = {
+  display: 'block',
+  width: '40%',
+  height: '100%',
+  top: 0,
+  right: 0,
+  position: 'absolute',
+  cursor: 'url(' + '"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0A' + 'AAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYRE' + 'Q4zSp4iAgAAAapJREFUWMPt179rFEEUB/DPhUistFCLNGksFSxFURurpBNEMRZpFWwE/' + 'wHr+A+IjdgognZpLo0/QKy0UEklERMNQQXxMCDcMRa+lWPZ29xubq+6Lwyz+2bffL9v5' + 's08lgkmqI+rWMcPvMJ1TI2L/Bx6SLn2YBzkLbwNwjsppYRF7ITtVNMCLgfRVuoD7ob9V' + 'pXJqu7ZYSzH8+3cWK/pyKfQjiifpxzwPsbmmxKwnC09ZnPkFwsSMt9+4SmOViXe30e+g' + 'zMF0X8YQkDWvg0SsYDNEsc/WEg1gTmsxlxPigRslhC/wOm0R4SIbDv+n+kMqUjVP78RX' + 'SCt1hw+h4CDxnl1Bvm9eG0XBlvUai51WS5970/CplbgdYEtO4Yn8bHpFVgL//NVVI9EA' + 'C6F7zZmRl0LhsHX6DfiCI9dwInoPw3z8XSB7Wz0L2sctdkoSvBoL+W4VTP6AziEL4Ou2' + 'zJsDEjEbow9xlK3210vScAr4fOsjvr5EhH52rCCaziWUkqdTuc+LkQCJtwYZVLtw3Hcj' + 'Lzo7SKwHT6N4QiW8BDv8BO/8SZETk/+WCaogr+r/hCMZ83IlAAAAABJRU5ErkJggg=="' + '), auto'
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -503,7 +520,72 @@ SlideShow.PropTypes = {
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-if (true) {
+
+
+var emptyFunction = __webpack_require__(9);
+var invariant = __webpack_require__(7);
+var ReactPropTypesSecret = __webpack_require__(8);
+
+module.exports = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
+    }
+    invariant(
+      false,
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+  };
+  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  };
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim
+  };
+
+  ReactPropTypes.checkPropTypes = emptyFunction;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+if (undefined !== 'production') {
   var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
     Symbol.for &&
     Symbol.for('react.element')) ||
@@ -518,28 +600,46 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(5)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(10)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = require('./factoryWithThrowingShims')();
+  module.exports = __webpack_require__(5)();
 }
 
 
 /***/ }),
-/* 5 */
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(1);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(54);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(9);
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(96);
 
 /***/ }),
-/* 6 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(97);
 
 /***/ }),
-/* 7 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);

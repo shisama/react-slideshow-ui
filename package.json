@@ -24,6 +24,7 @@
     "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.44.2",
     "flow-remove-types": "^1.2.1",
+    "ncp": "^2.0.0",
     "nyc": "^10.3.2",
     "power-assert": "^1.4.2",
     "prop-types": "^15.5.10",
@@ -36,8 +37,8 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
-    "build:demo": "NODE_ENV=development webpack",
+    "build": "NODE_ENV=production npm run clean &&  ncp src/icon demo/icon && babel src --out-dir lib --source-maps inline --ignore src/demo",
+    "build:demo": "NODE_ENV=development  ncp src/icon demo/icon && webpack",
     "build:dll": "webpack --config webpack.dll.config.js",
     "clean": "rimraf lib",
     "start": "webpack-dev-server --hot",
