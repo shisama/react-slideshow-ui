@@ -1,5 +1,8 @@
 extends:
   - google
+  - prettier
+  - prettier/react
+  - prettier/flowtype
 parser: babel-eslint
 parserOptions:
   ecmaFeatures:
@@ -13,7 +16,13 @@ env:
 plugins:
   - react
   - flowtype
+  - prettier
 rules:
   no-invalid-this: off
   react/jsx-uses-vars: warn
   valid-jsdoc: off
+  prettier/prettier:
+    - error
+    -
+      trailingComma: all
+      singleQuote: true

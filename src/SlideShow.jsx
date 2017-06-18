@@ -17,7 +17,7 @@ type Props = {
   prevIcon: Node,
   nextIcon: Node,
   withTimestamp: boolean,
-}
+};
 
 /**
  * @typedef {Object} State
@@ -31,7 +31,7 @@ type State = {
   index: number,
   progress: number,
   timestamp: number,
-}
+};
 
 /**
  * This class named SlideShow is the React component that allows you
@@ -144,11 +144,10 @@ export default class SlideShow extends React.Component {
    * @param {MouseEvent} e
    */
   onClickProgressBar = (e: MouseEvent) => {
-    const barWidth = document
-    .getElementsByClassName('progressBar')[0]
+    const barWidth = document.getElementsByClassName('progressBar')[0]
       .offsetWidth;
     const progressWidth = e.clientX;
-    const clickPosition = (progressWidth / barWidth) * 100;
+    const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.src.length; i++) {
       const checkWidth = this.calcProgress(i);
@@ -172,7 +171,7 @@ export default class SlideShow extends React.Component {
    */
   calcProgress = (page: number): number => {
     const base = 100 / this.props.src.length;
-    let progress = base * page;
+    let progress = Math.ceil(base * page);
     if (progress > 100) {
       return 100;
     }
@@ -180,7 +179,7 @@ export default class SlideShow extends React.Component {
   };
 
   isEmptyArray = (arr: Array<string>): boolean => {
-    return (arr === undefined || arr === null || arr.length === 0);
+    return arr === undefined || arr === null || arr.length === 0;
   };
 
   /**
@@ -195,69 +194,67 @@ export default class SlideShow extends React.Component {
 
     return (
       <div style={this.props.style}>
-        <div style={styles.BAR}>
-
-        </div>
+        <div style={styles.BAR} />
         <div>
           <div style={styles.IMAGE}>
-            <img className="content"
-                 src={src}
-                 style={{width: '100%'}}/>
-            <div className="prevOnContent"
-                 onClick={this.onClickPrevButton}
-                 style={
-                   styles.PREV_ON_CONTENT
-                 }>
-            </div>
-            <div className="nextOnContent"
-                 onClick={this.onClickNextButton}
-                 style={
-                   styles.NEXT_ON_CONTENT
-                 }>
-            </div>
+            <img className="content" src={src} style={{ width: '100%' }} />
+            <div
+              className="prevOnContent"
+              onClick={this.onClickPrevButton}
+              style={styles.PREV_ON_CONTENT}
+            />
+            <div
+              className="nextOnContent"
+              onClick={this.onClickNextButton}
+              style={styles.NEXT_ON_CONTENT}
+            />
           </div>
         </div>
-        <div className="progressBar"
-             style={
-               {
-                 backgroundColor: '#000',
-                 height: 10,
-                 marginTop: -6,
-                 position: 'relative',
-                 width: '100%',
-               }
-             }
-             onClick={this.onClickProgressBar}>
-          <div className="progress"
-               style={
-                 {
-                   backgroundColor: '#007bb6',
-                   height: '100%',
-                   width: `${this.state.progress}%`,
-                 }
-               }/>
+        <div
+          className="progressBar"
+          style={{
+            backgroundColor: '#000',
+            height: 10,
+            marginTop: -6,
+            position: 'relative',
+            width: '100%',
+          }}
+          onClick={this.onClickProgressBar}
+        >
+          <div
+            className="progress"
+            style={{
+              backgroundColor: '#007bb6',
+              height: '100%',
+              width: `${this.state.progress}%`,
+            }}
+          />
         </div>
         <div className={'bar'} style={styles.BAR}>
-          <button className={'prevButton'}
-                  onClick={this.onClickPrevButton}
-                  style={styles.BUTTON}>
+          <button
+            className={'prevButton'}
+            onClick={this.onClickPrevButton}
+            style={styles.BUTTON}
+          >
             {this.props.prevIcon}
           </button>
           <span style={styles.PAGE_VIEW}>
-            {this.props.src ? `${this.state.index
-            + 1} / ${this.props.src.length}`
+            {this.props.src
+              ? `${this.state.index + 1} / ${this.props.src.length}`
               : null}
           </span>
-          <button className={'nextButton'}
-                  onClick={this.onClickNextButton}
-                  style={styles.BUTTON}>
+          <button
+            className={'nextButton'}
+            onClick={this.onClickNextButton}
+            style={styles.BUTTON}
+          >
             {this.props.nextIcon}
           </button>
         </div>
       </div>
     );
   }
-};
+}
 
 SlideShow.defaultProps = {
   arrowButtonStyle: styles.ARROW_BUTTON,
@@ -265,14 +262,20 @@ SlideShow.defaultProps = {
   src: [],
   prevIcon: (
     <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
-      <path fill="#fff" d="M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z"
-            transform="translate(0 1)"/>
+      <path
+        fill="#fff"
+        d="M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z"
+        transform="translate(0 1)"
+      />
     </svg>
   ),
   nextIcon: (
     <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
-      <path fill="#fff" d="M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z"
-            transform="translate(0 1)"/>
+      <path
+        fill="#fff"
+        d="M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z"
+        transform="translate(0 1)"
+      />
     </svg>
   ),
   withTimestamp: false,

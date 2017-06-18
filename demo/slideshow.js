@@ -259,7 +259,7 @@ var SlideShow = function (_React$Component) {
     _this.onClickProgressBar = function (e) {
       var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
-      var clickPosition = progressWidth / barWidth * 100;
+      var clickPosition = Math.floor(progressWidth / barWidth * 100);
       var nextIndex = 0;
       for (var i = 0; i < _this.props.src.length; i++) {
         var checkWidth = _this.calcProgress(i);
@@ -278,7 +278,7 @@ var SlideShow = function (_React$Component) {
 
     _this.calcProgress = function (page) {
       var base = 100 / _this.props.src.length;
-      var progress = base * page;
+      var progress = Math.ceil(base * page);
       if (progress > 100) {
         return 100;
       }
@@ -378,20 +378,23 @@ var SlideShow = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { style: styles.IMAGE },
-            _react2.default.createElement('img', { className: 'content',
-              src: src,
-              style: { width: '100%' } }),
-            _react2.default.createElement('div', { className: 'prevOnContent',
+            _react2.default.createElement('img', { className: 'content', src: src, style: { width: '100%' } }),
+            _react2.default.createElement('div', {
+              className: 'prevOnContent',
               onClick: this.onClickPrevButton,
-              style: styles.PREV_ON_CONTENT }),
-            _react2.default.createElement('div', { className: 'nextOnContent',
+              style: styles.PREV_ON_CONTENT
+            }),
+            _react2.default.createElement('div', {
+              className: 'nextOnContent',
               onClick: this.onClickNextButton,
-              style: styles.NEXT_ON_CONTENT })
+              style: styles.NEXT_ON_CONTENT
+            })
           )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'progressBar',
+          {
+            className: 'progressBar',
             style: {
               backgroundColor: '#000',
               height: 10,
@@ -399,22 +402,27 @@ var SlideShow = function (_React$Component) {
               position: 'relative',
               width: '100%'
             },
-            onClick: this.onClickProgressBar },
-          _react2.default.createElement('div', { className: 'progress',
+            onClick: this.onClickProgressBar
+          },
+          _react2.default.createElement('div', {
+            className: 'progress',
             style: {
               backgroundColor: '#007bb6',
               height: '100%',
               width: this.state.progress + '%'
-            } })
+            }
+          })
         ),
         _react2.default.createElement(
           'div',
           { className: 'bar', style: styles.BAR },
           _react2.default.createElement(
             'button',
-            { className: 'prevButton',
+            {
+              className: 'prevButton',
               onClick: this.onClickPrevButton,
-              style: styles.BUTTON },
+              style: styles.BUTTON
+            },
             this.props.prevIcon
           ),
           _react2.default.createElement(
@@ -424,9 +432,11 @@ var SlideShow = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { className: 'nextButton',
+            {
+              className: 'nextButton',
               onClick: this.onClickNextButton,
-              style: styles.BUTTON },
+              style: styles.BUTTON
+            },
             this.props.nextIcon
           )
         )
@@ -438,7 +448,7 @@ var SlideShow = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = SlideShow;
-;
+
 
 SlideShow.defaultProps = {
   arrowButtonStyle: styles.ARROW_BUTTON,
@@ -447,14 +457,20 @@ SlideShow.defaultProps = {
   prevIcon: _react2.default.createElement(
     'svg',
     { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
-    _react2.default.createElement('path', { fill: '#fff', d: 'M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z',
-      transform: 'translate(0 1)' })
+    _react2.default.createElement('path', {
+      fill: '#fff',
+      d: 'M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z',
+      transform: 'translate(0 1)'
+    })
   ),
   nextIcon: _react2.default.createElement(
     'svg',
     { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
-    _react2.default.createElement('path', { fill: '#fff', d: 'M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z',
-      transform: 'translate(0 1)' })
+    _react2.default.createElement('path', {
+      fill: '#fff',
+      d: 'M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z',
+      transform: 'translate(0 1)'
+    })
   ),
   withTimestamp: false
 };
