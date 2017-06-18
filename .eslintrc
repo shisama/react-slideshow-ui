@@ -1,0 +1,28 @@
+extends:
+  - google
+  - prettier
+  - prettier/react
+  - prettier/flowtype
+parser: babel-eslint
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 6
+  sourceType: module
+env:
+  browser: true
+  node: true
+  es6: true
+plugins:
+  - react
+  - flowtype
+  - prettier
+rules:
+  no-invalid-this: off
+  react/jsx-uses-vars: warn
+  valid-jsdoc: off
+  prettier/prettier:
+    - error
+    -
+      trailingComma: all
+      singleQuote: true

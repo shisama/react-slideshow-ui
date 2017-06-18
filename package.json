@@ -5,15 +5,11 @@
   "license": "MIT",
   "description": "react-slideshow allows you to include slideshow to your React apps.",
   "main": "index.js",
-  "dependencies": {
-    "next": "^2.3.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
-  },
   "devDependencies": {
     "ava": "^0.19.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.1",
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -22,18 +18,40 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.8.2",
+    "eslint": "^4.0.0",
+    "eslint-closure": "^0.0.1",
+    "eslint-config-google": "^0.8.0",
+    "eslint-config-prettier": "^2.2.0",
+    "eslint-loader": "^1.8.0",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-prettier": "^2.1.2",
+    "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.44.2",
+    "flow-remove-types": "^1.2.1",
     "nyc": "^10.3.2",
     "power-assert": "^1.4.2",
+    "prettier": "^1.4.4",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
     "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "next",
+    "rimraf": "^2.6.1",
+    "sinon": "^2.3.4",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "build:development": "NODE_ENV=development webpack",
-    "demo": "next",
+    "build": "NODE_ENV=production npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
+    "build:demo": "NODE_ENV=development webpack",
+    "build:dll": "webpack --config webpack.dll.config.js",
+    "build:all": "npm run lint -- --fix && npm run typecheck && npm test && npm run build:demo && npm run build",
+    "clean": "rimraf lib",
+    "start": "webpack-dev-server --hot",
     "test": "nyc ava",
-    "typecheck": "flow"
+    "typecheck": "flow",
+    "remove-types": "flow-remove-types --out-dir out/ src/",
+    "lint": "eslint src --ext js --ext jsx"
   },
   "keywords": [
     "react",
@@ -66,12 +84,13 @@
             {
               "targets": {
                 "browsers": [
-                  "last 2 versions"
+                  "last 2 versions",
+                  "IE 11"
                 ]
               }
-            },
-            "react"
-          ]
+            }
+          ],
+          "react"
         ],
         "plugins": [
           "transform-class-properties",
@@ -82,7 +101,7 @@
     }
   },
   "ava": {
-    "files": "src/**/*.test.js",
+    "files": "**/*.test.js",
     "require": [
       "babel-register"
     ],
