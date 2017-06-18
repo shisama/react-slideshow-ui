@@ -148,7 +148,7 @@ export default class SlideShow extends React.Component {
     .getElementsByClassName('progressBar')[0]
       .offsetWidth;
     const progressWidth = e.clientX;
-    const clickPosition = Math.floor((progressWidth / barWidth) * 100);
+    const clickPosition = (progressWidth / barWidth) * 100;
     let nextIndex = 0;
     for (let i = 0; i < this.props.src.length; i++) {
       const checkWidth = this.calcProgress(i);
@@ -172,7 +172,7 @@ export default class SlideShow extends React.Component {
    */
   calcProgress = (page: number): number => {
     const base = 100 / this.props.src.length;
-    let progress = Math.ceil(base * page);
+    let progress = base * page;
     if (progress > 100) {
       return 100;
     }

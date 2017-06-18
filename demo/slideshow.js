@@ -259,7 +259,7 @@ var SlideShow = function (_React$Component) {
     _this.onClickProgressBar = function (e) {
       var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
-      var clickPosition = Math.floor(progressWidth / barWidth * 100);
+      var clickPosition = progressWidth / barWidth * 100;
       var nextIndex = 0;
       for (var i = 0; i < _this.props.src.length; i++) {
         var checkWidth = _this.calcProgress(i);
@@ -278,7 +278,7 @@ var SlideShow = function (_React$Component) {
 
     _this.calcProgress = function (page) {
       var base = 100 / _this.props.src.length;
-      var progress = Math.ceil(base * page);
+      var progress = base * page;
       if (progress > 100) {
         return 100;
       }
