@@ -1,16 +1,17 @@
-import test from "ava";
-import React from "react";
-import {shallow} from "enzyme";
-import SlideShow from "../src/SlideShow";
+import test from 'ava';
+import React from 'react';
+import {shallow} from 'enzyme';
+import sinon from 'sinon';
+import SlideShow from '../src/SlideShow';
 
 test("props style", t => {
   const wrapper = shallow(
     <SlideShow
-       src={[
-         "static/test/page1",
-         "static/test/page2",
-         "static/test/page3"
-       ]}
+      src={[
+        "static/test/page1",
+        "static/test/page2",
+        "static/test/page3"
+      ]}
       style={{width: 100}}
     />
   );
@@ -60,7 +61,7 @@ test("onclick next page event", t => {
         "static/test/page2",
         "static/test/page3"
       ]}
-      />
+    />
   );
   t.truthy(wrapper);
   wrapper.find(".nextButton").simulate("click");
@@ -81,7 +82,6 @@ test("onclick next page event", t => {
   t.is(wrapper.state().index, 2);
   t.is(wrapper.state().progress, 100);
 });
-
 
 test("onclick prev page event", t => {
   const wrapper = shallow(
@@ -129,7 +129,6 @@ test("componentWillMount props.src is undefined", t => {
   t.is(wrapper.state().src, "");
 });
 
-
 test("componentWillMount props.src is empty", t => {
   const wrapper = shallow(
     <SlideShow src={[]}/>
@@ -138,11 +137,44 @@ test("componentWillMount props.src is empty", t => {
   t.is(wrapper.state().src, "");
 });
 
-
 test("componentWillMount props.src is null", t => {
   const wrapper = shallow(
     <SlideShow src={null}/>
   );
   t.is(wrapper.find(".content").props().src, "");
   t.is(wrapper.state().src, "");
+});
+
+test("props withTimestamp", t => {
+  // to get fake time with sinon when Date.getTime is called.
+  const now = new Date();
+  const clock = sinon.useFakeTimers(now.getTime());
+  const timestamp = Math.floor(now.getTime() / 1000);
+
+  const wrapper = shallow(
+    <SlideShow
+      src={[
+        "static/test/page1",
+        "static/test/page2",
+        "static/test/page3"
+      ]}
+      style={{width: 100}}
+      withTimestamp={true}
+    />
+  );
+  t.truthy(wrapper);
+  t.is(wrapper.find(".content").props().src, `static/test/page1?${timestamp}`);
+  t.is(wrapper.state().src, "static/test/page1");
+
+  // click next button
+  wrapper.find(".nextButton").simulate("click");
+  t.is(wrapper.find(".content").props().src, `static/test/page2?${timestamp}`);
+  t.is(wrapper.state().src, "static/test/page2");
+
+  // click prev button
+  wrapper.find(".prevButton").simulate("click");
+  t.is(wrapper.find(".content").props().src, `static/test/page1?${timestamp}`);
+  t.is(wrapper.state().src, "static/test/page1");
+
+  clock.restore();
 });

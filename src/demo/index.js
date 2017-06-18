@@ -20,6 +20,7 @@ class App extends React.Component {
             './img/example2.png',
             './img/example3.png',
           ]}
+          withTimestamp={true}
         />
       </div>
     );

@@ -9,12 +9,14 @@ import * as styles from './styles';
  * @property {Array<string>} src,
  * @property {Node} prevIcon,
  * @property {Node} nextIcon
+ * @property {boolean} withTimestamp
  */
 type Props = {
   style: Object,
   src: Array<string>,
   prevIcon: Node,
   nextIcon: Node,
+  withTimestamp: boolean,
 }
 
 /**
@@ -22,11 +24,13 @@ type Props = {
  * @property {string} src
  * @property {number} index
  * @property {number} progress
+ * @property {number} timestamp
  */
 type State = {
   src: string,
   index: number,
-  progress: number
+  progress: number,
+  timestamp: number,
 }
 
 /**
@@ -48,10 +52,17 @@ export default class SlideShow extends React.Component {
    */
   constructor(props: Props) {
     super(props);
+
+    let timestamp = 0;
+    if (props.withTimestamp === true) {
+      timestamp = Math.floor(new Date().getTime() / 1000);
+    }
+
     this.state = {
       src: '',
       index: 0,
       progress: 0,
+      timestamp: timestamp,
     };
   }
 
@@ -177,6 +188,11 @@ export default class SlideShow extends React.Component {
    * @returns {XML}
    */
   render() {
+    let src = this.state.src;
+    if (this.props.withTimestamp === true) {
+      src += `?${this.state.timestamp}`;
+    }
+
     return (
       <div style={this.props.style}>
         <div style={styles.BAR}>
@@ -185,7 +201,7 @@ export default class SlideShow extends React.Component {
         <div>
           <div style={styles.IMAGE}>
             <img className="content"
-                 src={this.state.src}
+                 src={src}
                  style={{width: '100%'}}/>
             <div className="prevOnContent"
                  onClick={this.onClickPrevButton}
@@ -259,6 +275,7 @@ SlideShow.defaultProps = {
             transform="translate(0 1)"/>
     </svg>
   ),
+  withTimestamp: false,
 };
 
 SlideShow.PropTypes = {
@@ -267,4 +284,5 @@ SlideShow.PropTypes = {
   src: PropTypes.array,
   prevIcon: PropTypes.node,
   nextIcon: PropTypes.node,
+  withTimestamp: PropTypes.bool,
 };

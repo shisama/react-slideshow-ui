@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +91,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(11);
+var _reactDom = __webpack_require__(7);
 
 var _SlideShow = __webpack_require__(3);
 
@@ -130,7 +130,8 @@ var App = function (_React$Component) {
         null,
         _react2.default.createElement(_SlideShow2.default, {
           style: { width: 400 },
-          src: ['./img/example1.png', './img/example2.png', './img/example3.png']
+          src: ['./img/example1.png', './img/example2.png', './img/example3.png'],
+          withTimestamp: true
         })
       );
     }
@@ -158,7 +159,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(6);
+var _propTypes = __webpack_require__(5);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -189,6 +190,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @property {Array<string>} src,
  * @property {Node} prevIcon,
  * @property {Node} nextIcon
+ * @property {boolean} withTimestamp
  */
 
 
@@ -197,6 +199,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @property {string} src
  * @property {number} index
  * @property {number} progress
+ * @property {number} timestamp
  */
 var SlideShow = function (_React$Component) {
   _inherits(SlideShow, _React$Component);
@@ -286,10 +289,16 @@ var SlideShow = function (_React$Component) {
       return arr === undefined || arr === null || arr.length === 0;
     };
 
+    var timestamp = 0;
+    if (props.withTimestamp === true) {
+      timestamp = Math.floor(new Date().getTime() / 1000);
+    }
+
     _this.state = {
       src: '',
       index: 0,
-      progress: 0
+      progress: 0,
+      timestamp: timestamp
     };
     return _this;
   }
@@ -354,6 +363,11 @@ var SlideShow = function (_React$Component) {
      * @returns {XML}
      */
     value: function render() {
+      var src = this.state.src;
+      if (this.props.withTimestamp === true) {
+        src += '?' + this.state.timestamp;
+      }
+
       return _react2.default.createElement(
         'div',
         { style: this.props.style },
@@ -365,7 +379,7 @@ var SlideShow = function (_React$Component) {
             'div',
             { style: styles.IMAGE },
             _react2.default.createElement('img', { className: 'content',
-              src: this.state.src,
+              src: src,
               style: { width: '100%' } }),
             _react2.default.createElement('div', { className: 'prevOnContent',
               onClick: this.onClickPrevButton,
@@ -441,7 +455,8 @@ SlideShow.defaultProps = {
     { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
     _react2.default.createElement('path', { fill: '#fff', d: 'M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z',
       transform: 'translate(0 1)' })
-  )
+  ),
+  withTimestamp: false
 };
 
 SlideShow.PropTypes = {
@@ -449,7 +464,8 @@ SlideShow.PropTypes = {
   style: _propTypes2.default.object,
   src: _propTypes2.default.array,
   prevIcon: _propTypes2.default.node,
-  nextIcon: _propTypes2.default.node
+  nextIcon: _propTypes2.default.node,
+  withTimestamp: _propTypes2.default.bool
 };
 
 /***/ }),
@@ -510,7 +526,6 @@ var NEXT_ON_CONTENT = exports.NEXT_ON_CONTENT = {
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -520,72 +535,7 @@ var NEXT_ON_CONTENT = exports.NEXT_ON_CONTENT = {
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-
-
-var emptyFunction = __webpack_require__(9);
-var invariant = __webpack_require__(7);
-var ReactPropTypesSecret = __webpack_require__(8);
-
-module.exports = function() {
-  function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret) {
-      // It is still safe when called from React.
-      return;
-    }
-    invariant(
-      false,
-      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-      'Use PropTypes.checkPropTypes() to call them. ' +
-      'Read more at http://fb.me/use-check-prop-types'
-    );
-  };
-  shim.isRequired = shim;
-  function getShim() {
-    return shim;
-  };
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-  var ReactPropTypes = {
-    array: shim,
-    bool: shim,
-    func: shim,
-    number: shim,
-    object: shim,
-    string: shim,
-    symbol: shim,
-
-    any: shim,
-    arrayOf: getShim,
-    element: shim,
-    instanceOf: getShim,
-    node: shim,
-    objectOf: getShim,
-    oneOf: getShim,
-    oneOfType: getShim,
-    shape: getShim
-  };
-
-  ReactPropTypes.checkPropTypes = emptyFunction;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-if (undefined !== 'production') {
+if (true) {
   var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
     Symbol.for &&
     Symbol.for('react.element')) ||
@@ -600,46 +550,28 @@ if (undefined !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(10)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(6)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(5)();
+  module.exports = require('./factoryWithThrowingShims')();
 }
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(1);
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(54);
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(9);
-
-/***/ }),
-/* 10 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(96);
 
 /***/ }),
-/* 11 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(97);
 
 /***/ }),
-/* 12 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);
