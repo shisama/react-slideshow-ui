@@ -197,7 +197,7 @@ export default class SlideShow extends React.Component {
         <div style={styles.BAR} />
         <div>
           <div style={styles.IMAGE}>
-            <img className="content" src={src} style={{ width: '100%' }} />
+            <img className="content" src={src} style={{width: '100%'}} />
             <div
               className="prevOnContent"
               onClick={this.onClickPrevButton}
