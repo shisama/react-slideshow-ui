@@ -49,8 +49,8 @@
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "typecheck": "flow",
-    "remove-types": "flow-remove-types --out-dir out/ src/",
-    "lint": "eslint src --ext js --ext jsx"
+    "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
+    "lint": "eslint src --ext js,jsx"
   },
   "keywords": [
     "react",
