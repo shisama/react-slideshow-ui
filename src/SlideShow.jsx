@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as styles from './styles';
+import {Styles as styles} from './Styles';
 
 /**
  * @typedef {Object} Props

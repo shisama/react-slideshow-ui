@@ -1,1 +1,1 @@
-import './SlideShow';
+module.exports = require('./SlideShow');

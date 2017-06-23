@@ -163,11 +163,7 @@ var _propTypes = __webpack_require__(5);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _styles = __webpack_require__(4);
-
-var styles = _interopRequireWildcard(_styles);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _Styles = __webpack_require__(4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -371,23 +367,23 @@ var SlideShow = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { style: this.props.style },
-        _react2.default.createElement('div', { style: styles.BAR }),
+        _react2.default.createElement('div', { style: _Styles.Styles.BAR }),
         _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
             'div',
-            { style: styles.IMAGE },
+            { style: _Styles.Styles.IMAGE },
             _react2.default.createElement('img', { className: 'content', src: src, style: { width: '100%' } }),
             _react2.default.createElement('div', {
               className: 'prevOnContent',
               onClick: this.onClickPrevButton,
-              style: styles.PREV_ON_CONTENT
+              style: _Styles.Styles.PREV_ON_CONTENT
             }),
             _react2.default.createElement('div', {
               className: 'nextOnContent',
               onClick: this.onClickNextButton,
-              style: styles.NEXT_ON_CONTENT
+              style: _Styles.Styles.NEXT_ON_CONTENT
             })
           )
         ),
@@ -415,19 +411,19 @@ var SlideShow = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'bar', style: styles.BAR },
+          { className: 'bar', style: _Styles.Styles.BAR },
           _react2.default.createElement(
             'button',
             {
               className: 'prevButton',
               onClick: this.onClickPrevButton,
-              style: styles.BUTTON
+              style: _Styles.Styles.BUTTON
             },
             this.props.prevIcon
           ),
           _react2.default.createElement(
             'span',
-            { style: styles.PAGE_VIEW },
+            { style: _Styles.Styles.PAGE_VIEW },
             this.props.src ? this.state.index + 1 + ' / ' + this.props.src.length : null
           ),
           _react2.default.createElement(
@@ -435,7 +431,7 @@ var SlideShow = function (_React$Component) {
             {
               className: 'nextButton',
               onClick: this.onClickNextButton,
-              style: styles.BUTTON
+              style: _Styles.Styles.BUTTON
             },
             this.props.nextIcon
           )
@@ -451,12 +447,12 @@ exports.default = SlideShow;
 
 
 SlideShow.defaultProps = {
-  arrowButtonStyle: styles.ARROW_BUTTON,
+  arrowButtonStyle: _Styles.Styles.ARROW_BUTTON,
   style: {},
   src: [],
   prevIcon: _react2.default.createElement(
     'svg',
-    { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
+    { style: _Styles.Styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
     _react2.default.createElement('path', {
       fill: '#fff',
       d: 'M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z',
@@ -465,7 +461,7 @@ SlideShow.defaultProps = {
   ),
   nextIcon: _react2.default.createElement(
     'svg',
-    { style: styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
+    { style: _Styles.Styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
     _react2.default.createElement('path', {
       fill: '#fff',
       d: 'M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z',
@@ -494,48 +490,50 @@ SlideShow.PropTypes = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var IMAGE = exports.IMAGE = {
-  position: 'relative',
-  width: '100%'
-};
-var BUTTON = exports.BUTTON = {
-  backgroundColor: 'transparent',
-  border: 'none',
-  margin: '0 20px',
-  padding: 0
-};
-var BAR = exports.BAR = {
-  backgroundColor: '#323232',
-  height: '30px',
-  textAlign: 'center',
-  lineHeight: '30px',
-  margin: 'auto',
-  width: '100%'
-};
-var PAGE_VIEW = exports.PAGE_VIEW = {
-  color: '#fff'
-};
-var ARROW_BUTTON = exports.ARROW_BUTTON = {
-  backgroundColor: 'transparent',
-  height: '15px'
-};
-var PREV_ON_CONTENT = exports.PREV_ON_CONTENT = {
-  display: 'block',
-  width: '40%',
-  height: '100%',
-  top: 0,
-  left: 0,
-  position: 'absolute',
-  cursor: 'url(' + '"data:image/png;base64,' + 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/' + 'AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYREQ4Xdp3G0wAAAZ9JREFUWMPt' + '1z1rFFEUBuBnhEAaC1FBC1OlVKzFjyqNKY0oqGCddAHzAwS7/AELOwvBwlRpNCAhENME' + 'C7UTFFc0xKRJMEQxXpsTWMad3ZnZ3WyzLxwuc+/ce957PmcYYojqOIYZrGIbn3D3KAk8' + 'RcrJAa4dhfLLoXAPd1JKCQ9j7i2yfhOYC2WPUxPwJeZv1/FnHfzNPT+KcR6n+mmBybjp' + '+5QDlmPtZRcXM44F7LQItLzczBE4i++xNl9X+Y8Sig/lQwsrXMV+E4nRKgQWYuMrnEs1' + 'gSn8bkP8K663IrAbL4ylLhGWeNOGSONQaXPe7uB43L7Rq6jNssLSkOXTcCnGJ1mWjQ2i' + 'xo9jq53varqjSP4rRB9xKYJxtwXBtUF1v4mitOuFBcpgFJux6VY/XVCE/Wg28K0fHxdl' + '8DnGi4OKg6kw2xbO1HTBlZDKLoAXYf6TONFNXerGCqvB/F6HG9/H86j5fzqV4ip4EJs3' + 'cKNJ4QVMYxG/SnTRRlEzKpOOrzscfoAVzOI8RnodjCNx+Dp+RgN7h2dh+tPDv5YhquIf' + 'vGpAec8aptcAAAAASUVORK5CYII="' + '), auto'
-};
-var NEXT_ON_CONTENT = exports.NEXT_ON_CONTENT = {
-  display: 'block',
-  width: '40%',
-  height: '100%',
-  top: 0,
-  right: 0,
-  position: 'absolute',
-  cursor: 'url(' + '"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0A' + 'AAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYRE' + 'Q4zSp4iAgAAAapJREFUWMPt179rFEEUB/DPhUistFCLNGksFSxFURurpBNEMRZpFWwE/' + 'wHr+A+IjdgognZpLo0/QKy0UEklERMNQQXxMCDcMRa+lWPZ29xubq+6Lwyz+2bffL9v5' + 's08lgkmqI+rWMcPvMJ1TI2L/Bx6SLn2YBzkLbwNwjsppYRF7ITtVNMCLgfRVuoD7ob9V' + 'pXJqu7ZYSzH8+3cWK/pyKfQjiifpxzwPsbmmxKwnC09ZnPkFwsSMt9+4SmOViXe30e+g' + 'zMF0X8YQkDWvg0SsYDNEsc/WEg1gTmsxlxPigRslhC/wOm0R4SIbDv+n+kMqUjVP78RX' + 'SCt1hw+h4CDxnl1Bvm9eG0XBlvUai51WS5970/CplbgdYEtO4Yn8bHpFVgL//NVVI9EA' + 'C6F7zZmRl0LhsHX6DfiCI9dwInoPw3z8XSB7Wz0L2sctdkoSvBoL+W4VTP6AziEL4Ou2' + 'zJsDEjEbow9xlK3210vScAr4fOsjvr5EhH52rCCaziWUkqdTuc+LkQCJtwYZVLtw3Hcj' + 'Lzo7SKwHT6N4QiW8BDv8BO/8SZETk/+WCaogr+r/hCMZ83IlAAAAABJRU5ErkJggg=="' + '), auto'
+var Styles = exports.Styles = {
+  IMAGE: {
+    position: 'relative',
+    width: '100%'
+  },
+  BUTTON: {
+    backgroundColor: 'transparent',
+    border: 'none',
+    margin: '0 20px',
+    padding: 0
+  },
+  BAR: {
+    backgroundColor: '#323232',
+    height: '30px',
+    textAlign: 'center',
+    lineHeight: '30px',
+    margin: 'auto',
+    width: '100%'
+  },
+  PAGE_VIEW: {
+    color: '#fff'
+  },
+  ARROW_BUTTON: {
+    backgroundColor: 'transparent',
+    height: '15px'
+  },
+  PREV_ON_CONTENT: {
+    display: 'block',
+    width: '40%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    cursor: 'url(' + '"data:image/png;base64,' + 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/' + 'AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYREQ4Xdp3G0wAAAZ9JREFUWMPt' + '1z1rFFEUBuBnhEAaC1FBC1OlVKzFjyqNKY0oqGCddAHzAwS7/AELOwvBwlRpNCAhENME' + 'C7UTFFc0xKRJMEQxXpsTWMad3ZnZ3WyzLxwuc+/ce957PmcYYojqOIYZrGIbn3D3KAk8' + 'RcrJAa4dhfLLoXAPd1JKCQ9j7i2yfhOYC2WPUxPwJeZv1/FnHfzNPT+KcR6n+mmBybjp' + '+5QDlmPtZRcXM44F7LQItLzczBE4i++xNl9X+Y8Sig/lQwsrXMV+E4nRKgQWYuMrnEs1' + 'gSn8bkP8K663IrAbL4ylLhGWeNOGSONQaXPe7uB43L7Rq6jNssLSkOXTcCnGJ1mWjQ2i' + 'xo9jq53varqjSP4rRB9xKYJxtwXBtUF1v4mitOuFBcpgFJux6VY/XVCE/Wg28K0fHxdl' + '8DnGi4OKg6kw2xbO1HTBlZDKLoAXYf6TONFNXerGCqvB/F6HG9/H86j5fzqV4ip4EJs3' + 'cKNJ4QVMYxG/SnTRRlEzKpOOrzscfoAVzOI8RnodjCNx+Dp+RgN7h2dh+tPDv5YhquIf' + 'vGpAec8aptcAAAAASUVORK5CYII="' + '), auto'
+  },
+  NEXT_ON_CONTENT: {
+    display: 'block',
+    width: '40%',
+    height: '100%',
+    top: 0,
+    right: 0,
+    position: 'absolute',
+    cursor: 'url(' + '"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0A' + 'AAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYRE' + 'Q4zSp4iAgAAAapJREFUWMPt179rFEEUB/DPhUistFCLNGksFSxFURurpBNEMRZpFWwE/' + 'wHr+A+IjdgognZpLo0/QKy0UEklERMNQQXxMCDcMRa+lWPZ29xubq+6Lwyz+2bffL9v5' + 's08lgkmqI+rWMcPvMJ1TI2L/Bx6SLn2YBzkLbwNwjsppYRF7ITtVNMCLgfRVuoD7ob9V' + 'pXJqu7ZYSzH8+3cWK/pyKfQjiifpxzwPsbmmxKwnC09ZnPkFwsSMt9+4SmOViXe30e+g' + 'zMF0X8YQkDWvg0SsYDNEsc/WEg1gTmsxlxPigRslhC/wOm0R4SIbDv+n+kMqUjVP78RX' + 'SCt1hw+h4CDxnl1Bvm9eG0XBlvUai51WS5970/CplbgdYEtO4Yn8bHpFVgL//NVVI9EA' + 'C6F7zZmRl0LhsHX6DfiCI9dwInoPw3z8XSB7Wz0L2sctdkoSvBoL+W4VTP6AziEL4Ou2' + 'zJsDEjEbow9xlK3210vScAr4fOsjvr5EhH52rCCaziWUkqdTuc+LkQCJtwYZVLtw3Hcj' + 'Lzo7SKwHT6N4QiW8BDv8BO/8SZETk/+WCaogr+r/hCMZ83IlAAAAABJRU5ErkJggg=="' + '), auto'
+  }
 };
 
 /***/ }),
