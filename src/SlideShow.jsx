@@ -25,12 +25,16 @@ type Props = {
  * @property {number} index
  * @property {number} progress
  * @property {number} timestamp
+ * @property {number} preview
+ * @property {number} previewIndex
  */
 type State = {
   src: string,
   index: number,
   progress: number,
   timestamp: number,
+  preview: number,
+  previewIndex: number,
 };
 
 /**
@@ -58,11 +62,15 @@ export default class SlideShow extends React.Component {
       timestamp = Math.floor(new Date().getTime() / 1000);
     }
 
+    this.style = Object.assign({}, styles.ROOT, this.props.style);
+
     this.state = {
       src: '',
       index: 0,
       progress: 0,
       timestamp: timestamp,
+      preview: 0,
+      previewIndex: 0,
     };
   }
 
@@ -85,6 +93,8 @@ export default class SlideShow extends React.Component {
       src: images[0],
       index: 0,
       progress: progress,
+      preview: 0,
+      previewIndex: 0,
     });
   }
 
@@ -147,6 +157,34 @@ export default class SlideShow extends React.Component {
     const barWidth = document.getElementsByClassName('progressBar')[0]
       .offsetWidth;
     const progressWidth = e.clientX;
+    const nextIndex = this.calcProgressIndex(barWidth, progressWidth);
+    const nextProgress = this.calcProgress(nextIndex + 1);
+    const nextSrc = this.props.src[nextIndex];
+    this.setState({
+      src: nextSrc,
+      index: nextIndex,
+      progress: nextProgress,
+    });
+  };
+
+  onMouseMoveProgressBar = (e: MouseEvent) => {
+    const barWidth = document.getElementsByClassName('progressBar')[0]
+      .offsetWidth;
+    const progressWidth = e.clientX;
+    const nextIndex = this.calcProgressIndex(barWidth, progressWidth);
+    this.setState({
+      preview: 1,
+      previewIndex: nextIndex,
+    });
+  };
+
+  onMouseLeaveProgressBar = (e: MouseEvent) => {
+    this.setState({
+      preview: 0,
+    });
+  };
+
+  calcProgressIndex = (barWidth: number, progressWidth: number): number => {
     const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.src.length; i++) {
@@ -155,13 +193,7 @@ export default class SlideShow extends React.Component {
         nextIndex = i;
       }
     }
-    const nextProgress = this.calcProgress(nextIndex + 1);
-    const nextSrc = this.props.src[nextIndex];
-    this.setState({
-      src: nextSrc,
-      index: nextIndex,
-      progress: nextProgress,
-    });
+    return nextIndex;
   };
 
   /**
@@ -193,7 +225,7 @@ export default class SlideShow extends React.Component {
     }
 
     return (
-      <div style={this.props.style}>
+      <div style={this.style}>
         <div style={styles.BAR} />
         <div>
           <div style={styles.IMAGE}>
@@ -210,6 +242,7 @@ export default class SlideShow extends React.Component {
             />
           </div>
         </div>
+        {this._buildPreview()}
         <div
           className="progressBar"
           style={{
@@ -220,6 +253,8 @@ export default class SlideShow extends React.Component {
             width: '100%',
           }}
           onClick={this.onClickProgressBar}
+          onMouseMove={this.onMouseMoveProgressBar}
+          onMouseLeave={this.onMouseLeaveProgressBar}
         >
           <div
             className="progress"
@@ -254,6 +289,39 @@ export default class SlideShow extends React.Component {
       </div>
     );
   }
+
+  /**
+   *
+   * @returns {?XML}
+   * @private
+   */
+  _buildPreview = () => {
+    if (!this.props.src || this.props.src.length === 0) {
+      return null;
+    }
+
+    let preview = this.props.src.map((img, index) => {
+      const display = index === this.state.previewIndex ? 'inline' : 'none';
+      return (
+        <img
+          className={`preview-${index}`}
+          style={{display: display, width: 200}}
+          src={img}
+        />
+      );
+    });
+    const STYLE = Object.assign({}, styles.PREVIEW, {
+      opacity: this.state.preview,
+    });
+    return (
+      <div style={STYLE}>
+        {preview}
+        <p style={{margin: 0, textAlign: 'center', fontSize: 4}}>
+          {`${this.state.previewIndex + 1} / ${this.props.src.length}`}
+        </p>
+      </div>
+    );
+  };
 }
 
 SlideShow.defaultProps = {

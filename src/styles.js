@@ -1,4 +1,7 @@
 export const Styles = {
+  ROOT: {
+    position: 'relative',
+  },
   IMAGE: {
     position: 'relative',
     width: '100%',
@@ -27,7 +30,7 @@ export const Styles = {
   PREV_ON_CONTENT: {
     display: 'block',
     width: '40%',
-    height: '100%',
+    height: '95%',
     top: 0,
     left: 0,
     position: 'absolute',
@@ -50,7 +53,7 @@ export const Styles = {
   NEXT_ON_CONTENT: {
     display: 'block',
     width: '40%',
-    height: '100%',
+    height: '95%',
     top: 0,
     right: 0,
     position: 'absolute',
@@ -68,5 +71,17 @@ export const Styles = {
         'zJsDEjEbow9xlK3210vScAr4fOsjvr5EhH52rCCaziWUkqdTuc+LkQCJtwYZVLtw3Hcj' +
         'Lzo7SKwHT6N4QiW8BDv8BO/8SZETk/+WCaogr+r/hCMZ83IlAAAAABJRU5ErkJggg=="' +
         '), auto',
+  },
+  PREVIEW: {
+    position: 'absolute',
+    zIndex: 1,
+    bottom: 50,
+    opacity: 0,
+    left: '50%',
+    marginLeft: -100,
+    backgroundColor: '#323232',
+    color: '#fff',
+    border: '3px solid #323232',
+    borderRadius: '3px',
   },
 };

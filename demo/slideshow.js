@@ -196,6 +196,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @property {number} index
  * @property {number} progress
  * @property {number} timestamp
+ * @property {number} preview
+ * @property {number} previewIndex
  */
 var SlideShow = function (_React$Component) {
   _inherits(SlideShow, _React$Component);
@@ -255,6 +257,33 @@ var SlideShow = function (_React$Component) {
     _this.onClickProgressBar = function (e) {
       var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
+      var nextIndex = _this.calcProgressIndex(barWidth, progressWidth);
+      var nextProgress = _this.calcProgress(nextIndex + 1);
+      var nextSrc = _this.props.src[nextIndex];
+      _this.setState({
+        src: nextSrc,
+        index: nextIndex,
+        progress: nextProgress
+      });
+    };
+
+    _this.onMouseMoveProgressBar = function (e) {
+      var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
+      var progressWidth = e.clientX;
+      var nextIndex = _this.calcProgressIndex(barWidth, progressWidth);
+      _this.setState({
+        preview: 1,
+        previewIndex: nextIndex
+      });
+    };
+
+    _this.onMouseLeaveProgressBar = function (e) {
+      _this.setState({
+        preview: 0
+      });
+    };
+
+    _this.calcProgressIndex = function (barWidth, progressWidth) {
       var clickPosition = Math.floor(progressWidth / barWidth * 100);
       var nextIndex = 0;
       for (var i = 0; i < _this.props.src.length; i++) {
@@ -263,13 +292,7 @@ var SlideShow = function (_React$Component) {
           nextIndex = i;
         }
       }
-      var nextProgress = _this.calcProgress(nextIndex + 1);
-      var nextSrc = _this.props.src[nextIndex];
-      _this.setState({
-        src: nextSrc,
-        index: nextIndex,
-        progress: nextProgress
-      });
+      return nextIndex;
     };
 
     _this.calcProgress = function (page) {
@@ -285,16 +308,48 @@ var SlideShow = function (_React$Component) {
       return arr === undefined || arr === null || arr.length === 0;
     };
 
+    _this._buildPreview = function () {
+      if (!_this.props.src || _this.props.src.length === 0) {
+        return null;
+      }
+
+      var preview = _this.props.src.map(function (img, index) {
+        var display = index === _this.state.previewIndex ? 'inline' : 'none';
+        return _react2.default.createElement('img', {
+          className: 'preview-' + index,
+          style: { display: display, width: 200 },
+          src: img
+        });
+      });
+      var STYLE = Object.assign({}, _Styles.Styles.PREVIEW, {
+        opacity: _this.state.preview
+      });
+      return _react2.default.createElement(
+        'div',
+        { style: STYLE },
+        preview,
+        _react2.default.createElement(
+          'p',
+          { style: { margin: 0, textAlign: 'center', fontSize: 4 } },
+          _this.state.previewIndex + 1 + ' / ' + _this.props.src.length
+        )
+      );
+    };
+
     var timestamp = 0;
     if (props.withTimestamp === true) {
       timestamp = Math.floor(new Date().getTime() / 1000);
     }
 
+    _this.style = Object.assign({}, _Styles.Styles.ROOT, _this.props.style);
+
     _this.state = {
       src: '',
       index: 0,
       progress: 0,
-      timestamp: timestamp
+      timestamp: timestamp,
+      preview: 0,
+      previewIndex: 0
     };
     return _this;
   }
@@ -321,7 +376,9 @@ var SlideShow = function (_React$Component) {
       this.setState({
         src: images[0],
         index: 0,
-        progress: progress
+        progress: progress,
+        preview: 0,
+        previewIndex: 0
       });
     }
 
@@ -366,7 +423,7 @@ var SlideShow = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { style: this.props.style },
+        { style: this.style },
         _react2.default.createElement('div', { style: _Styles.Styles.BAR }),
         _react2.default.createElement(
           'div',
@@ -387,6 +444,7 @@ var SlideShow = function (_React$Component) {
             })
           )
         ),
+        this._buildPreview(),
         _react2.default.createElement(
           'div',
           {
@@ -398,7 +456,9 @@ var SlideShow = function (_React$Component) {
               position: 'relative',
               width: '100%'
             },
-            onClick: this.onClickProgressBar
+            onClick: this.onClickProgressBar,
+            onMouseMove: this.onMouseMoveProgressBar,
+            onMouseLeave: this.onMouseLeaveProgressBar
           },
           _react2.default.createElement('div', {
             className: 'progress',
@@ -438,6 +498,13 @@ var SlideShow = function (_React$Component) {
         )
       );
     }
+
+    /**
+     *
+     * @returns {?XML}
+     * @private
+     */
+
   }]);
 
   return SlideShow;
@@ -491,6 +558,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var Styles = exports.Styles = {
+  ROOT: {
+    position: 'relative'
+  },
   IMAGE: {
     position: 'relative',
     width: '100%'
@@ -519,7 +589,7 @@ var Styles = exports.Styles = {
   PREV_ON_CONTENT: {
     display: 'block',
     width: '40%',
-    height: '100%',
+    height: '95%',
     top: 0,
     left: 0,
     position: 'absolute',
@@ -528,11 +598,23 @@ var Styles = exports.Styles = {
   NEXT_ON_CONTENT: {
     display: 'block',
     width: '40%',
-    height: '100%',
+    height: '95%',
     top: 0,
     right: 0,
     position: 'absolute',
     cursor: 'url(' + '"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0A' + 'AAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYRE' + 'Q4zSp4iAgAAAapJREFUWMPt179rFEEUB/DPhUistFCLNGksFSxFURurpBNEMRZpFWwE/' + 'wHr+A+IjdgognZpLo0/QKy0UEklERMNQQXxMCDcMRa+lWPZ29xubq+6Lwyz+2bffL9v5' + 's08lgkmqI+rWMcPvMJ1TI2L/Bx6SLn2YBzkLbwNwjsppYRF7ITtVNMCLgfRVuoD7ob9V' + 'pXJqu7ZYSzH8+3cWK/pyKfQjiifpxzwPsbmmxKwnC09ZnPkFwsSMt9+4SmOViXe30e+g' + 'zMF0X8YQkDWvg0SsYDNEsc/WEg1gTmsxlxPigRslhC/wOm0R4SIbDv+n+kMqUjVP78RX' + 'SCt1hw+h4CDxnl1Bvm9eG0XBlvUai51WS5970/CplbgdYEtO4Yn8bHpFVgL//NVVI9EA' + 'C6F7zZmRl0LhsHX6DfiCI9dwInoPw3z8XSB7Wz0L2sctdkoSvBoL+W4VTP6AziEL4Ou2' + 'zJsDEjEbow9xlK3210vScAr4fOsjvr5EhH52rCCaziWUkqdTuc+LkQCJtwYZVLtw3Hcj' + 'Lzo7SKwHT6N4QiW8BDv8BO/8SZETk/+WCaogr+r/hCMZ83IlAAAAABJRU5ErkJggg=="' + '), auto'
+  },
+  PREVIEW: {
+    position: 'absolute',
+    zIndex: 1,
+    bottom: 50,
+    opacity: 0,
+    left: '50%',
+    marginLeft: -100,
+    backgroundColor: '#323232',
+    color: '#fff',
+    border: '3px solid #323232',
+    borderRadius: '3px'
   }
 };
 
