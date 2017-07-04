@@ -130,8 +130,11 @@ var App = function (_React$Component) {
         null,
         _react2.default.createElement(_SlideShow2.default, {
           style: { width: 400 },
-          src: ['./img/example1.png', './img/example2.png', './img/example3.png'],
-          withTimestamp: true
+          images: ['./img/example1.png', './img/example2.png', './img/example3.png'],
+          withTimestamp: true,
+          pageWillUpdate: function pageWillUpdate(index, image) {
+            console.log('Page Update! index: ' + index + ', image: ' + image);
+          }
         })
       );
     }
@@ -187,6 +190,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @property {Node} prevIcon,
  * @property {Node} nextIcon
  * @property {boolean} withTimestamp
+ * @property {function} pageWillUpdate
  */
 
 
@@ -213,7 +217,7 @@ var SlideShow = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SlideShow.__proto__ || Object.getPrototypeOf(SlideShow)).call(this, props));
 
     _this.onClickPrevButton = function () {
-      if (_this.isEmptyArray(_this.props.src)) {
+      if (_this.isEmptyArray(_this.props.images)) {
         return;
       }
 
@@ -222,49 +226,26 @@ var SlideShow = function (_React$Component) {
       }
 
       var nextIndex = _this.state.index - 1;
-      var nextProgress = _this.calcProgress(nextIndex + 1);
-
-      var nextState = {
-        src: _this.props.src[nextIndex],
-        index: nextIndex,
-        progress: nextProgress
-      };
-      _this.setState(nextState);
+      _this.updatePageState(nextIndex);
     };
 
     _this.onClickNextButton = function () {
-      if (!_this.props.src) {
+      if (!_this.props.images) {
         return;
       }
 
-      if (_this.state.index === _this.props.src.length - 1) {
+      if (_this.state.index === _this.props.images.length - 1) {
         return;
       }
       var nextIndex = _this.state.index + 1;
-      var nextProgress = _this.calcProgress(nextIndex + 1);
-      if (nextProgress > 100) {
-        nextProgress = 100;
-      }
-
-      var nextState = {
-        src: _this.props.src[nextIndex],
-        index: nextIndex,
-        progress: nextProgress
-      };
-      _this.setState(nextState);
+      _this.updatePageState(nextIndex);
     };
 
     _this.onClickProgressBar = function (e) {
       var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
       var nextIndex = _this.calcProgressIndex(barWidth, progressWidth);
-      var nextProgress = _this.calcProgress(nextIndex + 1);
-      var nextSrc = _this.props.src[nextIndex];
-      _this.setState({
-        src: nextSrc,
-        index: nextIndex,
-        progress: nextProgress
-      });
+      _this.updatePageState(nextIndex);
     };
 
     _this.onMouseMoveProgressBar = function (e) {
@@ -286,7 +267,7 @@ var SlideShow = function (_React$Component) {
     _this.calcProgressIndex = function (barWidth, progressWidth) {
       var clickPosition = Math.floor(progressWidth / barWidth * 100);
       var nextIndex = 0;
-      for (var i = 0; i < _this.props.src.length; i++) {
+      for (var i = 0; i < _this.props.images.length; i++) {
         var checkWidth = _this.calcProgress(i);
         if (clickPosition >= checkWidth) {
           nextIndex = i;
@@ -296,7 +277,7 @@ var SlideShow = function (_React$Component) {
     };
 
     _this.calcProgress = function (page) {
-      var base = 100 / _this.props.src.length;
+      var base = 100 / _this.props.images.length;
       var progress = Math.ceil(base * page);
       if (progress > 100) {
         return 100;
@@ -308,12 +289,23 @@ var SlideShow = function (_React$Component) {
       return arr === undefined || arr === null || arr.length === 0;
     };
 
-    _this._buildPreview = function () {
-      if (!_this.props.src || _this.props.src.length === 0) {
+    _this.updatePageState = function (index) {
+      var progress = _this.calcProgress(index + 1);
+      var image = _this.props.images[index];
+      _this.setState({
+        src: image,
+        index: index,
+        progress: progress
+      });
+      _this.props.pageWillUpdate(index, image);
+    };
+
+    _this._renderPreview = function () {
+      if (!_this.props.images || _this.props.images.length === 0) {
         return null;
       }
 
-      var preview = _this.props.src.map(function (img, index) {
+      var preview = _this.props.images.map(function (img, index) {
         var display = index === _this.state.previewIndex ? 'inline' : 'none';
         return _react2.default.createElement('img', {
           className: 'preview-' + index,
@@ -331,7 +323,7 @@ var SlideShow = function (_React$Component) {
         _react2.default.createElement(
           'p',
           { style: { margin: 0, textAlign: 'center', fontSize: 4 } },
-          _this.state.previewIndex + 1 + ' / ' + _this.props.src.length
+          _this.state.previewIndex + 1 + ' / ' + _this.props.images.length
         )
       );
     };
@@ -364,8 +356,8 @@ var SlideShow = function (_React$Component) {
   _createClass(SlideShow, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var images = this.props.src;
-      if (this.isEmptyArray(this.props.src)) {
+      var images = this.props.images;
+      if (this.isEmptyArray(this.props.images)) {
         return;
       }
       var progress = Math.ceil(100 / images.length);
@@ -444,7 +436,7 @@ var SlideShow = function (_React$Component) {
             })
           )
         ),
-        this._buildPreview(),
+        this._renderPreview(),
         _react2.default.createElement(
           'div',
           {
@@ -484,7 +476,7 @@ var SlideShow = function (_React$Component) {
           _react2.default.createElement(
             'span',
             { style: _Styles.Styles.PAGE_VIEW },
-            this.props.src ? this.state.index + 1 + ' / ' + this.props.src.length : null
+            this.props.images ? this.state.index + 1 + ' / ' + this.props.images.length : null
           ),
           _react2.default.createElement(
             'button',
@@ -500,7 +492,7 @@ var SlideShow = function (_React$Component) {
     }
 
     /**
-     *
+     * preview renderer
      * @returns {?XML}
      * @private
      */
@@ -516,7 +508,7 @@ exports.default = SlideShow;
 SlideShow.defaultProps = {
   arrowButtonStyle: _Styles.Styles.ARROW_BUTTON,
   style: {},
-  src: [],
+  images: [],
   prevIcon: _react2.default.createElement(
     'svg',
     { style: _Styles.Styles.ARROW_BUTTON, viewBox: '0 0 8 8' },
@@ -535,16 +527,20 @@ SlideShow.defaultProps = {
       transform: 'translate(0 1)'
     })
   ),
-  withTimestamp: false
+  withTimestamp: false,
+  pageWillUpdate: function pageWillUpdate(index, image) {
+    return;
+  }
 };
 
 SlideShow.PropTypes = {
   arrowButtonStyle: _propTypes2.default.object,
   style: _propTypes2.default.object,
-  src: _propTypes2.default.array,
+  images: _propTypes2.default.array,
   prevIcon: _propTypes2.default.node,
   nextIcon: _propTypes2.default.node,
-  withTimestamp: _propTypes2.default.bool
+  withTimestamp: _propTypes2.default.bool,
+  pageWillUpdate: _propTypes2.default.func
 };
 
 /***/ }),
