@@ -42,9 +42,9 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
-    "build:demo": "NODE_ENV=development webpack",
-    "build:dll": "webpack --config webpack.dll.config.js",
+    "build": "npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
+    "build:demo": "webpack",
+    "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
     "build:all": "npm run lint && npm run typecheck && npm test && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
     "start": "webpack-dev-server --hot",

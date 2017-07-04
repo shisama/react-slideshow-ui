@@ -292,11 +292,13 @@ export default class SlideShow extends React.Component {
 
     let preview = this.props.images.map((img, index) => {
       const display = index === this.state.previewIndex ? 'inline' : 'none';
+      const key = `preview-${index}`;
       return (
         <img
-          className={`preview-${index}`}
+          className={key}
           style={{display: display, width: 200}}
           src={img}
+          key={key}
         />
       );
     });
