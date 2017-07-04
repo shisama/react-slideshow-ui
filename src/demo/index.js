@@ -15,12 +15,15 @@ class App extends React.Component {
       <div>
         <SlideShow
           style={{width: 400}}
-          src={[
+          images={[
             './img/example1.png',
             './img/example2.png',
             './img/example3.png',
           ]}
           withTimestamp={true}
+          pageWillUpdate={(index, image) => {
+            console.log(`Page Update! index: ${index}, image: ${image}`);
+          }}
         />
       </div>
     );

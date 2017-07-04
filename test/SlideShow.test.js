@@ -7,7 +7,7 @@ import SlideShow from '../src/SlideShow';
 test("props style", t => {
   const wrapper = shallow(
     <SlideShow
-      src={[
+      images={[
         "static/test/page1",
         "static/test/page2",
         "static/test/page3"
@@ -21,7 +21,7 @@ test("props style", t => {
 test("props src", t => {
   const wrapper = shallow(
     <SlideShow
-      src={[
+      images={[
         "static/test/page1",
         "static/test/page2",
         "static/test/page3"
@@ -39,7 +39,7 @@ test("props src", t => {
 test("props prevIcon", t => {
   const wrapper = shallow(
     <SlideShow
-      src={["static/test/page1"]}
+      images={["static/test/page1"]}
       prevIcon={"Left"}
     />
   );
@@ -48,7 +48,7 @@ test("props prevIcon", t => {
 
 test("props nextIcon", t => {
   const wrapper = shallow(
-    <SlideShow src={["static/test/page1"]} nextIcon="Right"/>
+    <SlideShow images={["static/test/page1"]} nextIcon="Right"/>
   );
   t.is(wrapper.find(".nextButton").text(), "Right");
 });
@@ -56,7 +56,7 @@ test("props nextIcon", t => {
 test("onclick next page event", t => {
   const wrapper = shallow(
     <SlideShow
-      src={[
+      images={[
         "static/test/page1",
         "static/test/page2",
         "static/test/page3"
@@ -86,7 +86,7 @@ test("onclick next page event", t => {
 test("onclick prev page event", t => {
   const wrapper = shallow(
     <SlideShow
-      src={[
+      images={[
         "static/test/page1",
         "static/test/page2",
         "static/test/page3"
@@ -131,7 +131,7 @@ test("componentWillMount props.src is undefined", t => {
 
 test("componentWillMount props.src is empty", t => {
   const wrapper = shallow(
-    <SlideShow src={[]}/>
+    <SlideShow images={[]}/>
   );
   t.is(wrapper.find(".content").props().src, "");
   t.is(wrapper.state().src, "");
@@ -139,7 +139,7 @@ test("componentWillMount props.src is empty", t => {
 
 test("componentWillMount props.src is null", t => {
   const wrapper = shallow(
-    <SlideShow src={null}/>
+    <SlideShow images={null}/>
   );
   t.is(wrapper.find(".content").props().src, "");
   t.is(wrapper.state().src, "");
@@ -153,13 +153,14 @@ test("props withTimestamp", t => {
 
   const wrapper = shallow(
     <SlideShow
-      src={[
+      images={[
         "static/test/page1",
         "static/test/page2",
         "static/test/page3"
       ]}
       style={{width: 100}}
       withTimestamp={true}
+      pageWillUpdate={(index, image) => {console.log(`index: ${index}, image: ${image}`)}}
     />
   );
   t.truthy(wrapper);

@@ -10,13 +10,15 @@ import {Styles as styles} from './Styles';
  * @property {Node} prevIcon,
  * @property {Node} nextIcon
  * @property {boolean} withTimestamp
+ * @property {function} pageWillUpdate
  */
 type Props = {
   style: Object,
-  src: Array<string>,
+  images: Array<string>,
   prevIcon: Node,
   nextIcon: Node,
   withTimestamp: boolean,
+  pageWillUpdate: (index: number, image: string) => void,
 };
 
 /**
@@ -80,8 +82,8 @@ export default class SlideShow extends React.Component {
    * updates image src, page, and progress.
    */
   componentWillMount() {
-    const images: Array<string> = this.props.src;
-    if (this.isEmptyArray(this.props.src)) {
+    const images: Array<string> = this.props.images;
+    if (this.isEmptyArray(this.props.images)) {
       return;
     }
     let progress = Math.ceil(100 / images.length);
@@ -103,7 +105,7 @@ export default class SlideShow extends React.Component {
    * updates image src and page to move previous page.
    */
   onClickPrevButton = () => {
-    if (this.isEmptyArray(this.props.src)) {
+    if (this.isEmptyArray(this.props.images)) {
       return;
     }
 
@@ -112,14 +114,7 @@ export default class SlideShow extends React.Component {
     }
 
     const nextIndex = this.state.index - 1;
-    const nextProgress = this.calcProgress(nextIndex + 1);
-
-    const nextState = {
-      src: this.props.src[nextIndex],
-      index: nextIndex,
-      progress: nextProgress,
-    };
-    this.setState(nextState);
+    this.updatePageState(nextIndex);
   };
 
   /**
@@ -127,25 +122,15 @@ export default class SlideShow extends React.Component {
    * updates image src and page to move next page.
    */
   onClickNextButton = () => {
-    if (!this.props.src) {
+    if (!this.props.images) {
       return;
     }
 
-    if (this.state.index === this.props.src.length - 1) {
+    if (this.state.index === this.props.images.length - 1) {
       return;
     }
     const nextIndex = this.state.index + 1;
-    let nextProgress = this.calcProgress(nextIndex + 1);
-    if (nextProgress > 100) {
-      nextProgress = 100;
-    }
-
-    const nextState = {
-      src: this.props.src[nextIndex],
-      index: nextIndex,
-      progress: nextProgress,
-    };
-    this.setState(nextState);
+    this.updatePageState(nextIndex);
   };
 
   /**
@@ -158,13 +143,7 @@ export default class SlideShow extends React.Component {
       .offsetWidth;
     const progressWidth = e.clientX;
     const nextIndex = this.calcProgressIndex(barWidth, progressWidth);
-    const nextProgress = this.calcProgress(nextIndex + 1);
-    const nextSrc = this.props.src[nextIndex];
-    this.setState({
-      src: nextSrc,
-      index: nextIndex,
-      progress: nextProgress,
-    });
+    this.updatePageState(nextIndex);
   };
 
   onMouseMoveProgressBar = (e: MouseEvent) => {
@@ -187,7 +166,7 @@ export default class SlideShow extends React.Component {
   calcProgressIndex = (barWidth: number, progressWidth: number): number => {
     const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
-    for (let i = 0; i < this.props.src.length; i++) {
+    for (let i = 0; i < this.props.images.length; i++) {
       const checkWidth = this.calcProgress(i);
       if (clickPosition >= checkWidth) {
         nextIndex = i;
@@ -202,7 +181,7 @@ export default class SlideShow extends React.Component {
    * @returns {number}
    */
   calcProgress = (page: number): number => {
-    const base = 100 / this.props.src.length;
+    const base = 100 / this.props.images.length;
     let progress = Math.ceil(base * page);
     if (progress > 100) {
       return 100;
@@ -212,6 +191,17 @@ export default class SlideShow extends React.Component {
 
   isEmptyArray = (arr: Array<string>): boolean => {
     return arr === undefined || arr === null || arr.length === 0;
+  };
+
+  updatePageState = (index: number) => {
+    const progress = this.calcProgress(index + 1);
+    const image = this.props.images[index];
+    this.setState({
+      src: image,
+      index: index,
+      progress: progress,
+    });
+    this.props.pageWillUpdate(index, image);
   };
 
   /**
@@ -242,7 +232,7 @@ export default class SlideShow extends React.Component {
             />
           </div>
         </div>
-        {this._buildPreview()}
+        {this._renderPreview()}
         <div
           className="progressBar"
           style={{
@@ -274,8 +264,8 @@ export default class SlideShow extends React.Component {
             {this.props.prevIcon}
           </button>
           <span style={styles.PAGE_VIEW}>
-            {this.props.src
-              ? `${this.state.index + 1} / ${this.props.src.length}`
+            {this.props.images
+              ? `${this.state.index + 1} / ${this.props.images.length}`
               : null}
           </span>
           <button
@@ -291,22 +281,24 @@ export default class SlideShow extends React.Component {
   }
 
   /**
-   *
+   * preview renderer
    * @returns {?XML}
    * @private
    */
-  _buildPreview = () => {
-    if (!this.props.src || this.props.src.length === 0) {
+  _renderPreview = () => {
+    if (!this.props.images || this.props.images.length === 0) {
       return null;
     }
 
-    let preview = this.props.src.map((img, index) => {
+    let preview = this.props.images.map((img, index) => {
       const display = index === this.state.previewIndex ? 'inline' : 'none';
+      const key = `preview-${index}`;
       return (
         <img
-          className={`preview-${index}`}
+          className={key}
           style={{display: display, width: 200}}
           src={img}
+          key={key}
         />
       );
     });
@@ -317,7 +309,7 @@ export default class SlideShow extends React.Component {
       <div style={STYLE}>
         {preview}
         <p style={{margin: 0, textAlign: 'center', fontSize: 4}}>
-          {`${this.state.previewIndex + 1} / ${this.props.src.length}`}
+          {`${this.state.previewIndex + 1} / ${this.props.images.length}`}
         </p>
       </div>
     );
@@ -327,7 +319,7 @@ export default class SlideShow extends React.Component {
 SlideShow.defaultProps = {
   arrowButtonStyle: styles.ARROW_BUTTON,
   style: {},
-  src: [],
+  images: [],
   prevIcon: (
     <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
       <path
@@ -347,13 +339,17 @@ SlideShow.defaultProps = {
     </svg>
   ),
   withTimestamp: false,
+  pageWillUpdate: (index: number, image: string) => {
+    return;
+  },
 };
 
 SlideShow.PropTypes = {
   arrowButtonStyle: PropTypes.object,
   style: PropTypes.object,
-  src: PropTypes.array,
+  images: PropTypes.array,
   prevIcon: PropTypes.node,
   nextIcon: PropTypes.node,
   withTimestamp: PropTypes.bool,
+  pageWillUpdate: PropTypes.func,
 };
