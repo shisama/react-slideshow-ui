@@ -488,6 +488,27 @@ var SlideShow = function (_React$Component) {
               style: _Styles.Styles.BUTTON
             },
             this.props.nextIcon
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'fullscreen', style: { right: 10 } },
+            _react2.default.createElement(
+              'svg',
+              {
+                xmlns: 'http://www.w3.org/2000/svg',
+                viewBox: '0 -256 1792 1792',
+                id: 'fullscreen'
+              },
+              _react2.default.createElement(
+                'g',
+                { transform: 'matrix(1 0 0 -1 144.271 1293.017)', id: 'g2991' },
+                _react2.default.createElement('path', {
+                  d: 'm 755,480 q 0,-13 -10,-23 L 413,125 557,-19 q 19,-19 19,-45 0,-26 -19,-45 -19,-19 -45,-19 H 64 q -26,0 -45,19 -19,19 -19,45 v 448 q 0,26 19,45 19,19 45,19 26,0 45,-19 L 253,285 585,617 q 10,10 23,10 13,0 23,-10 L 745,503 q 10,-10 10,-23 z m 781,864 V 896 q 0,-26 -19,-45 -19,-19 -45,-19 -26,0 -45,19 L 1283,995 951,663 q -10,-10 -23,-10 -13,0 -23,10 L 791,777 q -10,10 -10,23 0,13 10,23 l 332,332 -144,144 q -19,19 -19,45 0,26 19,45 19,19 45,19 h 448 q 26,0 45,-19 19,-19 19,-45 z',
+                  id: 'path2993',
+                  fill: 'currentColor'
+                })
+              )
+            )
           )
         )
       );

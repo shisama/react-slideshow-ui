@@ -15,9 +15,10 @@ export const Styles = {
   BAR: {
     backgroundColor: '#323232',
     height: '30px',
-    textAlign: 'center',
     lineHeight: '30px',
     margin: 'auto',
+    position: 'relative',
+    textAlign: 'center',
     width: '100%',
   },
   PAGE_VIEW: {

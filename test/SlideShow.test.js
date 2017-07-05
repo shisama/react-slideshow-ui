@@ -179,3 +179,15 @@ test("props withTimestamp", t => {
 
   clock.restore();
 });
+
+test("full screen", t => {
+  const wrapper = shallow(
+    <SlideShow
+      images={[
+        "static/test/page1"
+      ]}
+    />
+  );
+  t.truthy(wrapper);
+  wrapper.find(".fullscreen").simulate("click");
+});
