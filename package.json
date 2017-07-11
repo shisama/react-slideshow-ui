@@ -53,7 +53,8 @@
     "test": "nyc ava",
     "typecheck": "flow",
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
-    "lint": "eslint src --ext js,jsx"
+    "lint": "eslint src --ext js,jsx",
+    "prepublish": "npm run build:all"
   },
   "keywords": [
     "react",
