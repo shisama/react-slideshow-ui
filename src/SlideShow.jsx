@@ -176,13 +176,21 @@ export default class SlideShow extends React.Component {
   };
 
   onChangeFullScreen = () => {
-    const targets = document.getElementsByClassName('slideshow-wrapper');
-    switchFullscreen(targets[0], isFullScreen => {
+    const element: Object = document.getElementsByClassName(
+      'slideshow-wrapper',
+    )[0];
+    switchFullscreen(element, isFullScreen => {
       this.setState({isFullScreen: isFullScreen});
       if (isFullScreen) {
         document.addEventListener('keydown', this.keydownEvent);
+        if (document.mozFullScreenEnabled) {
+          element.style.height = '70%';
+          element.style.width = '70%';
+          element.style.margin = 'auto';
+        }
       } else {
         document.removeEventListener('keydown', this.keydownEvent);
+        element.style = {};
       }
     });
   };

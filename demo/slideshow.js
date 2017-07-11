@@ -278,13 +278,19 @@ var SlideShow = function (_React$Component) {
     };
 
     _this.onChangeFullScreen = function () {
-      var targets = document.getElementsByClassName('slideshow-wrapper');
-      (0, _fullscreen2.default)(targets[0], function (isFullScreen) {
+      var element = document.getElementsByClassName('slideshow-wrapper')[0];
+      (0, _fullscreen2.default)(element, function (isFullScreen) {
         _this.setState({ isFullScreen: isFullScreen });
         if (isFullScreen) {
           document.addEventListener('keydown', _this.keydownEvent);
+          if (document.mozFullScreenEnabled) {
+            element.style.height = '70%';
+            element.style.width = '70%';
+            element.style.margin = 'auto';
+          }
         } else {
           document.removeEventListener('keydown', _this.keydownEvent);
+          element.style = {};
         }
       });
     };
@@ -774,9 +780,6 @@ function enterFullscreen(element) {
     element.msRequestFullscreen();
   } else if (element.mozRequestFullScreen) {
     element.parentElement.mozRequestFullScreen();
-    element.style.height = '70%';
-    element.style.width = '70%';
-    element.style.margin = 'auto';
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
   }
@@ -793,7 +796,6 @@ function exitFullscreen(element) {
     document.msExitFullscreen();
   } else if (document.mozCancelFullScreen) {
     document.mozCancelFullScreen();
-    element.style = {};
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
