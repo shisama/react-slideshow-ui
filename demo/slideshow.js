@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +91,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(11);
+var _reactDom = __webpack_require__(12);
 
 var _SlideShow = __webpack_require__(3);
 
@@ -162,11 +162,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(6);
+var _propTypes = __webpack_require__(7);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Styles = __webpack_require__(4);
+
+var _fullscreen = __webpack_require__(5);
+
+var _fullscreen2 = _interopRequireDefault(_fullscreen);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -202,6 +206,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * @property {number} timestamp
  * @property {number} preview
  * @property {number} previewIndex
+ * @property {boolean} isFullScreen
  */
 var SlideShow = function (_React$Component) {
   _inherits(SlideShow, _React$Component);
@@ -244,6 +249,10 @@ var SlideShow = function (_React$Component) {
     _this.onClickProgressBar = function (e) {
       var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
+      if (_this.state.isFullScreen) {
+        var content = document.getElementsByClassName('slideshow-wrapper')[0];
+        progressWidth -= content.offsetLeft;
+      }
       var nextIndex = _this.calcProgressIndex(barWidth, progressWidth);
       _this.updatePageState(nextIndex);
     };
@@ -251,6 +260,10 @@ var SlideShow = function (_React$Component) {
     _this.onMouseMoveProgressBar = function (e) {
       var barWidth = document.getElementsByClassName('progressBar')[0].offsetWidth;
       var progressWidth = e.clientX;
+      if (_this.state.isFullScreen) {
+        var content = document.getElementsByClassName('slideshow-wrapper')[0];
+        progressWidth -= content.offsetLeft;
+      }
       var nextIndex = _this.calcProgressIndex(barWidth, progressWidth);
       _this.setState({
         preview: 1,
@@ -262,6 +275,28 @@ var SlideShow = function (_React$Component) {
       _this.setState({
         preview: 0
       });
+    };
+
+    _this.onChangeFullScreen = function () {
+      var targets = document.getElementsByClassName('slideshow-wrapper');
+      (0, _fullscreen2.default)(targets[0], function (isFullScreen) {
+        _this.setState({ isFullScreen: isFullScreen });
+        if (isFullScreen) {
+          document.addEventListener('keydown', _this.keydownEvent);
+        } else {
+          document.removeEventListener('keydown', _this.keydownEvent);
+        }
+      });
+    };
+
+    _this.keydownEvent = function (e) {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        _this.onClickPrevButton();
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        _this.onClickNextButton();
+      } else if (e.key === 'Escape') {
+        _this.onChangeFullScreen();
+      }
     };
 
     _this.calcProgressIndex = function (barWidth, progressWidth) {
@@ -315,8 +350,10 @@ var SlideShow = function (_React$Component) {
           key: key
         });
       });
+      var bottom = _this.state.isFullScreen ? 180 : _Styles.Styles.PREVIEW.bottom;
       var STYLE = Object.assign({}, _Styles.Styles.PREVIEW, {
-        opacity: _this.state.preview
+        opacity: _this.state.preview,
+        bottom: bottom
       });
       return _react2.default.createElement(
         'div',
@@ -328,6 +365,47 @@ var SlideShow = function (_React$Component) {
           _this.state.previewIndex + 1 + ' / ' + _this.props.images.length
         )
       );
+    };
+
+    _this._renderFullscreenIcon = function () {
+      if (_this.state.isFullScreen) {
+        return _react2.default.createElement(
+          'svg',
+          { id: 'two-arrows', width: '15', height: '15', viewBox: '0 0 612 612' },
+          _react2.default.createElement(
+            'g',
+            null,
+            _react2.default.createElement(
+              'g',
+              { id: '_x36_' },
+              _react2.default.createElement(
+                'g',
+                null,
+                _react2.default.createElement('path', {
+                  d: 'M260.655,351.173c-3.615-4.016-8.721-6.636-14.554-6.655l-164.915-0.229c-10.92-0.019-19.756,8.816-19.737,19.737     c0.019,10.92,12.756,23.198,18.226,28.668l41.711,41.712L0,554.625L57.375,612l119.608-121.979l41.711,41.712     c9.027,9.027,18.188,18.628,29.108,18.646c10.92,0.02,19.756-8.816,19.737-19.736l-0.229-164.915     C267.291,359.895,264.671,354.788,260.655,351.173z M493.119,175.472L612,57.375L554.625,0L436.566,118.556l-42.419-42.687     c-9.181-9.238-18.494-19.068-29.587-19.087c-11.111-0.019-20.081,9.027-20.081,20.196l0.229,168.797     c0,5.967,2.678,11.188,6.771,14.898c3.69,4.112,8.874,6.789,14.803,6.809l167.726,0.229c11.093,0.019,20.082-9.027,20.082-20.196     c-0.02-11.169-12.967-23.753-18.532-29.338L493.119,175.472z',
+                  fill: '#FFFFFF'
+                })
+              )
+            )
+          )
+        );
+      } else {
+        return _react2.default.createElement(
+          'svg',
+          {
+            id: 'fullscreen',
+            width: '15',
+            height: '15',
+            viewBox: '0 0 438.529 438.529'
+          },
+          _react2.default.createElement(
+            'g',
+            { fill: '#fff' },
+            _react2.default.createElement('path', { d: 'M180.156,225.828c-1.903-1.902-4.093-2.854-6.567-2.854c-2.475,0-4.665,0.951-6.567,2.854l-94.787,94.787l-41.112-41.117 c-3.617-3.61-7.895-5.421-12.847-5.421c-4.952,0-9.235,1.811-12.851,5.421c-3.617,3.621-5.424,7.905-5.424,12.854v127.907 c0,4.948,1.807,9.229,5.424,12.847c3.619,3.613,7.902,5.424,12.851,5.424h127.906c4.949,0,9.23-1.811,12.847-5.424 c3.615-3.617,5.424-7.898,5.424-12.847s-1.809-9.233-5.424-12.854l-41.112-41.104l94.787-94.793 c1.902-1.903,2.853-4.086,2.853-6.564c0-2.478-0.953-4.66-2.853-6.57L180.156,225.828z' }),
+            _react2.default.createElement('path', { d: 'M433.11,5.424C429.496,1.807,425.212,0,420.263,0H292.356c-4.948,0-9.227,1.807-12.847,5.424 c-3.614,3.615-5.421,7.898-5.421,12.847s1.807,9.233,5.421,12.847l41.106,41.112l-94.786,94.787 c-1.901,1.906-2.854,4.093-2.854,6.567s0.953,4.665,2.854,6.567l32.552,32.548c1.902,1.903,4.086,2.853,6.563,2.853 s4.661-0.95,6.563-2.853l94.794-94.787l41.104,41.109c3.62,3.616,7.905,5.428,12.854,5.428s9.229-1.812,12.847-5.428 c3.614-3.614,5.421-7.898,5.421-12.847V18.268C438.53,13.315,436.734,9.04,433.11,5.424z' })
+          )
+        );
+      }
     };
 
     var timestamp = 0;
@@ -343,7 +421,8 @@ var SlideShow = function (_React$Component) {
       progress: 0,
       timestamp: timestamp,
       preview: 0,
-      previewIndex: 0
+      previewIndex: 0,
+      isFullScreen: false
     };
     return _this;
   }
@@ -417,77 +496,103 @@ var SlideShow = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { style: this.style },
-        _react2.default.createElement('div', { style: _Styles.Styles.BAR }),
+        { style: this.style, className: 'slideshow' },
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'slideshow-wrapper', style: {} },
           _react2.default.createElement(
             'div',
-            { style: _Styles.Styles.IMAGE },
-            _react2.default.createElement('img', { className: 'content', src: src, style: { width: '100%' } }),
+            null,
+            _react2.default.createElement(
+              'div',
+              { style: _Styles.Styles.IMAGE },
+              _react2.default.createElement('img', { className: 'content', src: src, style: { width: '100%' } }),
+              _react2.default.createElement('div', {
+                className: 'prevOnContent',
+                onClick: this.onClickPrevButton,
+                style: _Styles.Styles.PREV_ON_CONTENT
+              }),
+              _react2.default.createElement('div', {
+                className: 'nextOnContent',
+                onClick: this.onClickNextButton,
+                style: _Styles.Styles.NEXT_ON_CONTENT
+              })
+            )
+          ),
+          this._renderPreview(),
+          _react2.default.createElement(
+            'div',
+            {
+              className: 'progressBar',
+              style: {
+                backgroundColor: '#000',
+                height: 10,
+                marginTop: -6,
+                position: 'relative',
+                width: '100%'
+              },
+              onClick: this.onClickProgressBar,
+              onMouseMove: this.onMouseMoveProgressBar,
+              onMouseLeave: this.onMouseLeaveProgressBar
+            },
             _react2.default.createElement('div', {
-              className: 'prevOnContent',
-              onClick: this.onClickPrevButton,
-              style: _Styles.Styles.PREV_ON_CONTENT
-            }),
-            _react2.default.createElement('div', {
-              className: 'nextOnContent',
-              onClick: this.onClickNextButton,
-              style: _Styles.Styles.NEXT_ON_CONTENT
+              className: 'progress',
+              style: {
+                backgroundColor: '#007bb6',
+                height: '100%',
+                width: this.state.progress + '%'
+              }
             })
-          )
-        ),
-        this._renderPreview(),
-        _react2.default.createElement(
-          'div',
-          {
-            className: 'progressBar',
-            style: {
-              backgroundColor: '#000',
-              height: 10,
-              marginTop: -6,
-              position: 'relative',
-              width: '100%'
-            },
-            onClick: this.onClickProgressBar,
-            onMouseMove: this.onMouseMoveProgressBar,
-            onMouseLeave: this.onMouseLeaveProgressBar
-          },
-          _react2.default.createElement('div', {
-            className: 'progress',
-            style: {
-              backgroundColor: '#007bb6',
-              height: '100%',
-              width: this.state.progress + '%'
-            }
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'bar', style: _Styles.Styles.BAR },
-          _react2.default.createElement(
-            'button',
-            {
-              className: 'prevButton',
-              onClick: this.onClickPrevButton,
-              style: _Styles.Styles.BUTTON
-            },
-            this.props.prevIcon
           ),
           _react2.default.createElement(
-            'span',
-            { style: _Styles.Styles.PAGE_VIEW },
-            this.props.images ? this.state.index + 1 + ' / ' + this.props.images.length : null
-          ),
-          _react2.default.createElement(
-            'button',
-            {
-              className: 'nextButton',
-              onClick: this.onClickNextButton,
-              style: _Styles.Styles.BUTTON
-            },
-            this.props.nextIcon
+            'div',
+            { className: 'bar', style: _Styles.Styles.BAR },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'button',
+                {
+                  className: 'prevButton',
+                  onClick: this.onClickPrevButton,
+                  style: _Styles.Styles.BUTTON
+                },
+                this.props.prevIcon
+              ),
+              _react2.default.createElement(
+                'span',
+                { style: _Styles.Styles.PAGE_VIEW },
+                this.props.images ? this.state.index + 1 + ' / ' + this.props.images.length : null
+              ),
+              _react2.default.createElement(
+                'button',
+                {
+                  className: 'nextButton',
+                  onClick: this.onClickNextButton,
+                  style: _Styles.Styles.BUTTON
+                },
+                this.props.nextIcon
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'button',
+                {
+                  className: 'fullscreen',
+                  style: {
+                    backgroundColor: 'transparent',
+                    borderStyle: 'none',
+                    position: 'absolute',
+                    right: 10,
+                    top: 5
+                  },
+                  onClick: this.onChangeFullScreen
+                },
+                this._renderFullscreenIcon()
+              )
+            )
           )
         )
       );
@@ -572,9 +677,10 @@ var Styles = exports.Styles = {
   BAR: {
     backgroundColor: '#323232',
     height: '30px',
-    textAlign: 'center',
     lineHeight: '30px',
     margin: 'auto',
+    position: 'relative',
+    textAlign: 'center',
     width: '100%'
   },
   PAGE_VIEW: {
@@ -621,6 +727,101 @@ var Styles = exports.Styles = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * switch target DOMElement to fullscreen mode.
+ * @param element {Element} DOMElement that you want to make fullscreen.
+ * @param callback {Function} callback function after calling fullscreen api.
+ */
+function switchFullscreen(element, callback) {
+  if (!isFullscreen()) {
+    enterFullscreen(element);
+    fullScreenChange(function (event) {
+      if (isFullscreen()) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    });
+  } else {
+    exitFullscreen(element);
+  }
+}
+
+/**
+ * check whether fullscreen or not.
+ * @returns {boolean}
+ */
+function isFullscreen() {
+  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * enter fullscreen mode.
+ * @param {Element} element
+ */
+function enterFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.parentElement.mozRequestFullScreen();
+    element.style.height = '70%';
+    element.style.width = '70%';
+    element.style.margin = 'auto';
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+  }
+}
+
+/**
+ * exit fullscreen mode.
+ * @param {Element} element
+ */
+function exitFullscreen(element) {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+    element.style = {};
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+/**
+ * injection function to onfullscreenchange.
+ * @param callback
+ */
+function fullScreenChange(callback) {
+  if (document.fullscreenEnabled) {
+    document.addEventListener('fullscreenchange', callback);
+  } else if (document.mozFullScreenEnabled) {
+    document.onmozfullscreenchange = callback;
+  } else if (document.webkitFullscreenEnabled) {
+    document.addEventListener('webkitfullscreenchange', callback);
+  } else if (document.msFullscreenEnabled) {
+    document.addEventListener('msfullscreenchange', callback);
+  }
+}
+
+exports.default = switchFullscreen;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -632,9 +833,9 @@ var Styles = exports.Styles = {
 
 
 
-var emptyFunction = __webpack_require__(9);
-var invariant = __webpack_require__(7);
-var ReactPropTypesSecret = __webpack_require__(8);
+var emptyFunction = __webpack_require__(10);
+var invariant = __webpack_require__(8);
+var ReactPropTypesSecret = __webpack_require__(9);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -683,7 +884,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -710,46 +911,46 @@ if (undefined !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(10)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(11)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(5)();
+  module.exports = __webpack_require__(6)();
 }
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(1);
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(53);
+module.exports = (__webpack_require__(0))(1);
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(9);
+module.exports = (__webpack_require__(0))(53);
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(98);
+module.exports = (__webpack_require__(0))(9);
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(99);
+module.exports = (__webpack_require__(0))(98);
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(99);
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);
