@@ -17,6 +17,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
+    "browser-env": "^3.1.0",
     "enzyme": "^2.8.2",
     "eslint": "^4.0.0",
     "eslint-closure": "^0.0.1",
@@ -30,6 +31,7 @@
     "flow-remove-types": "^1.2.1",
     "nyc": "^10.3.2",
     "power-assert": "^1.4.2",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.4.4",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
@@ -103,7 +105,8 @@
   "ava": {
     "files": "**/*.test.js",
     "require": [
-      "babel-register"
+      "babel-register",
+      "./test/helpers/setup-browser-env.js"
     ],
     "babel": {
       "presets": [
@@ -123,5 +126,8 @@
         "transform-flow-strip-types"
       ]
     }
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
