@@ -175,7 +175,7 @@ export default class SlideShow extends React.Component {
     });
   };
 
-  onChangeFullScreen = (e: MouseEvent) => {
+  onChangeFullScreen = () => {
     const targets = document.getElementsByClassName('slideshow-wrapper');
     switchFullscreen(targets[0], isFullScreen => {
       this.setState({isFullScreen: isFullScreen});
@@ -187,13 +187,13 @@ export default class SlideShow extends React.Component {
     });
   };
 
-  keydownEvent = e => {
+  keydownEvent = (e: Event) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       this.onClickPrevButton();
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       this.onClickNextButton();
     } else if (e.key === 'Escape') {
-      this.onChangeFullScreen(null);
+      this.onChangeFullScreen();
     }
   };
 

@@ -277,25 +277,26 @@ var SlideShow = function (_React$Component) {
       });
     };
 
-    _this.onChangeFullScreen = function (e) {
+    _this.onChangeFullScreen = function () {
       var targets = document.getElementsByClassName('slideshow-wrapper');
       (0, _fullscreen2.default)(targets[0], function (isFullScreen) {
         _this.setState({ isFullScreen: isFullScreen });
-
-        var keydownEvent = function keydownEvent(e) {
-          if (e.keyCode === 37 || e.keyCode === 38) {
-            _this.onClickPrevButton();
-          } else if (e.keyCode === 39 || e.keyCode === 40) {
-            _this.onClickNextButton();
-          }
-        };
-
         if (isFullScreen) {
-          document.addEventListener('keydown', keydownEvent, false);
+          document.addEventListener('keydown', _this.keydownEvent);
         } else {
-          document.removeEventListener('keydown', keydownEvent, false);
+          document.removeEventListener('keydown', _this.keydownEvent);
         }
       });
+    };
+
+    _this.keydownEvent = function (e) {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        _this.onClickPrevButton();
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        _this.onClickNextButton();
+      } else if (e.key === 'Escape') {
+        _this.onChangeFullScreen();
+      }
     };
 
     _this.calcProgressIndex = function (barWidth, progressWidth) {
@@ -733,32 +734,84 @@ Object.defineProperty(exports, "__esModule", {
 });
 /**
  * switch target DOMElement to fullscreen mode.
- * @param target {Element} DOMElement that you want to make fullscreen.
+ * @param element {Element} DOMElement that you want to make fullscreen.
  * @param callback {Function} callback function after calling fullscreen api.
  */
-function switchFullscreen(target, callback) {
-  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-    if (target.requestFullscreen) {
-      target.requestFullscreen();
-    } else if (target.msRequestFullscreen) {
-      target.msRequestFullscreen();
-    } else if (target.mozRequestFullScreen) {
-      target.mozRequestFullScreen();
-    } else if (target.webkitRequestFullscreen) {
-      target.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-    }
-    callback(true);
+function switchFullscreen(element, callback) {
+  if (!isFullscreen()) {
+    enterFullscreen(element);
+    fullScreenChange(function (event) {
+      if (isFullscreen()) {
+        callback(true);
+      } else {
+        callback(false);
+      }
+    });
   } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
-    callback(false);
+    exitFullscreen(element);
+  }
+}
+
+/**
+ * check whether fullscreen or not.
+ * @returns {boolean}
+ */
+function isFullscreen() {
+  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * enter fullscreen mode.
+ * @param {Element} element
+ */
+function enterFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.parentElement.mozRequestFullScreen();
+    element.style.height = '70%';
+    element.style.width = '70%';
+    element.style.margin = 'auto';
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+  }
+}
+
+/**
+ * exit fullscreen mode.
+ * @param {Element} element
+ */
+function exitFullscreen(element) {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+    element.style = {};
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+/**
+ * injection function to onfullscreenchange.
+ * @param callback
+ */
+function fullScreenChange(callback) {
+  if (document.fullscreenEnabled) {
+    document.addEventListener('fullscreenchange', callback);
+  } else if (document.mozFullScreenEnabled) {
+    document.onmozfullscreenchange = callback;
+  } else if (document.webkitFullscreenEnabled) {
+    document.addEventListener('webkitfullscreenchange', callback);
+  } else if (document.msFullscreenEnabled) {
+    document.addEventListener('msfullscreenchange', callback);
   }
 }
 

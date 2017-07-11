@@ -14,7 +14,7 @@ function switchFullscreen(element, callback) {
       }
     });
   } else {
-    exitFullscreen();
+    exitFullscreen(element);
   }
 }
 
@@ -36,7 +36,7 @@ function isFullscreen() {
 
 /**
  * enter fullscreen mode.
- * @param element
+ * @param {Element} element
  */
 function enterFullscreen(element) {
   if (element.requestFullscreen) {
@@ -44,7 +44,10 @@ function enterFullscreen(element) {
   } else if (element.msRequestFullscreen) {
     element.msRequestFullscreen();
   } else if (element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
+    element.parentElement.mozRequestFullScreen();
+    element.style.height = '70%';
+    element.style.width = '70%';
+    element.style.margin = 'auto';
   } else if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
   }
@@ -52,14 +55,16 @@ function enterFullscreen(element) {
 
 /**
  * exit fullscreen mode.
+ * @param {Element} element
  */
-function exitFullscreen() {
+function exitFullscreen(element) {
   if (document.exitFullscreen) {
     document.exitFullscreen();
   } else if (document.msExitFullscreen) {
     document.msExitFullscreen();
   } else if (document.mozCancelFullScreen) {
     document.mozCancelFullScreen();
+    element.style = {};
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
