@@ -1,14 +1,14 @@
-# React SlideShow
+# React SlideShow UI
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/shisama/react-slideshow/blob/master/LICENSE)
 
-React UI Component for SlideShow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
+React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
 
 [Demo](https://shisama.github.io/react-slideshow/demo/)(Updated with every release)
 
 ## Installation
 ```
-npm install --save react-slideshow
+npm install --save react-slideshow-ui
 ```
 
 ## Usage
