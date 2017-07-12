@@ -190,7 +190,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /**
  * @typedef {Object} Props
  * @property {Object} style
- * @property {Array<string>} src,
+ * @property {Array<string>} images,
  * @property {Node} prevIcon,
  * @property {Node} nextIcon
  * @property {boolean} withTimestamp
