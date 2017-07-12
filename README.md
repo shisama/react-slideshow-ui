@@ -4,7 +4,7 @@
 
 React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
 
-[Demo](https://shisama.github.io/react-slideshow/demo/)(Updated with every release)
+[Demo](https://shisama.github.io/react-slideshow-ui/demo/)(Updated with every release)
 
 ## Installation
 ```
