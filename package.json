@@ -1,9 +1,9 @@
 {
   "name": "react-slideshow",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Masashi Hirano (@shisama)",
   "license": "MIT",
-  "description": "react-slideshow allows you to include slideshow to your React apps.",
+  "description": "React UI Component for SlideShow like SlideShare or SpeakerDeck.",
   "main": "index.js",
   "devDependencies": {
     "ava": "^0.19.1",
