@@ -13,7 +13,7 @@ test
 .gitignore
 _config.yml
 package-lock.json
-react-slideshow.iml
+react-slideshow-ui.iml
 webpack.config.js
 webpack.dll.config.js
 yarn.lock
