@@ -1,9 +1,9 @@
 {
-  "name": "react-slideshow",
+  "name": "react-slideshow-ui",
   "version": "0.1.0",
   "author": "Masashi Hirano (@shisama)",
   "license": "MIT",
-  "description": "React UI Component for SlideShow like SlideShare or SpeakerDeck.",
+  "description": "React UI Component for slideshow like SlideShare or SpeakerDeck.",
   "main": "index.js",
   "devDependencies": {
     "ava": "^0.19.1",
