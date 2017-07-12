@@ -1,9 +1,9 @@
 {
   "name": "react-slideshow",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Masashi Hirano (@shisama)",
   "license": "MIT",
-  "description": "react-slideshow allows you to include slideshow to your React apps.",
+  "description": "React UI Component for SlideShow like SlideShare or SpeakerDeck.",
   "main": "index.js",
   "devDependencies": {
     "ava": "^0.19.1",
@@ -17,6 +17,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
+    "browser-env": "^3.1.0",
     "enzyme": "^2.8.2",
     "eslint": "^4.0.0",
     "eslint-closure": "^0.0.1",
@@ -30,6 +31,7 @@
     "flow-remove-types": "^1.2.1",
     "nyc": "^10.3.2",
     "power-assert": "^1.4.2",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.4.4",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
@@ -42,16 +44,17 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
-    "build:demo": "NODE_ENV=development webpack",
-    "build:dll": "webpack --config webpack.dll.config.js",
-    "build:all": "npm run lint -- --fix && npm run typecheck && npm test && npm run build:demo && npm run build",
+    "build": "npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
+    "build:demo": "webpack",
+    "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
+    "build:all": "npm run lint && npm run typecheck && npm test && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "typecheck": "flow",
-    "remove-types": "flow-remove-types --out-dir out/ src/",
-    "lint": "eslint src --ext js --ext jsx"
+    "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
+    "lint": "eslint src --ext js,jsx",
+    "prepublish": "npm run build:all"
   },
   "keywords": [
     "react",
@@ -103,7 +106,8 @@
   "ava": {
     "files": "**/*.test.js",
     "require": [
-      "babel-register"
+      "babel-register",
+      "./test/helpers/setup-browser-env.js"
     ],
     "babel": {
       "presets": [
@@ -123,5 +127,8 @@
         "transform-flow-strip-types"
       ]
     }
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
