@@ -15,7 +15,7 @@ npm install --save react-slideshow-ui
 ```javascript
 import React from 'react';
 import {render} from 'react-dom';
-import SlideShow from 'react-slideshow';
+import SlideShow from 'react-slideshow-ui';
 
 class App extends React.Component {
   render() {
