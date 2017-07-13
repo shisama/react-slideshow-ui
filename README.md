@@ -1,4 +1,5 @@
 # React SlideShow UI
+https://github.com/shisama/react-slideshow-ui
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/shisama/react-slideshow/blob/master/LICENSE)
 
@@ -47,11 +48,11 @@ render(<App />, document.getElementById('slideshow'));
 |name|type|reqired|description|
 |----|----|-------|-----------|
 |style|Object|Yes|style of this component.|
-|images|Array<string>|Yes|url of image for slide.|
-|prevIcon|Node|No|icon for button to move previous page.|
-|nextIcon|Node|No|icon for button to move next page.|
-|withTimestamp|boolean|No|if you want to add unixtime to img url. i.e. `example.png?1483228800`|
-|pageWillUpdate|function|No|function that is emitted when moving page.|
+|images|Array<string>|Yes|url strings of image for slide.|
+|prevIcon|Dom|No|icon for button to move previous page.|
+|nextIcon|Dom|No|icon for button to move next page.|
+|withTimestamp|boolean|No|set true if you want to add timestamp to img url. i.e. `example.png?1483228800`|
+|pageWillUpdate|function|No|function that is invoked when the page is turned.|
 
 ## License
 This project is licensed under the terms of the
