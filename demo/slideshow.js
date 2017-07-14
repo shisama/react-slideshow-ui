@@ -283,14 +283,10 @@ var SlideShow = function (_React$Component) {
         _this.setState({ isFullScreen: isFullScreen });
         if (isFullScreen) {
           document.addEventListener('keydown', _this.keydownEvent);
-          if (document.mozFullScreenEnabled) {
-            element.style.height = '70%';
-            element.style.width = '70%';
-            element.style.margin = 'auto';
-          }
+          element.style.width = '70%';
         } else {
           document.removeEventListener('keydown', _this.keydownEvent);
-          element.style = {};
+          element.style.width = '100%';
         }
       });
     };
@@ -356,7 +352,8 @@ var SlideShow = function (_React$Component) {
           key: key
         });
       });
-      var bottom = _this.state.isFullScreen ? 180 : _Styles.Styles.PREVIEW.bottom;
+      var fullscreenBottom = document.mozFullScreen ? 180 : 120;
+      var bottom = _this.state.isFullScreen ? fullscreenBottom : _Styles.Styles.PREVIEW.bottom;
       var STYLE = Object.assign({}, _Styles.Styles.PREVIEW, {
         opacity: _this.state.preview,
         bottom: bottom
@@ -505,7 +502,7 @@ var SlideShow = function (_React$Component) {
         { style: this.style, className: 'slideshow' },
         _react2.default.createElement(
           'div',
-          { className: 'slideshow-wrapper', style: {} },
+          { className: 'slideshow-wrapper', style: { margin: 'auto' } },
           _react2.default.createElement(
             'div',
             null,
@@ -530,13 +527,7 @@ var SlideShow = function (_React$Component) {
             'div',
             {
               className: 'progressBar',
-              style: {
-                backgroundColor: '#000',
-                height: 10,
-                marginTop: -6,
-                position: 'relative',
-                width: '100%'
-              },
+              style: _Styles.Styles.PROGRESS_BAR,
               onClick: this.onClickProgressBar,
               onMouseMove: this.onMouseMoveProgressBar,
               onMouseLeave: this.onMouseLeaveProgressBar
@@ -725,6 +716,13 @@ var Styles = exports.Styles = {
     color: '#fff',
     border: '3px solid #323232',
     borderRadius: '3px'
+  },
+  PROGRESS_BAR: {
+    backgroundColor: '#000',
+    height: 10,
+    marginTop: -6,
+    position: 'relative',
+    width: '100%'
   }
 };
 
