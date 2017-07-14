@@ -183,14 +183,10 @@ export default class SlideShow extends React.Component {
       this.setState({isFullScreen: isFullScreen});
       if (isFullScreen) {
         document.addEventListener('keydown', this.keydownEvent);
-        if (document.mozFullScreenEnabled) {
-          element.style.height = '70%';
-          element.style.width = '70%';
-          element.style.margin = 'auto';
-        }
+        element.style.width = '70%';
       } else {
         document.removeEventListener('keydown', this.keydownEvent);
-        element.style = {};
+        element.style.width = '100%';
       }
     });
   };
@@ -258,7 +254,7 @@ export default class SlideShow extends React.Component {
 
     return (
       <div style={this.style} className="slideshow">
-        <div className="slideshow-wrapper" style={{}}>
+        <div className="slideshow-wrapper" style={{margin: 'auto'}}>
           <div>
             <div style={styles.IMAGE}>
               <img className="content" src={src} style={{width: '100%'}} />
@@ -277,13 +273,7 @@ export default class SlideShow extends React.Component {
           {this._renderPreview()}
           <div
             className="progressBar"
-            style={{
-              backgroundColor: '#000',
-              height: 10,
-              marginTop: -6,
-              position: 'relative',
-              width: '100%',
-            }}
+            style={styles.PROGRESS_BAR}
             onClick={this.onClickProgressBar}
             onMouseMove={this.onMouseMoveProgressBar}
             onMouseLeave={this.onMouseLeaveProgressBar}
@@ -362,7 +352,10 @@ export default class SlideShow extends React.Component {
         />
       );
     });
-    const bottom = this.state.isFullScreen ? 180 : styles.PREVIEW.bottom;
+    const fullscreenBottom = document.mozFullScreen ? 180 : 120;
+    const bottom = this.state.isFullScreen
+      ? fullscreenBottom
+      : styles.PREVIEW.bottom;
     const STYLE = Object.assign({}, styles.PREVIEW, {
       opacity: this.state.preview,
       bottom: bottom,
