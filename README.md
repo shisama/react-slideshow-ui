@@ -9,7 +9,7 @@ React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) 
 
 ![React SlideShow](https://github.com/shisama/react-slideshow-ui/raw/master/screenshot.png) 
 
-[Demo](https://shisama.github.io/react-slideshow-ui/demo/)(Updated with every release)
+## [Demo](https://shisama.github.io/react-slideshow-ui/demo/)(Updated with every release)
 
 ## Installation
 ```
