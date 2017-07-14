@@ -1,10 +1,13 @@
 # React SlideShow UI
-https://github.com/shisama/react-slideshow-ui
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/shisama/react-slideshow/blob/master/LICENSE)
+[![Join the chat at https://gitter.im/shisama/react-slideshow-ui](https://badges.gitter.im/shisama/react-slideshow-ui.svg)](https://gitter.im/shisama/react-slideshow-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
 
+[![NPM](https://nodei.co/npm/react-slideshow-ui.png?downloads=true&stars=true)](https://nodei.co/npm/react-slideshow-ui/) [![NPM](https://nodei.co/npm-dl/react-slideshow-ui.png?months=3)](https://nodei.co/npm/react-slideshow-ui/)
+
+![React SlideShow](https://github.com/shisama/react-slideshow-ui/raw/master/screenshot.png))
 [Demo](https://shisama.github.io/react-slideshow-ui/demo/)(Updated with every release)
 
 ## Installation

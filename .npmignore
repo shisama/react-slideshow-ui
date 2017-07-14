@@ -14,6 +14,7 @@ test
 _config.yml
 package-lock.json
 react-slideshow-ui.iml
+screenshot.png
 webpack.config.js
 webpack.dll.config.js
 yarn.lock
