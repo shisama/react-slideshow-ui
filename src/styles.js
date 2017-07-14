@@ -60,4 +60,11 @@ export const Styles = {
     border: '3px solid #323232',
     borderRadius: '3px',
   },
+  PROGRESS_BAR: {
+    backgroundColor: '#000',
+    height: 10,
+    marginTop: -6,
+    position: 'relative',
+    width: '100%',
+  },
 };
