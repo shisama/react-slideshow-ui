@@ -2,6 +2,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/shisama/react-slideshow/blob/master/LICENSE)
 [![Join the chat at https://gitter.im/shisama/react-slideshow-ui](https://badges.gitter.im/shisama/react-slideshow-ui.svg)](https://gitter.im/shisama/react-slideshow-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![David](https://david-dm.org/shisama/react-slideshow-ui.svg)
 
 React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
 
