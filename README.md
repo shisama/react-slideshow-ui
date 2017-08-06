@@ -54,11 +54,11 @@ render(<App />, document.getElementById('slideshow'));
 |name|type|reqired|description|
 |----|----|-------|-----------|
 |style|Object|Yes|style of this component.|
-|images|Array<string>|Yes|url strings of image for slide.|
+|images|Array\<string\>|Yes|url strings of images for slide.|
 |prevIcon|Dom|No|icon for button to move previous page.|
 |nextIcon|Dom|No|icon for button to move next page.|
 |withTimestamp|boolean|No|set true if you want to add timestamp to img url. i.e. `example.png?1483228800`|
-|pageWillUpdate|function|No|function that is invoked when the page is turned.|
+|pageWillUpdate|function|No|function that is invoked when the page is turned over.|
 
 ## License
 This project is licensed under the terms of the
