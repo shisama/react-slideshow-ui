@@ -192,9 +192,21 @@ export default class SlideShow extends React.Component {
   };
 
   keydownEvent = (e: Event) => {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    if (
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowLeft' ||
+      e.keyCode === 37 ||
+      e.keyCode === 38
+    ) {
       this.onClickPrevButton();
-    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    } else if (
+      e.key === 'ArrowDown' ||
+      e.key === 'ArrowRight' ||
+      e.keyCode === 39 ||
+      e.keyCode === 40 ||
+      e.keyCode === 32
+    ) {
       this.onClickNextButton();
     } else if (e.key === 'Escape') {
       this.onChangeFullScreen();

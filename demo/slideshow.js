@@ -292,9 +292,10 @@ var SlideShow = function (_React$Component) {
     };
 
     _this.keydownEvent = function (e) {
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.keyCode === 37 || e.keyCode === 38) {
         _this.onClickPrevButton();
-      } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.keyCode === 39 || e.keyCode === 40 || e.keyCode === 32) {
         _this.onClickNextButton();
       } else if (e.key === 'Escape') {
         _this.onChangeFullScreen();
