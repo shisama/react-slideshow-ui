@@ -4,10 +4,11 @@
 [![Join the chat at https://gitter.im/shisama/react-slideshow-ui](https://badges.gitter.im/shisama/react-slideshow-ui.svg)](https://gitter.im/shisama/react-slideshow-ui?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <a href="https://david-dm.org/shisama/react-slideshow-ui/"><img src="https://david-dm.org/shisama/react-slideshow-ui.svg" alt="Dependency Status"></a>
 <a href="https://david-dm.org/shisama/react-slideshow-ui/?type=dev"><img src="https://david-dm.org/shisama/react-slideshow-ui/dev-status.svg" alt="devDependency Status"></a>
+[![npm](https://img.shields.io/npm/dt/react-slideshow-ui.svg)](https://www.npmjs.com/package/react-slideshow-ui)
 
 React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
 
-[![NPM](https://nodei.co/npm/react-slideshow-ui.png?downloads=true&stars=true)](https://nodei.co/npm/react-slideshow-ui/) [![NPM](https://nodei.co/npm-dl/react-slideshow-ui.png?months=3)](https://nodei.co/npm/react-slideshow-ui/)
+[![NPM](https://nodei.co/npm/react-slideshow-ui.png?downloads=true&stars=true)](https://nodei.co/npm/react-slideshow-ui/) 
 
 ![React SlideShow](https://github.com/shisama/react-slideshow-ui/raw/master/screenshot.png) 
 
