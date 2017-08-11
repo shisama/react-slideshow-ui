@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Styles as styles} from './Styles';
-import switchFullscreen from './fullscreen';
+import toggleFullscreen from 'toggle-fullscreen';
 
 /**
  * @typedef {Object} Props
@@ -179,7 +179,7 @@ export default class SlideShow extends React.Component {
     const element: Object = document.getElementsByClassName(
       'slideshow-wrapper',
     )[0];
-    switchFullscreen(element, isFullScreen => {
+    toggleFullscreen(element).then(isFullScreen => {
       this.setState({isFullScreen: isFullScreen});
       if (isFullScreen) {
         document.addEventListener('keydown', this.keydownEvent);

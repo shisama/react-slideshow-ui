@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +91,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(12);
+var _reactDom = __webpack_require__(13);
 
 var _SlideShow = __webpack_require__(3);
 
@@ -162,15 +162,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(7);
+var _propTypes = __webpack_require__(6);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Styles = __webpack_require__(4);
 
-var _fullscreen = __webpack_require__(5);
+var _toggleFullscreen = __webpack_require__(7);
 
-var _fullscreen2 = _interopRequireDefault(_fullscreen);
+var _toggleFullscreen2 = _interopRequireDefault(_toggleFullscreen);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -279,7 +279,7 @@ var SlideShow = function (_React$Component) {
 
     _this.onChangeFullScreen = function () {
       var element = document.getElementsByClassName('slideshow-wrapper')[0];
-      (0, _fullscreen2.default)(element, function (isFullScreen) {
+      (0, _toggleFullscreen2.default)(element).then(function (isFullScreen) {
         _this.setState({ isFullScreen: isFullScreen });
         if (isFullScreen) {
           document.addEventListener('keydown', _this.keydownEvent);
@@ -732,97 +732,6 @@ var Styles = exports.Styles = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * switch target DOMElement to fullscreen mode.
- * @param element {Element} DOMElement that you want to make fullscreen.
- * @param callback {Function} callback function after calling fullscreen api.
- */
-function switchFullscreen(element, callback) {
-  if (!isFullscreen()) {
-    enterFullscreen(element);
-    fullScreenChange(function (event) {
-      if (isFullscreen()) {
-        callback(true);
-      } else {
-        callback(false);
-      }
-    });
-  } else {
-    exitFullscreen(element);
-  }
-}
-
-/**
- * check whether fullscreen or not.
- * @returns {boolean}
- */
-function isFullscreen() {
-  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-    return false;
-  }
-  return true;
-}
-
-/**
- * enter fullscreen mode.
- * @param {Element} element
- */
-function enterFullscreen(element) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  } else if (element.mozRequestFullScreen) {
-    element.parentElement.mozRequestFullScreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-  }
-}
-
-/**
- * exit fullscreen mode.
- * @param {Element} element
- */
-function exitFullscreen(element) {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  }
-}
-
-/**
- * injection function to onfullscreenchange.
- * @param callback
- */
-function fullScreenChange(callback) {
-  if (document.fullscreenEnabled) {
-    document.addEventListener('fullscreenchange', callback);
-  } else if (document.mozFullScreenEnabled) {
-    document.onmozfullscreenchange = callback;
-  } else if (document.webkitFullscreenEnabled) {
-    document.addEventListener('webkitfullscreenchange', callback);
-  } else if (document.msFullscreenEnabled) {
-    document.addEventListener('msfullscreenchange', callback);
-  }
-}
-
-exports.default = switchFullscreen;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -834,9 +743,9 @@ exports.default = switchFullscreen;
 
 
 
-var emptyFunction = __webpack_require__(10);
-var invariant = __webpack_require__(8);
-var ReactPropTypesSecret = __webpack_require__(9);
+var emptyFunction = __webpack_require__(11);
+var invariant = __webpack_require__(9);
+var ReactPropTypesSecret = __webpack_require__(10);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -885,7 +794,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -912,46 +821,145 @@ if (undefined !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(11)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(12)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(6)();
+  module.exports = __webpack_require__(5)();
 }
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(1);
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+/**
+ * switch target DOMElement to fullscreen mode.
+ * @param element {Element} DOMElement that you want to make fullscreen.
+ */
+function toggleFullscreen(element) {
+  return new Promise(function(resolve, reject) {
+    if (!isFullscreen()) {
+      enterFullscreen(element);
+      fullScreenChange(function() {
+        if (isFullscreen()) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    } else {
+      exitFullscreen();
+      resolve(false);
+    }
+  });
+
+  /**
+   * check whether fullscreen or not.
+   * @returns {boolean}
+   */
+  function isFullscreen() {
+    if (
+      !document.fullscreenElement &&
+      !document.mozFullScreenElement &&
+      !document.webkitFullscreenElement &&
+      !document.msFullscreenElement
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * enter fullscreen mode.
+   * @param {Element} element
+   */
+  function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.parentElement.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  }
+
+  /**
+   * exit fullscreen mode.
+   */
+  function exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+
+  /**
+   * injection function to onfullscreenchange.
+   * @param callback
+   */
+  function fullScreenChange(callback) {
+    if (document.fullscreenEnabled) {
+      document.addEventListener('fullscreenchange', callback);
+    } else if (document.mozFullScreenEnabled) {
+      document.onmozfullscreenchange = callback;
+    } else if (document.webkitFullscreenEnabled) {
+      document.addEventListener('webkitfullscreenchange', callback);
+    } else if (document.msFullscreenEnabled) {
+      document.addEventListener('msfullscreenchange', callback);
+    }
+  }
+}
+
+module.exports = toggleFullscreen;
+
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(53);
+module.exports = (__webpack_require__(0))(1);
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(9);
+module.exports = (__webpack_require__(0))(53);
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(98);
+module.exports = (__webpack_require__(0))(9);
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(99);
+module.exports = (__webpack_require__(0))(98);
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(99);
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);
