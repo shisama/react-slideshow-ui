@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {Styles as styles} from './Styles';
 import toggleFullscreen from 'toggle-fullscreen';
 
+require('es6-promise').polyfill();
+
 /**
  * @typedef {Object} Props
  * @property {Object} style
@@ -208,7 +210,7 @@ export default class SlideShow extends React.Component {
       e.keyCode === 32
     ) {
       this.onClickNextButton();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === 'Escape' || e.keyCode === 27) {
       this.onChangeFullScreen();
     }
   };

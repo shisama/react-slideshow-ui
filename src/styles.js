@@ -27,6 +27,7 @@ export const Styles = {
   ARROW_BUTTON: {
     backgroundColor: 'transparent',
     height: '15px',
+    width: '15px',
   },
   PREV_ON_CONTENT: {
     display: 'block',
