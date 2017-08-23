@@ -181,7 +181,7 @@ export default class SlideShow extends React.Component {
     const element: Object = document.getElementsByClassName(
       'slideshow-wrapper',
     )[0];
-    toggleFullscreen(element).then(isFullScreen => {
+    toggleFullscreen(element, isFullScreen => {
       this.setState({isFullScreen: isFullScreen});
       if (isFullScreen) {
         document.addEventListener('keydown', this.keydownEvent);
