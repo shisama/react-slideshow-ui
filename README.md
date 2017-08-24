@@ -61,6 +61,12 @@ render(<App />, document.getElementById('slideshow'));
 |withTimestamp|boolean|No|set true if you want to add timestamp to img url. i.e. `example.png?1483228800`|
 |pageWillUpdate|function|No|function that is invoked when the page is turned over.|
 
+## Browser Support
+Chrome@latest
+Firefox@latest
+Safari@latest
+IE11
+
 ## License
 This project is licensed under the terms of the
 [MIT license](https://github.com/shisama/react-slideshow/blob/master/LICENSE)
