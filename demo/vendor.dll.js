@@ -23566,7 +23566,6 @@ var Promise = __webpack_require__(83).Promise;
 function toggleFullscreen(element, callback) {
   if (callback) {
     if (!isFullscreen()) {
-      enterFullscreen(element);
       fullScreenChange(function() {
         if (isFullscreen()) {
           callback(true);
@@ -23574,6 +23573,7 @@ function toggleFullscreen(element, callback) {
           callback(false);
         }
       });
+      enterFullscreen(element);
     } else {
       exitFullscreen();
       callback(false);
@@ -23653,7 +23653,8 @@ function toggleFullscreen(element, callback) {
     } else if (document.mozFullScreenEnabled) {
       document.addEventListener('mozfullscreenchange',callback);
     } else if (document.webkitFullscreenEnabled) {
-      document.addEventListener('webkitfullscreenchange', callback);
+      document.addEventListener('webkitfullscreenchange', callback); //Safari
+      document.addEventListener('fullscreenChange', callback); // Edge
     } else if (document.msFullscreenEnabled) {
       document.addEventListener('MSFullscreenChange', callback);
     }

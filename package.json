@@ -1,6 +1,6 @@
 {
   "name": "react-slideshow-ui",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Masashi Hirano (https://github.com/shisama)",
   "license": "MIT",
   "description": "React UI Component for slideshow like SlideShare or SpeakerDeck.",
@@ -29,18 +29,18 @@
     "build": "npm run clean && babel src --out-dir lib --source-maps inline --ignore src/demo",
     "build:demo": "webpack",
     "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
-    "build:all": "npm run lint && npm run typecheck && npm test && npm run build:demo && npm run clean && npm run build",
+    "build:all": "npm run lint && npm run typecheck && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "typecheck": "flow",
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
     "lint": "eslint src --ext js,jsx",
-    "prepublish": "npm run build:all"
+    "prepublish": "npm run lint && npm run typecheck && npm test && npm build"
   },
   "dependencies": {
     "react": "^15.6.1",
-    "toggle-fullscreen": "^0.2.1"
+    "toggle-fullscreen": "^0.2.2"
   },
   "devDependencies": {
     "ava": "^0.21.0",
