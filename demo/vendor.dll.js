@@ -23624,7 +23624,7 @@ function toggleFullscreen(element, callback) {
     } else if (element.mozRequestFullScreen) {
       element.parentElement.mozRequestFullScreen();
     } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+      element.webkitRequestFullscreen();
     }
   }
 
