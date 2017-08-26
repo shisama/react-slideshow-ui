@@ -663,7 +663,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Styles = exports.Styles = {
   ROOT: {
-    position: 'relative'
+    backgroundColor: 'transparent',
+    border: 0,
+    fontSize: '100%',
+    lineHeight: 1,
+    margin: 0,
+    outline: 0,
+    padding: 0,
+    position: 'relative',
+    textDecoration: 'none'
   },
   IMAGE: {
     position: 'relative',
