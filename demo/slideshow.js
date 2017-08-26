@@ -356,7 +356,14 @@ var SlideShow = function (_React$Component) {
           key: key
         });
       });
-      var fullscreenBottom = document.mozFullScreen ? 180 : 120;
+      var fullscreenBottom = 120;
+      var wrapper = document.querySelector('.slideshow-wrapper');
+      var content = document.querySelector('.content');
+      var progressBar = document.querySelector('.progressBar');
+      var bar = document.querySelector('.bar');
+      if (wrapper && content && progressBar && bar) {
+        fullscreenBottom = window.screen.availHeight - content.offsetHeight + progressBar.offsetHeight + bar.offsetHeight + 10;
+      }
       var bottom = _this.state.isFullScreen ? fullscreenBottom : _Styles.Styles.PREVIEW.bottom;
       var STYLE = _extends({}, _Styles.Styles.PREVIEW, {
         opacity: _this.state.preview,
