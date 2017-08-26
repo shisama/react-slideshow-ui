@@ -23582,7 +23582,6 @@ function toggleFullscreen(element, callback) {
   }
   return new Promise(function(resolve, reject) {
     if (!isFullscreen()) {
-      enterFullscreen(element);
       fullScreenChange(function() {
         if (isFullscreen()) {
           resolve(true);
@@ -23590,6 +23589,7 @@ function toggleFullscreen(element, callback) {
           resolve(false);
         }
       });
+      enterFullscreen(element);
     } else {
       exitFullscreen();
       resolve(false);
