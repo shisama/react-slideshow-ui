@@ -376,7 +376,8 @@ export default class SlideShow extends React.Component {
         window.screen.availHeight -
         content.offsetHeight +
         progressBar.offsetHeight +
-        bar.offsetHeight;
+        bar.offsetHeight +
+        10;
     }
     const bottom = this.state.isFullScreen
       ? fullscreenBottom
