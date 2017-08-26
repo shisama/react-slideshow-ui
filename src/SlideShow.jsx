@@ -366,7 +366,18 @@ export default class SlideShow extends React.Component {
         />
       );
     });
-    const fullscreenBottom = document.mozFullScreen ? 180 : 120;
+    let fullscreenBottom = 120;
+    const wrapper = document.querySelector('.slideshow-wrapper');
+    const content = document.querySelector('.content');
+    const progressBar = document.querySelector('.progressBar');
+    const bar = document.querySelector('.bar');
+    if (wrapper && content && progressBar && bar) {
+      fullscreenBottom =
+        window.screen.availHeight -
+        content.offsetHeight +
+        progressBar.offsetHeight +
+        bar.offsetHeight;
+    }
     const bottom = this.state.isFullScreen
       ? fullscreenBottom
       : styles.PREVIEW.bottom;
