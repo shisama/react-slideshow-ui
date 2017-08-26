@@ -1,6 +1,6 @@
 {
   "name": "react-slideshow-ui",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": "Masashi Hirano (https://github.com/shisama)",
   "license": "MIT",
   "description": "React UI Component for slideshow like SlideShare or SpeakerDeck.",
