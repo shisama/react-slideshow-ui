@@ -23617,12 +23617,15 @@ function toggleFullscreen(element, callback) {
    * @param {Element} element
    */
   function enterFullscreen(element) {
+    var userAgent = window.navigator.userAgent.toLowerCase();
     if (element.requestFullscreen) {
       element.requestFullscreen();
     } else if (element.msRequestFullscreen) {
       element.msRequestFullscreen();
     } else if (element.mozRequestFullScreen) {
       element.parentElement.mozRequestFullScreen();
+    } else if (userAgent.indexOf('edge') != -1) {
+      element.parentElement.webkitRequestFullscreen();
     } else if (element.webkitRequestFullscreen) {
       element.webkitRequestFullscreen();
     }
