@@ -283,7 +283,7 @@ var SlideShow = function (_React$Component) {
     _this.onChangeFullScreen = function () {
       var element = document.getElementsByClassName('slideshow-wrapper')[0];
       (0, _toggleFullscreen2.default)(element).then(function () {
-        return (0, _toggleFullscreen.fullScreenChange)(function () {
+        return (0, _toggleFullscreen.fullscreenChange)(function () {
           var isFullScreen = (0, _toggleFullscreen.isFullscreen)();
           _this.setState({ isFullScreen: isFullScreen });
           if (isFullScreen) {
@@ -511,6 +511,11 @@ var SlideShow = function (_React$Component) {
         src += '?' + this.state.timestamp;
       }
 
+      var paging = void 0;
+      if (this.props.images) {
+        paging = this.state.index + 1 + ' / ' + this.props.images.length;
+      }
+
       return _react2.default.createElement(
         'div',
         { style: this.style, className: 'slideshow' },
@@ -573,7 +578,7 @@ var SlideShow = function (_React$Component) {
               _react2.default.createElement(
                 'span',
                 { style: _Styles.Styles.PAGE_VIEW },
-                this.props.images ? this.state.index + 1 + ' / ' + this.props.images.length : null
+                paging
               ),
               _react2.default.createElement(
                 'button',

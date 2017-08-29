@@ -23566,7 +23566,7 @@ __webpack_require__(83).polyfill();
 function toggleFullscreen(element, callback) {
   if (callback && typeof callback === 'function') {
     if (!isFullscreen()) {
-      fullScreenChange(function () {
+      fullscreenChange(function() {
         if (isFullscreen()) {
           callback(true);
         } else {
@@ -23580,7 +23580,7 @@ function toggleFullscreen(element, callback) {
     }
     return null;
   }
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     if (!isFullscreen()) {
       enterFullscreen(element);
     } else {
@@ -23626,7 +23626,7 @@ function toggleFullscreen(element, callback) {
 }
 
 /**
- * check whether fullscreen or not.
+ * check if fullscreen or not.
  * @returns {boolean}
  */
 function isFullscreen() {
@@ -23642,11 +23642,11 @@ function isFullscreen() {
 }
 
 /**
- * injection function to onfullscreenchange.
+ * add eventListener 'fullscreenchange'
  * @param callback
  * @return {Promise}
  */
-function fullScreenChange(callback) {
+function fullscreenChange(callback) {
   return new Promise(function(resolve, reject) {
     if (document.fullscreenEnabled) {
       document.addEventListener('fullscreenchange', callback);
@@ -23665,7 +23665,7 @@ function fullScreenChange(callback) {
 }
 
 module.exports = toggleFullscreen;
-module.exports.fullScreenChange = fullScreenChange;
+module.exports.fullscreenChange = fullscreenChange;
 module.exports.isFullscreen = isFullscreen;
 
 /***/ }),
