@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -182,7 +182,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(11).polyfill();
+/**
+ * This class named SlideShow is the React component that allows you
+ * to develop slideshow like 'SlideShare' or 'SpeakerDeck' very easy!
+ * @class
+ */
+
 
 /**
  * @typedef {Object} Props
@@ -204,12 +209,6 @@ __webpack_require__(11).polyfill();
  * @property {number} preview
  * @property {number} previewIndex
  * @property {boolean} isFullScreen
- */
-
-/**
- * This class named SlideShow is the React component that allows you
- * to develop slideshow like 'SlideShare' or 'SpeakerDeck' very easy!
- * @class
  */
 var SlideShow = function (_React$Component) {
   _inherits(SlideShow, _React$Component);
@@ -283,7 +282,7 @@ var SlideShow = function (_React$Component) {
     _this.onChangeFullScreen = function () {
       var element = document.getElementsByClassName('slideshow-wrapper')[0];
       (0, _toggleFullscreen2.default)(element).then(function () {
-        return (0, _toggleFullscreen.fullScreenChange)(function () {
+        return (0, _toggleFullscreen.fullscreenChange)(function () {
           var isFullScreen = (0, _toggleFullscreen.isFullscreen)();
           _this.setState({ isFullScreen: isFullScreen });
           if (isFullScreen) {
@@ -511,6 +510,11 @@ var SlideShow = function (_React$Component) {
         src += '?' + this.state.timestamp;
       }
 
+      var paging = void 0;
+      if (this.props.images) {
+        paging = this.state.index + 1 + ' / ' + this.props.images.length;
+      }
+
       return _react2.default.createElement(
         'div',
         { style: this.style, className: 'slideshow' },
@@ -573,7 +577,7 @@ var SlideShow = function (_React$Component) {
               _react2.default.createElement(
                 'span',
                 { style: _Styles.Styles.PAGE_VIEW },
-                this.props.images ? this.state.index + 1 + ' / ' + this.props.images.length : null
+                paging
               ),
               _react2.default.createElement(
                 'button',
@@ -765,7 +769,7 @@ var Styles = exports.Styles = {
 
 
 
-var emptyFunction = __webpack_require__(12);
+var emptyFunction = __webpack_require__(11);
 var invariant = __webpack_require__(7);
 var ReactPropTypesSecret = __webpack_require__(10);
 
@@ -843,7 +847,7 @@ if (undefined !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(13)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(12)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -879,22 +883,16 @@ module.exports = (__webpack_require__(0))(53);
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(83);
+module.exports = (__webpack_require__(0))(9);
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(9);
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(99);
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);

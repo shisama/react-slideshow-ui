@@ -3,11 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Styles as styles} from './Styles';
 import toggleFullscreen, {
-  fullScreenChange,
+  fullscreenChange,
   isFullscreen,
 } from 'toggle-fullscreen';
-
-require('es6-promise').polyfill();
 
 /**
  * @typedef {Object} Props
@@ -185,7 +183,7 @@ export default class SlideShow extends React.Component {
       'slideshow-wrapper',
     )[0];
     toggleFullscreen(element).then(() => {
-      return fullScreenChange(() => {
+      return fullscreenChange(() => {
         const isFullScreen = isFullscreen();
         this.setState({isFullScreen: isFullScreen});
         if (isFullScreen) {
@@ -272,6 +270,11 @@ export default class SlideShow extends React.Component {
       src += `?${this.state.timestamp}`;
     }
 
+    let paging;
+    if (this.props.images) {
+      paging = `${this.state.index + 1} / ${this.props.images.length}`;
+    }
+
     return (
       <div style={this.style} className="slideshow">
         <div className="slideshow-wrapper" style={{margin: 'auto'}}>
@@ -316,11 +319,7 @@ export default class SlideShow extends React.Component {
               >
                 {this.props.prevIcon}
               </button>
-              <span style={styles.PAGE_VIEW}>
-                {this.props.images
-                  ? `${this.state.index + 1} / ${this.props.images.length}`
-                  : null}
-              </span>
+              <span style={styles.PAGE_VIEW}>{paging}</span>
               <button
                 className={'nextButton'}
                 onClick={this.onClickNextButton}
