@@ -2,7 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Styles as styles} from './Styles';
-import toggleFullscreen from 'toggle-fullscreen';
+import toggleFullscreen, {
+  fullScreenChange,
+  isFullscreen,
+} from 'toggle-fullscreen';
 
 require('es6-promise').polyfill();
 
@@ -181,15 +184,18 @@ export default class SlideShow extends React.Component {
     const element: Object = document.getElementsByClassName(
       'slideshow-wrapper',
     )[0];
-    toggleFullscreen(element, isFullScreen => {
-      this.setState({isFullScreen: isFullScreen});
-      if (isFullScreen) {
-        document.addEventListener('keydown', this.keydownEvent);
-        element.style.width = '70%';
-      } else {
-        document.removeEventListener('keydown', this.keydownEvent);
-        element.style.width = '100%';
-      }
+    toggleFullscreen(element).then(() => {
+      return fullScreenChange(() => {
+        const isFullScreen = isFullscreen();
+        this.setState({isFullScreen: isFullScreen});
+        if (isFullScreen) {
+          document.addEventListener('keydown', this.keydownEvent);
+          element.style.width = '70%';
+        } else {
+          document.removeEventListener('keydown', this.keydownEvent);
+          element.style.width = '100%';
+        }
+      });
     });
   };
 

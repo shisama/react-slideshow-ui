@@ -282,15 +282,18 @@ var SlideShow = function (_React$Component) {
 
     _this.onChangeFullScreen = function () {
       var element = document.getElementsByClassName('slideshow-wrapper')[0];
-      (0, _toggleFullscreen2.default)(element, function (isFullScreen) {
-        _this.setState({ isFullScreen: isFullScreen });
-        if (isFullScreen) {
-          document.addEventListener('keydown', _this.keydownEvent);
-          element.style.width = '70%';
-        } else {
-          document.removeEventListener('keydown', _this.keydownEvent);
-          element.style.width = '100%';
-        }
+      (0, _toggleFullscreen2.default)(element).then(function () {
+        return (0, _toggleFullscreen.fullScreenChange)(function () {
+          var isFullScreen = (0, _toggleFullscreen.isFullscreen)();
+          _this.setState({ isFullScreen: isFullScreen });
+          if (isFullScreen) {
+            document.addEventListener('keydown', _this.keydownEvent);
+            element.style.width = '70%';
+          } else {
+            document.removeEventListener('keydown', _this.keydownEvent);
+            element.style.width = '100%';
+          }
+        });
       });
     };
 

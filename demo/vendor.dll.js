@@ -23557,16 +23557,16 @@ module.exports = __webpack_require__(186);
 /* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Promise = __webpack_require__(83).Promise;
+__webpack_require__(83).polyfill();
 
 /**
  * switch target DOMElement to fullscreen mode.
  * @param element {Element} DOMElement that you want to make fullscreen.
  */
 function toggleFullscreen(element, callback) {
-  if (callback) {
+  if (callback && typeof callback === 'function') {
     if (!isFullscreen()) {
-      fullScreenChange(function() {
+      fullScreenChange(function () {
         if (isFullscreen()) {
           callback(true);
         } else {
@@ -23580,37 +23580,15 @@ function toggleFullscreen(element, callback) {
     }
     return null;
   }
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (!isFullscreen()) {
-      fullScreenChange(function() {
-        if (isFullscreen()) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      });
       enterFullscreen(element);
     } else {
       exitFullscreen();
-      resolve(false);
     }
+    resolve();
   });
 
-  /**
-   * check whether fullscreen or not.
-   * @returns {boolean}
-   */
-  function isFullscreen() {
-    if (
-      !document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
-    ) {
-      return false;
-    }
-    return true;
-  }
 
   /**
    * enter fullscreen mode.
@@ -23645,27 +23623,50 @@ function toggleFullscreen(element, callback) {
       document.webkitExitFullscreen();
     }
   }
+}
 
-  /**
-   * injection function to onfullscreenchange.
-   * @param callback
-   */
-  function fullScreenChange(callback) {
+/**
+ * check whether fullscreen or not.
+ * @returns {boolean}
+ */
+function isFullscreen() {
+  if (
+    !document.fullscreenElement &&
+    !document.mozFullScreenElement &&
+    !document.webkitFullscreenElement &&
+    !document.msFullscreenElement
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * injection function to onfullscreenchange.
+ * @param callback
+ * @return {Promise}
+ */
+function fullScreenChange(callback) {
+  return new Promise(function(resolve, reject) {
     if (document.fullscreenEnabled) {
       document.addEventListener('fullscreenchange', callback);
     } else if (document.mozFullScreenEnabled) {
-      document.addEventListener('mozfullscreenchange',callback);
+      document.addEventListener('mozfullscreenchange', callback);
     } else if (document.webkitFullscreenEnabled) {
       document.addEventListener('webkitfullscreenchange', callback); //Safari
       document.addEventListener('fullscreenChange', callback); // Edge
     } else if (document.msFullscreenEnabled) {
       document.addEventListener('MSFullscreenChange', callback);
+    } else {
+      reject();
     }
-  }
+    resolve();
+  });
 }
 
 module.exports = toggleFullscreen;
-
+module.exports.fullScreenChange = fullScreenChange;
+module.exports.isFullscreen = isFullscreen;
 
 /***/ }),
 /* 187 */
