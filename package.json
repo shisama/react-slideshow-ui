@@ -34,7 +34,7 @@
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "lint": "eslint src --ext js,jsx",
-    "prepublish": "npm run lint && npm test && npm build"
+    "prepublish": "npm test && npm build"
   },
   "dependencies": {
     "react": "^16.0.0",
