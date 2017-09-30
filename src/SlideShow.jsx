@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Styles as styles} from './Styles';
@@ -16,14 +15,6 @@ import toggleFullscreen, {
  * @property {boolean} withTimestamp
  * @property {function} pageWillUpdate
  */
-type Props = {
-  style: Object,
-  images: Array<string>,
-  prevIcon: Node,
-  nextIcon: Node,
-  withTimestamp: boolean,
-  pageWillUpdate: (index: number, image: string) => void,
-};
 
 /**
  * @typedef {Object} State
@@ -35,15 +26,6 @@ type Props = {
  * @property {number} previewIndex
  * @property {boolean} isFullScreen
  */
-type State = {
-  src: string,
-  index: number,
-  progress: number,
-  timestamp: number,
-  preview: number,
-  previewIndex: number,
-  isFullScreen: boolean,
-};
 
 /**
  * This class named SlideShow is the React component that allows you
@@ -51,18 +33,12 @@ type State = {
  * @class
  */
 export default class SlideShow extends React.Component {
-  state: State;
-  props: Props;
-  style: Object;
-  static defaultProps: Object;
-  static PropTypes: Object;
-
   /**
    * constructor
    * call super constructor and initialize states.
    * @param {Props} props
    */
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     let timestamp = 0;
@@ -89,7 +65,7 @@ export default class SlideShow extends React.Component {
    * updates image src, page, and progress.
    */
   componentWillMount() {
-    const images: Array<string> = this.props.images;
+    const images = this.props.images;
     if (this.isEmptyArray(this.props.images)) {
       return;
     }
@@ -145,7 +121,7 @@ export default class SlideShow extends React.Component {
    * updates states to move page.
    * @param {MouseEvent} e
    */
-  onClickProgressBar = (e: MouseEvent) => {
+  onClickProgressBar = e => {
     const barWidth = document.getElementsByClassName('progressBar')[0]
       .offsetWidth;
     let progressWidth = e.clientX;
@@ -157,7 +133,7 @@ export default class SlideShow extends React.Component {
     this.updatePageState(nextIndex);
   };
 
-  onMouseMoveProgressBar = (e: MouseEvent) => {
+  onMouseMoveProgressBar = e => {
     const barWidth = document.getElementsByClassName('progressBar')[0]
       .offsetWidth;
     let progressWidth = e.clientX;
@@ -172,16 +148,14 @@ export default class SlideShow extends React.Component {
     });
   };
 
-  onMouseLeaveProgressBar = (e: MouseEvent) => {
+  onMouseLeaveProgressBar = e => {
     this.setState({
       preview: 0,
     });
   };
 
   onChangeFullScreen = () => {
-    const element: Object = document.getElementsByClassName(
-      'slideshow-wrapper',
-    )[0];
+    const element = document.getElementsByClassName('slideshow-wrapper')[0];
     const fn = () => {
       const isFullScreen = isFullscreen();
       this.setState({isFullScreen: isFullScreen});
@@ -196,7 +170,7 @@ export default class SlideShow extends React.Component {
     Promise.all([toggleFullscreen(element), fullscreenChange(fn)]);
   };
 
-  keydownEvent = (e: Event) => {
+  keydownEvent = e => {
     e.preventDefault();
     if (
       e.key === 'ArrowUp' ||
@@ -218,7 +192,7 @@ export default class SlideShow extends React.Component {
     }
   };
 
-  calcProgressIndex = (barWidth: number, progressWidth: number): number => {
+  calcProgressIndex = (barWidth, progressWidth) => {
     const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.images.length; i++) {
@@ -235,7 +209,7 @@ export default class SlideShow extends React.Component {
    * @param {number} page
    * @returns {number}
    */
-  calcProgress = (page: number): number => {
+  calcProgress = page => {
     const base = 100 / this.props.images.length;
     let progress = Math.ceil(base * page);
     if (progress > 100) {
@@ -244,11 +218,11 @@ export default class SlideShow extends React.Component {
     return progress;
   };
 
-  isEmptyArray = (arr: Array<string>): boolean => {
+  isEmptyArray = arr => {
     return arr === undefined || arr === null || arr.length === 0;
   };
 
-  updatePageState = (index: number) => {
+  updatePageState = index => {
     const progress = this.calcProgress(index + 1);
     const image = this.props.images[index];
     this.setState({
@@ -457,7 +431,7 @@ SlideShow.defaultProps = {
     </svg>
   ),
   withTimestamp: false,
-  pageWillUpdate: (index: number, image: string) => {
+  pageWillUpdate: (index, image) => {
     return;
   },
 };

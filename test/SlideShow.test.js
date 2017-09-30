@@ -1,8 +1,11 @@
 import test from 'ava';
 import React from 'react';
-import {shallow} from 'enzyme';
+import {configure, shallow} from 'enzyme';
 import sinon from 'sinon';
 import SlideShow from '../src/SlideShow';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({adapter: new Adapter()});
 
 test("props style", t => {
   const wrapper = shallow(
