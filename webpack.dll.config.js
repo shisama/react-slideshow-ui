@@ -15,7 +15,8 @@ module.exports = {
       path: path.join(__dirname, "dll", "[name]-manifest.json"),
       name: "[name]",
     }),
-    new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin()
   ],
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"]

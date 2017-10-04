@@ -1,6 +1,6 @@
 {
   "name": "react-slideshow-ui",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "author": "Masashi Hirano (https://github.com/shisama)",
   "license": "MIT",
   "description": "React UI Component for slideshow like SlideShare or SpeakerDeck.",
@@ -26,14 +26,16 @@
     "powerpoint"
   ],
   "scripts": {
-    "build": "npm run clean && babel src --out-dir lib --ignore src/demo",
+    "build": "npm run clean && babel --no-comments src --out-dir lib --ignore src/demo",
     "build:demo": "webpack",
     "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
-    "build:all": "npm run lint && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
+    "build:all": "npm run lint && npm run typecheck && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
     "lint": "eslint src --ext js,jsx",
+    "typecheck": "flow",
+    "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
     "prepublish": "npm test && npm build"
   },
   "dependencies": {
@@ -63,6 +65,8 @@
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-prettier": "^2.2.0",
     "eslint-plugin-react": "^7.3.0",
+    "flow-bin": "^0.56.0",
+    "flow-remove-types": "^1.2.1",
     "nyc": "^11.1.0",
     "power-assert": "^1.4.2",
     "pre-commit": "^1.2.2",
