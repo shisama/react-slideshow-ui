@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import {Styles as styles} from './Styles';
 import toggleFullscreen, {
@@ -9,12 +10,23 @@ import toggleFullscreen, {
 /**
  * @typedef {Object} Props
  * @property {Object} style
- * @property {Array<string>} images,
- * @property {Node} prevIcon,
- * @property {Node} nextIcon
+ * @property {Array<string>} images
+ * @property {React.Node} prevIcon
+ * @property {React.Node} nextIcon
  * @property {boolean} withTimestamp
  * @property {function} pageWillUpdate
+ * @property {React.Node} children
  */
+type Props = {
+  style: Object,
+  images: Array<string>,
+  prevIcon: React.Node,
+  nextIcon: React.Node,
+  withTimestamp: boolean,
+  pageWillUpdate: (index: number, image: string) => void,
+  className: string,
+  children: React.Node,
+};
 
 /**
  * @typedef {Object} State
@@ -26,19 +38,34 @@ import toggleFullscreen, {
  * @property {number} previewIndex
  * @property {boolean} isFullScreen
  */
+type State = {
+  src: string,
+  index: number,
+  progress: number,
+  timestamp: number,
+  preview: number,
+  previewIndex: number,
+  isFullScreen: boolean,
+};
 
 /**
  * This class named SlideShow is the React component that allows you
  * to develop slideshow like 'SlideShare' or 'SpeakerDeck' very easy!
  * @class
  */
-export default class SlideShow extends React.Component {
+export default class SlideShow extends React.Component<Props, State> {
+  state: State;
+  props: Props;
+  style: Object;
+  static defaultProps: Object;
+  static PropTypes: Object;
+
   /**
    * constructor
    * call super constructor and initialize states.
    * @param {Props} props
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     let timestamp = 0;
@@ -65,7 +92,7 @@ export default class SlideShow extends React.Component {
    * updates image src, page, and progress.
    */
   componentWillMount() {
-    const images = this.props.images;
+    const images: Array<string> = this.props.images;
     if (this.isEmptyArray(this.props.images)) {
       return;
     }
@@ -121,7 +148,7 @@ export default class SlideShow extends React.Component {
    * updates states to move page.
    * @param {MouseEvent} e
    */
-  onClickProgressBar = e => {
+  onClickProgressBar = (e: MouseEvent) => {
     const barWidth = document.getElementsByClassName('progressBar')[0]
       .offsetWidth;
     let progressWidth = e.clientX;
@@ -133,7 +160,7 @@ export default class SlideShow extends React.Component {
     this.updatePageState(nextIndex);
   };
 
-  onMouseMoveProgressBar = e => {
+  onMouseMoveProgressBar = (e: MouseEvent) => {
     const barWidth = document.getElementsByClassName('progressBar')[0]
       .offsetWidth;
     let progressWidth = e.clientX;
@@ -148,14 +175,16 @@ export default class SlideShow extends React.Component {
     });
   };
 
-  onMouseLeaveProgressBar = e => {
+  onMouseLeaveProgressBar = (e: MouseEvent) => {
     this.setState({
       preview: 0,
     });
   };
 
   onChangeFullScreen = () => {
-    const element = document.getElementsByClassName('slideshow-wrapper')[0];
+    const element: Object = document.getElementsByClassName(
+      'slideshow-wrapper',
+    )[0];
     const fn = () => {
       const isFullScreen = isFullscreen();
       this.setState({isFullScreen: isFullScreen});
@@ -170,7 +199,7 @@ export default class SlideShow extends React.Component {
     Promise.all([toggleFullscreen(element), fullscreenChange(fn)]);
   };
 
-  keydownEvent = e => {
+  keydownEvent = (e: Event) => {
     e.preventDefault();
     if (
       e.key === 'ArrowUp' ||
@@ -192,7 +221,7 @@ export default class SlideShow extends React.Component {
     }
   };
 
-  calcProgressIndex = (barWidth, progressWidth) => {
+  calcProgressIndex = (barWidth: number, progressWidth: number): number => {
     const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.images.length; i++) {
@@ -209,7 +238,7 @@ export default class SlideShow extends React.Component {
    * @param {number} page
    * @returns {number}
    */
-  calcProgress = page => {
+  calcProgress = (page: number): number => {
     const base = 100 / this.props.images.length;
     let progress = Math.ceil(base * page);
     if (progress > 100) {
@@ -218,11 +247,11 @@ export default class SlideShow extends React.Component {
     return progress;
   };
 
-  isEmptyArray = arr => {
+  isEmptyArray = (arr: Array<string>): boolean => {
     return arr === undefined || arr === null || arr.length === 0;
   };
 
-  updatePageState = index => {
+  updatePageState = (index: number) => {
     const progress = this.calcProgress(index + 1);
     const image = this.props.images[index];
     this.setState({
@@ -431,7 +460,7 @@ SlideShow.defaultProps = {
     </svg>
   ),
   withTimestamp: false,
-  pageWillUpdate: (index, image) => {
+  pageWillUpdate: (index: number, image: string) => {
     return;
   },
 };
