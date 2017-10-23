@@ -56,7 +56,6 @@ type State = {
 export default class SlideShow extends React.Component<Props, State> {
   state: State;
   props: Props;
-  style: Object;
   static defaultProps: Object;
   static PropTypes: Object;
 
@@ -72,8 +71,6 @@ export default class SlideShow extends React.Component<Props, State> {
     if (props.withTimestamp === true) {
       timestamp = Math.floor(new Date().getTime() / 1000);
     }
-
-    this.style = Object.assign({}, styles.ROOT, this.props.style);
 
     this.state = {
       src: '',
@@ -108,6 +105,62 @@ export default class SlideShow extends React.Component<Props, State> {
       preview: 0,
       previewIndex: 0,
     });
+  }
+
+  /**
+   * shouldComponentUpdate
+   * @param {Props} nextProps
+   * @param {State} nextState
+   * @return {boolean}
+   */
+  shouldComponentUpdate(nextProps: Props, nextState: State) {
+    if (_shallowEqualObject(this.props, nextProps)) {
+      return true;
+    }
+
+    if (_shallowEqualObject(this.state, nextState)) {
+      return true;
+    }
+
+    if (_shallowEqualObject(this.props.style, nextProps.style)) {
+      return true;
+    }
+
+    if (this.props.images.length !== nextProps.images.length) {
+      return true;
+    }
+
+    for (let i = 0; i < this.props.images.length; i++) {
+      const prev = this.props.images[i];
+      const next = nextProps.images[i];
+      if (prev !== next) {
+        return true;
+      }
+    }
+    return false;
+
+    /**
+     * shallow equal
+     * @param {Object} prevObj
+     * @param {Object} nextObj
+     * @private
+     */
+    function _shallowEqualObject(prevObj: Object, nextObj: Object) {
+      const prevKeys = Object.keys(prevObj);
+      const nextKeys = Object.keys(nextObj);
+      if (prevKeys.length !== nextKeys.length) {
+        return true;
+      }
+
+      for (const key of prevKeys) {
+        const prev = prevObj[key];
+        const next = nextObj[key];
+        if (prev !== next) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
 
   /**
@@ -277,8 +330,10 @@ export default class SlideShow extends React.Component<Props, State> {
       paging = `${this.state.index + 1} / ${this.props.images.length}`;
     }
 
+    const style = Object.assign({}, styles.ROOT, this.props.style);
+
     return (
-      <div style={this.style} className="slideshow">
+      <div style={style} className="slideshow">
         <div className="slideshow-wrapper" style={{margin: 'auto'}}>
           <div>
             <div style={styles.IMAGE}>

@@ -33,7 +33,7 @@
     "clean": "rimraf lib",
     "start": "webpack-dev-server --hot",
     "test": "nyc ava",
-    "lint": "eslint src --ext js,jsx",
+    "lint": "eslint src --ext js,jsx --fix",
     "typecheck": "flow",
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
     "prepublish": "npm test && npm build"
@@ -77,8 +77,8 @@
     "react-test-renderer": "^16.0.0",
     "rimraf": "^2.6.1",
     "sinon": "^4.0.0",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.2"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   },
   "babel": {
     "env": {
@@ -88,7 +88,9 @@
             "env",
             {
               "targets": {
-                "Chrome": 57
+                "browsers": [
+                  "last 2 versions"
+                ]
               },
               "useBuiltIns": true
             }
