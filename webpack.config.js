@@ -26,7 +26,7 @@ module.exports = {
       context: __dirname,
       manifest: require("./dll/vendor-manifest.json"),
     }),
-    new webpack.optimize.UglifyJsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin(),
   ],
   module: {
     rules: [

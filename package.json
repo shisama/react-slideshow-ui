@@ -26,7 +26,7 @@
     "powerpoint"
   ],
   "scripts": {
-    "build": "npm run clean && babel --no-comments src --out-dir lib --ignore src/demo",
+    "build": "npm run clean && babel --no-comments src --out-dir lib --ignore src/demo,src/typedef",
     "build:demo": "webpack",
     "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
     "build:all": "npm run lint && npm run typecheck && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
