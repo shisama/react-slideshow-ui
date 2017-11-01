@@ -14,7 +14,7 @@ class App extends React.Component {
     return (
       <div>
         <SlideShow
-          style={{width: 400}}
+          style={{width: 400, margin: 'auto'}}
           images={[
             './img/example1.png',
             './img/example2.png',

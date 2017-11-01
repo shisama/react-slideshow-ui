@@ -152,7 +152,10 @@ export default class SlideShow extends React.Component<Props, State> {
         return true;
       }
 
-      for (const key of prevKeys) {
+      for (const key in prevObj) {
+        if (!prevObj.hasOwnProperty(key)) {
+          continue;
+        }
         const prev = prevObj[key];
         const next = nextObj[key];
         if (prev !== next) {
@@ -201,27 +204,16 @@ export default class SlideShow extends React.Component<Props, State> {
    * updates states to move page.
    * @param {MouseEvent} e
    */
-  onClickProgressBar = (e: MouseEvent) => {
-    const barWidth = document.getElementsByClassName('progressBar')[0]
-      .offsetWidth;
-    let progressWidth = e.clientX;
-    if (this.state.isFullScreen) {
-      const content = document.getElementsByClassName('slideshow-wrapper')[0];
-      progressWidth -= content.offsetLeft;
+  onClickProgressBar = (e: any) => {
+    const nextIndex = this.calcProgressIndex(e);
+    if (nextIndex === undefined || nextIndex === null) {
+      return;
     }
-    const nextIndex = this.calcProgressIndex(barWidth, progressWidth);
     this.updatePageState(nextIndex);
   };
 
-  onMouseMoveProgressBar = (e: MouseEvent) => {
-    const barWidth = document.getElementsByClassName('progressBar')[0]
-      .offsetWidth;
-    let progressWidth = e.clientX;
-    if (this.state.isFullScreen) {
-      const content = document.getElementsByClassName('slideshow-wrapper')[0];
-      progressWidth -= content.offsetLeft;
-    }
-    const nextIndex = this.calcProgressIndex(barWidth, progressWidth);
+  onMouseMoveProgressBar = (e: any) => {
+    const nextIndex = this.calcProgressIndex(e);
     this.setState({
       preview: 1,
       previewIndex: nextIndex,
@@ -274,7 +266,14 @@ export default class SlideShow extends React.Component<Props, State> {
     }
   };
 
-  calcProgressIndex = (barWidth: number, progressWidth: number): number => {
+  calcProgressIndex = (e: SyntheticMouseEvent<HTMLElement>): number | void => {
+    const parent = e.currentTarget.parentElement;
+    if (!parent) {
+      return;
+    }
+    const barWidth = parent.getBoundingClientRect().width;
+    let progressWidth =
+      e.clientX - e.currentTarget.getBoundingClientRect().left;
     const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.images.length; i++) {
