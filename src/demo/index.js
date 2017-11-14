@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
 import SlideShow from '../SlideShow';
 
 /**
@@ -14,7 +14,7 @@ class App extends React.Component {
     return (
       <div>
         <SlideShow
-          style={{width: 400, left: '50%', top: 50}}
+          style={{width: 400, left: '40%', top: 50}}
           images={[
             './img/example1.png',
             './img/example2.png',
@@ -30,4 +30,4 @@ class App extends React.Component {
   }
 }
 
-render(<App />, document.getElementById('slideshow'));
+ReactDOM.render(<App />, document.getElementById('slideshow'));

@@ -10,7 +10,7 @@ export default function(props) {
   const {isFullScreen} = props;
   if (isFullScreen) {
     return (
-      <svg id="two-arrows" width="15" height="15" viewBox="0 0 612 612">
+      <svg id="no-fullscreen" width="15" height="15" viewBox="0 0 612 612">
         <g>
           <g id="_x36_">
             <g>
