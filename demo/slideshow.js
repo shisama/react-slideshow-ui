@@ -97,6 +97,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(4);
 
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _SlideShow = __webpack_require__(5);
 
 var _SlideShow2 = _interopRequireDefault(_SlideShow);
@@ -133,7 +135,7 @@ var App = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_SlideShow2.default, {
-          style: { width: 400, left: '50%', top: 50 },
+          style: { width: 400, left: '40%', top: 50 },
           images: ['./img/example1.png', './img/example2.png', './img/example3.png'],
           withTimestamp: true,
           pageWillUpdate: function pageWillUpdate(index, image) {
@@ -147,7 +149,7 @@ var App = function (_React$Component) {
   return App;
 }(_react2.default.Component);
 
-(0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('slideshow'));
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('slideshow'));
 
 /***/ }),
 /* 4 */
@@ -803,7 +805,7 @@ exports.default = function (props) {
   if (isFullScreen) {
     return React.createElement(
       "svg",
-      { id: "two-arrows", width: "15", height: "15", viewBox: "0 0 612 612" },
+      { id: "no-fullscreen", width: "15", height: "15", viewBox: "0 0 612 612" },
       React.createElement(
         "g",
         null,
