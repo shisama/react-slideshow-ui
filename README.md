@@ -60,6 +60,8 @@ render(<App />, document.getElementById('slideshow'));
 |nextIcon|Dom|No|icon for button to move next page.|
 |withTimestamp|boolean|No|set true if you want to add timestamp to img url. i.e. `example.png?1483228800`|
 |pageWillUpdate|function|No|function that is invoked when the page is turned over.|
+|showFullscreenIcon|boolean|No|is icon to toggle fullscreen shown? default:`true`|
+|className|string|No|className of this component. default:`slideshow`
 
 ## Browser Support
 Chrome@latest
