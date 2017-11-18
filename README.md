@@ -54,14 +54,15 @@ render(<App />, document.getElementById('slideshow'));
 
 |name|type|reqired|description|
 |----|----|-------|-----------|
-|style|Object|Yes|style of this component.|
+|style|Object|Yes|style of this component. This object is immutable.|
 |images|Array\<string\>|Yes|url strings of images for slide.|
 |prevIcon|Dom|No|icon for button to move previous page.|
 |nextIcon|Dom|No|icon for button to move next page.|
 |withTimestamp|boolean|No|set true if you want to add timestamp to img url. i.e. `example.png?1483228800`|
 |pageWillUpdate|function|No|function that is invoked when the page is turned over.|
 |showFullscreenIcon|boolean|No|is icon to toggle fullscreen shown? default:`true`|
-|className|string|No|className of this component. default:`slideshow`
+|className|string|No|className of this component. default:`slideshow`|
+
 
 ## Browser Support
 Chrome@latest

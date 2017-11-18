@@ -37,6 +37,18 @@ export default class SlideShow extends React.Component<Props, State> {
       this.timestamp = Math.floor(new Date().getTime() / 1000);
     }
 
+    if (this.props.style) {
+      for (const key in this.props.style) {
+        if (this.props.style.hasOwnProperty(key)) {
+          styles.ROOT[key] = this.props.style[key];
+        }
+      }
+    }
+    if (styles.ROOT.height) {
+      styles.IMAGE.height =
+        styles.ROOT.height - styles.BAR.height - styles.PROGRESS_BAR.height + 5;
+    }
+
     this.state = {
       src: '',
       index: 0,
@@ -84,10 +96,6 @@ export default class SlideShow extends React.Component<Props, State> {
     }
 
     if (shallowEqualObject(this.state, nextState)) {
-      return true;
-    }
-
-    if (shallowEqualObject(this.props.style, nextProps.style)) {
       return true;
     }
 
@@ -261,17 +269,6 @@ export default class SlideShow extends React.Component<Props, State> {
    * @returns {XML}
    */
   render() {
-    if (this.props.style) {
-      for (const key in this.props.style) {
-        if (this.props.style.hasOwnProperty(key)) {
-          styles.ROOT[key] = this.props.style[key];
-        }
-      }
-    }
-    if (styles.ROOT.height) {
-      styles.IMAGE.height =
-        styles.ROOT.height - styles.BAR.height - styles.PROGRESS_BAR.height + 5;
-    }
     return (
       <div style={styles.ROOT} className={this.props.className}>
         <div
