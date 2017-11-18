@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import styles from './styles';
-import {Props, State} from './typedef';
 import Preview from './Preview';
 import FullscreenIcon from './FullscreenIcon';
 import FullscreenButton from './FullscreenButton';
@@ -262,18 +261,25 @@ export default class SlideShow extends React.Component<Props, State> {
    * @returns {XML}
    */
   render() {
-    const style = Object.assign({}, styles.ROOT, this.props.style);
-
-    const IMG_CLASS_NAME = 'content';
-
+    if (this.props.style) {
+      for (const key in this.props.style) {
+        if (this.props.style.hasOwnProperty(key)) {
+          styles.ROOT[key] = this.props.style[key];
+        }
+      }
+    }
+    if (styles.ROOT.height) {
+      styles.IMAGE.height =
+        styles.ROOT.height - styles.BAR.height - styles.PROGRESS_BAR.height + 5;
+    }
     return (
-      <div style={style} className={this.props.className}>
+      <div style={styles.ROOT} className={this.props.className}>
         <div
           className={`${this.props.className}-wrapper`}
           style={{margin: 'auto'}}
         >
           <Viewer
-            imgClassName={IMG_CLASS_NAME}
+            imgClassName={`${this.props.className}-image`}
             styles={styles}
             src={this.state.src}
             onClickPrevButton={this.onClickPrevButton}
@@ -285,7 +291,7 @@ export default class SlideShow extends React.Component<Props, State> {
             previewIndex={this.state.previewIndex}
             images={this.props.images}
             isFullScreen={this.state.isFullScreen}
-            imgClassName={IMG_CLASS_NAME}
+            imgClassName={`${this.props.className}-image`}
           />
           <ProgressBar
             style={styles.PROGRESS_BAR}
@@ -343,4 +349,43 @@ SlideShow.defaultProps = {
   },
   className: 'slideshow',
   showFullscreenIcon: true,
+};
+/**
+ * @typedef {Object} Props
+ * @property {Object} style
+ * @property {Array<string>} images
+ * @property {React.Node} prevIcon
+ * @property {React.Node} nextIcon
+ * @property {boolean} withTimestamp
+ * @property {function} pageWillUpdate
+ * @property {React.Node} children
+ */
+export type Props = {
+  style: Object,
+  images: Array<string>,
+  prevIcon: React.Node,
+  nextIcon: React.Node,
+  withTimestamp: boolean,
+  pageWillUpdate: (index: number, image: string) => void,
+  showFullscreenIcon: boolean,
+  className: string,
+  children: React.Node,
+};
+
+/**
+ * @typedef {Object} State
+ * @property {string} src
+ * @property {number} index
+ * @property {number} progress
+ * @property {number} preview
+ * @property {number} previewIndex
+ * @property {boolean} isFullScreen
+ */
+export type State = {
+  src: string,
+  index: number,
+  progress: number,
+  preview: number,
+  previewIndex: number,
+  isFullScreen: boolean,
 };

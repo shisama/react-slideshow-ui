@@ -3,7 +3,7 @@ export default {
     backgroundColor: 'transparent',
     border: 0,
     fontSize: '100%',
-    lineHeight: 1,
+    lineHeight: '1px',
     margin: 0,
     outline: 0,
     padding: 0,
@@ -11,6 +11,8 @@ export default {
     textDecoration: 'none',
   },
   IMAGE: {
+    height: '100%',
+    overflow: 'auto',
     position: 'relative',
     width: '100%',
   },
@@ -22,9 +24,10 @@ export default {
   },
   BAR: {
     backgroundColor: '#323232',
-    height: '30px',
+    height: 30,
     lineHeight: '30px',
     margin: 'auto',
+    overflow: 'auto',
     position: 'relative',
     textAlign: 'center',
     width: '100%',
@@ -34,8 +37,8 @@ export default {
   },
   ARROW_BUTTON: {
     backgroundColor: 'transparent',
-    height: '15px',
-    width: '15px',
+    height: 15,
+    width: 15,
   },
   PREV_ON_CONTENT: {
     display: 'block',
