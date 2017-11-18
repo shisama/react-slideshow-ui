@@ -221,9 +221,6 @@ export default class SlideShow extends React.Component<Props, State> {
     const barWidth = parent.children[0].offsetWidth;
     let progressWidth =
       e.clientX - e.currentTarget.getBoundingClientRect().left;
-    if (this.state.isFullScreen) {
-      progressWidth -= parent.children[0].offsetLeft;
-    }
     const clickPosition = Math.floor(progressWidth / barWidth * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.images.length; i++) {
