@@ -19,7 +19,8 @@ plugins:
   - prettier
 rules:
   no-invalid-this: off
-  react/jsx-uses-vars: warn
+  react/jsx-uses-vars: error
+  react/jsx-uses-react: error
   valid-jsdoc: off
   prettier/prettier:
     - error
