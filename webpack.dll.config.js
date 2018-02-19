@@ -1,24 +1,27 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
+  mode: 'production',
   entry: {
-    vendor: [path.join(__dirname, "src", "demo", "vendor.js")]
+    vendor: [
+      'react',
+      'react-dom',
+      'toggle-fullscreen',
+    ]
   },
   output: {
-    path: path.join(__dirname, "demo"),
-    filename: "[name].dll.js",
-    library: "[name]"
+    path: path.join(__dirname, 'demo'),
+    filename: '[name].dll.js',
+    library: '[name]'
   },
   plugins: [
     new webpack.DllPlugin({
-      path: path.join(__dirname, "dll", "[name]-manifest.json"),
-      name: "[name]",
-    }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin()
+      path: path.join(__dirname, 'dll', '[name]-manifest.json'),
+      name: '[name]',
+    })
   ],
   resolve: {
-    modules: [path.resolve(__dirname, "src"), "node_modules"]
+    modules: [path.resolve(__dirname, 'src'), 'node_modules']
   }
 };
