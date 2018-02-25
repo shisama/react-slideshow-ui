@@ -31,7 +31,6 @@
     "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
     "build:all": "npm run lint && npm run typecheck && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
-    "start": "webpack-dev-server",
     "test": "nyc ava",
     "lint": "eslint src --ext js,jsx --fix",
     "typecheck": "flow",
