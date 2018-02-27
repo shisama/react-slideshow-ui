@@ -1,13 +1,18 @@
 import * as React from 'react';
+import {onlyUpdateForKeys} from 'recompose';
 
 /**
  *
  * @param props
  * @return {XML}
  */
-export default function(props) {
-  const {style, onClick, onMouseMove, onMouseLeave, progress} = props;
-
+export default onlyUpdateForKeys(['progress'])(function({
+  style,
+  onClick,
+  onMouseMove,
+  onMouseLeave,
+  progress,
+}) {
   return (
     <div
       style={style}
@@ -24,4 +29,4 @@ export default function(props) {
       />
     </div>
   );
-}
+});

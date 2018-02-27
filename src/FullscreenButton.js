@@ -1,11 +1,12 @@
 import * as React from 'react';
+import {onlyUpdateForKeys} from 'recompose';
 
 /**
  *
  * @param props
  * @return {XML}
  */
-export default function(props) {
+export default onlyUpdateForKeys(['children'])(function(props) {
   return (
     <div>
       <button
@@ -22,4 +23,4 @@ export default function(props) {
       </button>
     </div>
   );
-}
+});

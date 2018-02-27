@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "build": "npm run clean && babel --no-comments src --out-dir lib --ignore src/demo",
-    "build:demo": "webpack",
+    "build:demo": "NODE_ENV=development webpack",
     "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
     "build:all": "npm run lint && npm run typecheck && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
@@ -40,6 +40,7 @@
   "dependencies": {
     "apiai-promisified": "^1.0.1",
     "react": "^16.0.0",
+    "recompose": "^0.26.0",
     "toggle-fullscreen": "^0.3.1"
   },
   "devDependencies": {

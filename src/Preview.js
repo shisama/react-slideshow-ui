@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {pure} from 'recompose';
 
 const PREVIEW = {
   position: 'absolute',
@@ -18,12 +19,18 @@ const PREVIEW = {
  * @param props
  * @return {XML}
  */
-export default function(props) {
-  if (!props.images || props.images.length === 0) {
+export default pure(function({
+  images,
+  imgClassName,
+  isFullScreen,
+  opacity,
+  previewIndex,
+}) {
+  if (!images || images.length === 0) {
     return null;
   }
-  let previews = props.images.map((img, index) => {
-    const display = index === props.previewIndex ? 'inline' : 'none';
+  let previews = images.map((img, index) => {
+    const display = index === previewIndex ? 'inline' : 'none';
     const key = `preview-${index}`;
     return (
       <img
@@ -36,21 +43,21 @@ export default function(props) {
   });
 
   let fullscreenBottom = 120;
-  const imgView = document.querySelector(props.imgClassName);
+  const imgView = document.querySelector(imgClassName);
   if (imgView) {
     fullscreenBottom = window.screen.availHeight - imgView.offsetHeight + 30;
   }
-  const bottom = props.isFullScreen ? fullscreenBottom : PREVIEW.bottom;
+  const bottom = isFullScreen ? fullscreenBottom : PREVIEW.bottom;
   const style = Object.assign({}, PREVIEW, {
-    opacity: props.opacity,
+    opacity: opacity,
     bottom: bottom,
   });
   return (
     <div style={style}>
       {previews}
       <p style={{margin: 0, textAlign: 'center', fontSize: 4}}>
-        {`${props.previewIndex + 1} / ${props.images.length}`}
+        {`${previewIndex + 1} / ${images.length}`}
       </p>
     </div>
   );
-}
+});

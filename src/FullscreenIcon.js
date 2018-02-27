@@ -1,11 +1,12 @@
 import * as React from 'react';
+import {pure} from 'recompose';
 
 /**
  *
  * @param props
  * @return {XML}
  */
-export default function(props) {
+export default pure(function(props) {
   const {isFullScreen} = props;
   if (isFullScreen) {
     return (
@@ -32,4 +33,4 @@ export default function(props) {
       </svg>
     );
   }
-}
+});

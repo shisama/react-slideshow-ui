@@ -1,12 +1,13 @@
 import * as React from 'react';
+import {onlyUpdateForKeys} from 'recompose';
 
 /**
  *
  * @param props
  * @return {XML}
  */
-export default function(props) {
-  const {
+export default onlyUpdateForKeys(['currentPage', 'allPages', 'children'])(
+  function({
     styles,
     onClickPrevButton,
     onClickNextButton,
@@ -15,20 +16,20 @@ export default function(props) {
     prevIcon,
     nextIcon,
     children,
-  } = props;
-
-  return (
-    <div style={styles.BAR}>
-      <div>
-        <button onClick={onClickPrevButton} style={styles.BUTTON}>
-          {prevIcon}
-        </button>
-        <span style={styles.PAGE_VIEW}>{`${currentPage} / ${allPages}`}</span>
-        <button onClick={onClickNextButton} style={styles.BUTTON}>
-          {nextIcon}
-        </button>
+  }) {
+    return (
+      <div style={styles.BAR}>
+        <div>
+          <button onClick={onClickPrevButton} style={styles.BUTTON}>
+            {prevIcon}
+          </button>
+          <span style={styles.PAGE_VIEW}>{`${currentPage} / ${allPages}`}</span>
+          <button onClick={onClickNextButton} style={styles.BUTTON}>
+            {nextIcon}
+          </button>
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
-  );
-}
+    );
+  },
+);
