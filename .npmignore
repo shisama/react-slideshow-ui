@@ -6,6 +6,7 @@ dll
 node_modules
 out
 src
+dist
 test
 .eslintignore
 .eslintrc
