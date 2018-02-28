@@ -31,28 +31,28 @@
     "build:dll": "NODE_ENV=production webpack --config webpack.dll.config.js",
     "build:all": "npm run lint && npm run typecheck && npm test && npm run build:dll && npm run build:demo && npm run clean && npm run build",
     "clean": "rimraf lib",
-    "test": "nyc ava",
+    "test": "NODE_ENV=test jest --verbose --coverage",
     "lint": "eslint src --ext js,jsx --fix",
     "typecheck": "flow",
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
     "prepublish": "npm test && npm build"
   },
   "dependencies": {
-    "apiai-promisified": "^1.0.1",
     "react": "^16.0.0",
     "recompose": "^0.26.0",
     "toggle-fullscreen": "^0.3.1"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.4.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
     "browser-env": "^3.2.5",
@@ -67,8 +67,7 @@
     "eslint-plugin-react": "^7.6.1",
     "flow-bin": "^0.56.0",
     "flow-remove-types": "^1.2.1",
-    "nyc": "^11.5.0",
-    "power-assert": "^1.4.2",
+    "jest": "^22.4.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.10.2",
     "prop-types": "^15.5.10",
@@ -122,30 +121,24 @@
           "transform-class-properties",
           "transform-object-assign"
         ]
-      }
-    }
-  },
-  "ava": {
-    "files": "**/*.test.js",
-    "require": [
-      "babel-register",
-      "./test/helpers/setup-browser-env.js"
-    ],
-    "babel": {
-      "presets": [
-        [
-          "env",
-          {
-            "targets": {
-              "node": "current"
+      },
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
             }
-          }
+          ],
+          "react"
         ],
-        "react"
-      ],
-      "plugins": [
-        "transform-class-properties"
-      ]
+        "plugins": [
+          "transform-class-properties",
+          "transform-object-assign"
+        ]
+      }
     }
   },
   "pre-commit": [
