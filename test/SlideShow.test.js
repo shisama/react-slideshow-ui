@@ -3,6 +3,8 @@ import {configure, shallow} from 'enzyme';
 import SlideShow from '../src/SlideShow';
 import Adapter from 'enzyme-adapter-react-16';
 
+import FullscreenIcon from '../src/FullscreenIcon';
+
 configure({adapter: new Adapter()});
 
 test("props style", () => {
@@ -59,4 +61,16 @@ test("componentWillMount props.images is null", () => {
     <SlideShow images={null}/>
   );
   expect(wrapper.state().src).toEqual("");
+});
+
+test("pass to correct props to FullscreenIcon", () => {
+  const wrapper = shallow(
+    <SlideShow images={[
+      "static/test/page1",
+      "static/test/page2",
+      "static/test/page3"
+    ]}
+    />
+  );
+  expect(wrapper.find(FullscreenIcon).props().isFullScreen).toBe(false);
 });
