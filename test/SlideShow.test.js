@@ -63,7 +63,7 @@ test("componentWillMount props.images is null", () => {
   expect(wrapper.state().src).toEqual("");
 });
 
-test("pass to correct props to FullscreenIcon", () => {
+test("pass correct props to FullscreenIcon", () => {
   const wrapper = shallow(
     <SlideShow images={[
       "static/test/page1",
@@ -72,5 +72,5 @@ test("pass to correct props to FullscreenIcon", () => {
     ]}
     />
   );
-  expect(wrapper.find(FullscreenIcon).props().isFullScreen).toBe(false);
+  expect(wrapper.find(FullscreenIcon).props().isFullScreen).toEqual(false);
 });
