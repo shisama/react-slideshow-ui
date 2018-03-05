@@ -74,3 +74,31 @@ test("pass correct props to FullscreenIcon", () => {
   );
   expect(wrapper.find(FullscreenIcon).props().isFullScreen).toEqual(false);
 });
+
+test("props ", () => {
+  const wrapper = shallow(
+    <SlideShow
+      images={[
+        "static/test/page1",
+        "static/test/page2",
+        "static/test/page3"
+      ]}
+      showFullscreenIcon={false}
+    />
+  );
+  expect(wrapper.find(FullscreenIcon).exists()).toEqual(false);
+});
+
+test("props ", () => {
+  const wrapper = shallow(
+    <SlideShow
+      images={[
+        "static/test/page1",
+        "static/test/page2",
+        "static/test/page3"
+      ]}
+      showFullscreenIcon={true}
+    />
+  );
+  expect(wrapper.find(FullscreenIcon).exists()).toEqual(true);
+});
