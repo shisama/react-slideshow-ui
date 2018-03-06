@@ -4,6 +4,7 @@ import SlideShow from '../src/SlideShow';
 import Adapter from 'enzyme-adapter-react-16';
 
 import FullscreenIcon from '../src/FullscreenIcon';
+import FullscreenButton from '../src/FullscreenButton';
 
 configure({adapter: new Adapter()});
 
@@ -75,7 +76,7 @@ test("pass correct props to FullscreenIcon", () => {
   expect(wrapper.find(FullscreenIcon).props().isFullScreen).toEqual(false);
 });
 
-test("props ", () => {
+test("props showFullscreenIcon is false", () => {
   const wrapper = shallow(
     <SlideShow
       images={[
@@ -87,9 +88,10 @@ test("props ", () => {
     />
   );
   expect(wrapper.find(FullscreenIcon).exists()).toEqual(false);
+  expect(wrapper.find(FullscreenButton).exists()).toEqual(false);
 });
 
-test("props ", () => {
+test("props showFullscreenIcon is true", () => {
   const wrapper = shallow(
     <SlideShow
       images={[
@@ -101,4 +103,5 @@ test("props ", () => {
     />
   );
   expect(wrapper.find(FullscreenIcon).exists()).toEqual(true);
+  expect(wrapper.find(FullscreenButton).exists()).toEqual(true);
 });
