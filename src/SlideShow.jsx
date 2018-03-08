@@ -5,8 +5,8 @@ import Preview from './Preview';
 import FullscreenIcon from './FullscreenIcon';
 import FullscreenButton from './FullscreenButton';
 import Viewer from './Viewer';
-import Bar from './Bar';
 import ProgressBar from './ProgressBar';
+import PagingButton from './PagingButton';
 import shallowEqualObject from './shallow-equal-object';
 import toggleFullscreen from 'toggle-fullscreen';
 
@@ -294,21 +294,22 @@ export default class SlideShow extends React.Component<Props, State> {
             onMouseLeave={this.onMouseLeaveProgressBar}
             progress={this.state.progress}
           />
-          <Bar
-            styles={styles}
-            onClickPrevButton={this.onClickPrevButton}
-            onClickNextButton={this.onClickNextButton}
-            currentPage={this.state.index + 1}
-            allPages={this.props.images ? this.props.images.length : 0}
-            prevIcon={this.props.prevIcon}
-            nextIcon={this.props.nextIcon}
-          >
+          <div style={styles.BAR}>
+            <PagingButton onClick={this.onClickPrevButton}>
+              {this.props.prevIcon}
+            </PagingButton>
+            <span style={styles.PAGE_VIEW}>{`${this.state.index + 1} / ${
+              this.props.images ? this.props.images.length : 0
+            }`}</span>
+            <PagingButton onClick={this.onClickNextButton}>
+              {this.props.nextIcon}
+            </PagingButton>
             {this.props.showFullscreenIcon ? (
               <FullscreenButton onClick={this.onChangeFullScreen}>
                 <FullscreenIcon isFullScreen={this.state.isFullScreen} />
               </FullscreenButton>
             ) : null}
-          </Bar>
+          </div>
         </div>
       </div>
     );
