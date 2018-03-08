@@ -2,12 +2,12 @@ import * as React from 'react';
 import {pure} from 'recompose';
 
 /**
+ * Icon for fullscreen switch button
  *
  * @param props
- * @return {XML}
+ * @return {DOM}
  */
-export default pure(function(props) {
-  const {isFullScreen} = props;
+export default pure(function({isFullScreen}) {
   if (isFullScreen) {
     return (
       <svg id="no-fullscreen" width="15" height="15" viewBox="0 0 612 612">
