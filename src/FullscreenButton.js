@@ -6,7 +6,7 @@ import {onlyUpdateForKeys} from 'recompose';
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys(['children'])(function(props) {
+export default onlyUpdateForKeys(['children'])(function({onClick, children}) {
   return (
     <div>
       <button
@@ -17,9 +17,9 @@ export default onlyUpdateForKeys(['children'])(function(props) {
           right: 10,
           top: 5,
         }}
-        onClick={props.onClick}
+        onClick={onClick}
       >
-        {props.children}
+        {children}
       </button>
     </div>
   );
