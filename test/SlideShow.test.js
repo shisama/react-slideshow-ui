@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import FullscreenIcon from '../src/FullscreenIcon';
 import FullscreenButton from '../src/FullscreenButton';
+import PagingButton from '../src/PagingButton';
 
 configure({adapter: new Adapter()});
 
@@ -58,14 +59,14 @@ describe("SlideShow", () => {
     expect(wrapper.state().src).toBe("");
   });
 
-  test("componentWillMount props.images is null", () => {
+  test("props images is null", () => {
     const wrapper = shallow(
       <SlideShow images={null}/>
     );
     expect(wrapper.state().src).toBe("");
   });
 
-  test("pass correct props to FullscreenIcon", () => {
+  test("pass isFullScreen to FullscreenIcon", () => {
     const wrapper = shallow(
       <SlideShow images={[
         "static/test/page1",
@@ -105,5 +106,25 @@ describe("SlideShow", () => {
     );
     expect(wrapper.find(FullscreenIcon).exists()).toBeTruthy();
     expect(wrapper.find(FullscreenButton).exists()).toBeTruthy();
+  });
+
+  test("click button to move page", () => {
+    const wrapper = shallow(
+      <SlideShow
+        images={[
+          "static/test/page1",
+          "static/test/page2",
+          "static/test/page3"
+        ]}
+        showFullscreenIcon={true}
+      />
+    );
+    expect(wrapper.state().index).toBe(0);
+    wrapper.find(PagingButton).at(1).simulate('click');
+    expect(wrapper.state().index).toBe(1);
+    wrapper.find(PagingButton).at(1).simulate('click');
+    expect(wrapper.state().index).toBe(2);
+    wrapper.find(PagingButton).at(0).simulate('click');
+    expect(wrapper.state().index).toBe(1);
   });
 });
