@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import FullscreenIcon from '../src/FullscreenIcon';
 import FullscreenButton from '../src/FullscreenButton';
 import PagingButton from '../src/PagingButton';
+import ProgressBar from '../src/ProgressBar';
 
 configure({adapter: new Adapter()});
 
@@ -126,5 +127,56 @@ describe("SlideShow", () => {
     expect(wrapper.state().index).toBe(2);
     wrapper.find(PagingButton).at(0).simulate('click');
     expect(wrapper.state().index).toBe(1);
+  });
+
+  test("mousemove on progress bar", () => {
+    const wrapper = shallow(
+      <SlideShow
+        images={[
+          "static/test/page1",
+          "static/test/page2",
+          "static/test/page3"
+        ]}
+        showFullscreenIcon={true}
+        style={{width: 500}}
+      />
+    );
+    wrapper.find(ProgressBar).simulate('mousemove', {
+      clientX: 690,
+      currentTarget: {
+        parentElement: {
+          children: [
+            {
+              offsetWidth: 400
+            }
+          ]
+        },
+        getBoundingClientRect: function() {
+          return {
+            left: 600
+          }
+        }
+      }
+    });
+    expect(wrapper.state().previewIndex).toBe(0);
+
+    wrapper.find(ProgressBar).simulate('mousemove', {
+      clientX: 690,
+      currentTarget: {
+        parentElement: {
+          children: [
+            {
+              offsetWidth: 400
+            }
+          ]
+        },
+        getBoundingClientRect: function() {
+          return {
+            left: 100
+          }
+        }
+      }
+    });
+    expect(wrapper.state().previewIndex).toBe(2);
   });
 });
