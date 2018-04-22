@@ -1,5 +1,14 @@
+// @flow
 import * as React from 'react';
 import {pure} from 'recompose';
+
+type Props = {
+  images: Array<string>,
+  imgClassName: string,
+  isFullScreen: boolean,
+  opacity: number,
+  previewIndex: number,
+};
 
 const PREVIEW = {
   position: 'absolute',
@@ -25,13 +34,13 @@ export default pure(function({
   isFullScreen,
   opacity,
   previewIndex,
-}) {
+}: Props) {
   if (!images || images.length === 0) {
     return null;
   }
-  let previews = images.map((img, index) => {
-    const display = index === previewIndex ? 'inline' : 'none';
-    const key = `preview-${index}`;
+  let previews: Array<React.Node> = images.map((img, index) => {
+    const display: string = index === previewIndex ? 'inline' : 'none';
+    const key: string = `preview-${index}`;
     return (
       <img
         className={key}
@@ -42,12 +51,12 @@ export default pure(function({
     );
   });
 
-  let fullscreenBottom = 120;
-  const imgView = document.querySelector(imgClassName);
+  let fullscreenBottom: number = 120;
+  const imgView: ?HTMLElement = document.querySelector(imgClassName);
   if (imgView) {
     fullscreenBottom = window.screen.availHeight - imgView.offsetHeight + 30;
   }
-  const bottom = isFullScreen ? fullscreenBottom : PREVIEW.bottom;
+  const bottom: number = isFullScreen ? fullscreenBottom : PREVIEW.bottom;
   const style = Object.assign({}, PREVIEW, {
     opacity: opacity,
     bottom: bottom,

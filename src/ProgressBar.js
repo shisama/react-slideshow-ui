@@ -1,5 +1,14 @@
+// @flow
 import * as React from 'react';
 import {onlyUpdateForKeys} from 'recompose';
+
+type Props = {
+  style: Object,
+  onClick: (e: MouseEvent) => void,
+  onMouseMove: (e: MouseEvent) => void,
+  onMouseLeave: (e: MouseEvent) => void,
+  progress: number,
+};
 
 /**
  *
@@ -12,7 +21,7 @@ export default onlyUpdateForKeys(['progress'])(function({
   onMouseMove,
   onMouseLeave,
   progress,
-}) {
+}: Props) {
   return (
     <div
       style={style}

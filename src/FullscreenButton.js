@@ -1,12 +1,21 @@
+// @flow
 import * as React from 'react';
 import {onlyUpdateForKeys} from 'recompose';
+
+type Props = {
+  onClick: (e: Event) => void,
+  children: React.Element<any>,
+};
 
 /**
  *
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys(['children'])(function({onClick, children}) {
+export default onlyUpdateForKeys(['children'])(function({
+  onClick,
+  children,
+}: Props) {
   return (
     <div>
       <button

@@ -1,5 +1,15 @@
+// @flow
 import * as React from 'react';
 import {onlyUpdateForKeys} from 'recompose';
+
+type Props = {
+  styles: Object,
+  src: string,
+  onClickPrevButton: (e: Event) => void,
+  onClickNextButton: (e: Event) => void,
+  timestamp: number,
+  imgClassName: string,
+};
 
 /**
  *
@@ -14,7 +24,7 @@ export default onlyUpdateForKeys(['src', 'timestamp', 'imgClassName'])(
     onClickNextButton,
     timestamp,
     imgClassName,
-  }) {
+  }: Props) {
     let _src = src;
     if (timestamp) {
       _src += `?${timestamp}`;
