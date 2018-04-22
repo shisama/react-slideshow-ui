@@ -3,6 +3,7 @@
 coverage
 demo
 dll
+flow-typed
 node_modules
 out
 src

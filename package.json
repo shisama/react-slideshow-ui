@@ -33,7 +33,7 @@
     "clean": "rimraf lib",
     "test": "NODE_ENV=test jest --verbose --coverage",
     "lint": "eslint src --ext js,jsx --fix",
-    "typecheck": "flow",
+    "typecheck": "flow-typed install --skip && flow",
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
     "prepublish": "npm test && npm build",
     "git-add": "git add lib demo dll"
@@ -68,6 +68,7 @@
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.56.0",
     "flow-remove-types": "^1.2.1",
+    "flow-typed": "^2.4.0",
     "jest": "^22.4.3",
     "pre-commit": "^1.2.2",
     "prettier": "^1.11.1",

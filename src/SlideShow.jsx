@@ -349,22 +349,22 @@ SlideShow.defaultProps = {
  * @typedef {Object} Props
  * @property {Object} style
  * @property {Array<string>} images
- * @property {React.Node} prevIcon
- * @property {React.Node} nextIcon
+ * @property {React.Element<any>} prevIcon
+ * @property {React.Element<any>} nextIcon
  * @property {boolean} withTimestamp
  * @property {function} pageWillUpdate
- * @property {React.Node} children
+ * @property {React.Element<any>} children
  */
 export type Props = {
   style: Object,
   images: Array<string>,
-  prevIcon: React.Node,
-  nextIcon: React.Node,
+  prevIcon: React.Element<any>,
+  nextIcon: React.Element<any>,
   withTimestamp: boolean,
   pageWillUpdate: (index: number, image: string) => void,
   showFullscreenIcon: boolean,
   className: string,
-  children: React.Node,
+  children: React.Element<any>,
 };
 
 /**

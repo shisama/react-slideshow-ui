@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# typedef
+/flow-typed
+
 # testing
 /coverage
 .nyc_output
