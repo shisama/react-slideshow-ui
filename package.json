@@ -35,7 +35,7 @@
     "lint": "eslint src --ext js,jsx --fix",
     "typecheck": "flow",
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
-    "prepublish": "npm test && npm build",
+    "prepublishOnly": "npm test && npm build",
     "git-add": "git add lib demo dll",
     "typed": "flow-typed install --skip"
   },
