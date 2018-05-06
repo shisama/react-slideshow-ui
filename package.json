@@ -37,7 +37,8 @@
     "remove-types": "flow-remove-types --out-dir out/ src/ && eslint out --ext js,jsx --fix",
     "prepublishOnly": "npm test && npm build",
     "git-add": "git add lib demo dll",
-    "typed": "flow-typed install --skip"
+    "typed": "flow-typed install --skip",
+    "check-updates": "ncu"
   },
   "dependencies": {
     "react": "^16.3.2",
@@ -71,6 +72,7 @@
     "flow-remove-types": "^1.2.1",
     "flow-typed": "^2.4.0",
     "jest": "^22.4.3",
+    "npm-check-updates": "^2.14.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.12.1",
     "prop-types": "^15.6.1",
