@@ -28,7 +28,7 @@ const PREVIEW = {
  * @param props
  * @return {XML}
  */
-export default pure(function({
+export default pure<Props>(function({
   images,
   imgClassName,
   isFullScreen,
@@ -38,7 +38,7 @@ export default pure(function({
   if (!images || images.length === 0) {
     return null;
   }
-  let previews: Array<React.Node> = images.map((img, index) => {
+  const previews: Array<React.Node> = images.map((img, index) => {
     const display: string = index === previewIndex ? 'inline' : 'none';
     const key: string = `preview-${index}`;
     return (

@@ -8,7 +8,7 @@ type Props = {
   children: React.Element<any>,
 };
 
-export default pure(function({onClick, children}: Props) {
+export default pure<Props>(function({onClick, children}: Props) {
   return (
     <React.Fragment>
       <button onClick={onClick} style={styles.BUTTON}>

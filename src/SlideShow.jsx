@@ -37,10 +37,10 @@ export default class SlideShow extends React.Component<Props, State> {
       this.timestamp = Math.floor(new Date().getTime() / 1000);
     }
 
-    if (this.props.style) {
-      for (const key in this.props.style) {
-        if (this.props.style.hasOwnProperty(key)) {
-          styles.ROOT[key] = this.props.style[key];
+    if (props.style) {
+      for (const key in props.style) {
+        if (props.style.hasOwnProperty(key)) {
+          styles.ROOT[key] = props.style[key];
         }
       }
     }
@@ -191,7 +191,7 @@ export default class SlideShow extends React.Component<Props, State> {
     Promise.all([toggleFullscreen(element), fullscreenChange(fn)]);
   };
 
-  keydownEvent = (e: Event) => {
+  keydownEvent = (e: KeyboardEvent) => {
     e.preventDefault();
     if (
       e.key === 'ArrowUp' ||
@@ -219,9 +219,9 @@ export default class SlideShow extends React.Component<Props, State> {
       return;
     }
     const barWidth = parent.children[0].offsetWidth;
-    let progressWidth =
+    const progressWidth =
       e.clientX - e.currentTarget.getBoundingClientRect().left;
-    const clickPosition = Math.floor(progressWidth / barWidth * 100);
+    const clickPosition = Math.floor((progressWidth / barWidth) * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.images.length; i++) {
       const checkWidth = this.calcProgress(i);
@@ -239,7 +239,7 @@ export default class SlideShow extends React.Component<Props, State> {
    */
   calcProgress = (page: number): number => {
     const base = 100 / this.props.images.length;
-    let progress = Math.ceil(base * page);
+    const progress = Math.ceil(base * page);
     if (progress > 100) {
       return 100;
     }

@@ -12,7 +12,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys(['children'])(function({
+export default onlyUpdateForKeys<Props>(['children'])(function({
   onClick,
   children,
 }: Props) {

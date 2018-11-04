@@ -22,4 +22,4 @@ function shallowEqualObject(prevObj: Object, nextObj: Object) {
   return false;
 }
 
-module.exports = shallowEqualObject;
+export default shallowEqualObject;

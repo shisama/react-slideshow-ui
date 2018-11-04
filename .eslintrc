@@ -22,9 +22,11 @@ rules:
   react/jsx-uses-vars: error
   react/jsx-uses-react: error
   valid-jsdoc: off
+  no-mixed-operators: off
   prettier/prettier:
     - error
     -
       trailingComma: all
       singleQuote: true
       bracketSpacing: false
+      no-mixed-operators: off
