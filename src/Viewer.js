@@ -16,7 +16,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys(['src', 'timestamp', 'imgClassName'])(
+export default onlyUpdateForKeys<Props>(['src', 'timestamp', 'imgClassName'])(
   function({
     styles,
     src,

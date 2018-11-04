@@ -15,7 +15,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys(['progress'])(function({
+export default onlyUpdateForKeys<Props>(['progress'])(function({
   style,
   onClick,
   onMouseMove,
