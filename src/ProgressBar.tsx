@@ -1,12 +1,11 @@
-// @flow
 import * as React from 'react';
 import {onlyUpdateForKeys} from 'recompose';
 
 type Props = {
-  style: Object,
-  onClick: (e: MouseEvent) => void,
-  onMouseMove: (e: MouseEvent) => void,
-  onMouseLeave: (e: MouseEvent) => void,
+  style?: React.CSSProperties,
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void,
+  onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void,
+  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => void,
   progress: number,
 };
 
@@ -15,13 +14,13 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys<Props>(['progress'])(function({
+export default onlyUpdateForKeys<Props>(['progress'])(({
   style,
   onClick,
   onMouseMove,
   onMouseLeave,
   progress,
-}: Props) {
+}: Props) => {
   return (
     <div
       style={style}

@@ -17,6 +17,10 @@ describe("Viewer", () => {
       <Viewer
         src={_src}
         styles={styles}
+        onClickPrevButton={() => {return}}
+        onClickNextButton={() => {return}}
+        timestamp={null}
+        imgClassName="test"
       />
     );
     expect(wrapper.find("img").props().src).toBe(_src);
@@ -28,6 +32,9 @@ describe("Viewer", () => {
         src={_src}
         styles={styles}
         timestamp={_timestamp}
+        onClickPrevButton={() => {return}}
+        onClickNextButton={() => {return}}
+        imgClassName="test"
       />
     );
     expect(wrapper.find("img").props().src).toBe(`${_src}?${_timestamp}`);
@@ -40,6 +47,8 @@ describe("Viewer", () => {
         styles={styles}
         timestamp={_timestamp}
         imgClassName={_imgClassName}
+        onClickPrevButton={() => {return}}
+        onClickNextButton={() => {return}}
       />
     );
     expect(wrapper.find("img").props().className).toBe(_imgClassName);
@@ -49,8 +58,12 @@ describe("Viewer", () => {
     const _onClickPrevButton = sinon.spy();
     const wrapper = mount(
       <Viewer
+        src={_src}
         styles={styles}
         onClickPrevButton={_onClickPrevButton}
+        onClickNextButton={() => {return}}
+        timestamp={Math.floor(Date.now() / 1000)}
+        imgClassName="test"
       />
     );
     wrapper.find('div').at(1).simulate('click');
@@ -64,6 +77,10 @@ describe("Viewer", () => {
       <Viewer
         styles={styles}
         onClickNextButton={_onClickNextButton}
+        src={_src}
+        onClickPrevButton={() => {return}}
+        timestamp={Math.floor(Date.now() / 1000)}
+        imgClassName="test"
       />
     );
     wrapper.find('div').at(2).simulate('click');

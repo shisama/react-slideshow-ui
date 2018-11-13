@@ -1,14 +1,15 @@
-// @flow
 import * as React from 'react';
-import styles from './styles';
-import Preview from './Preview';
-import FullscreenIcon from './FullscreenIcon';
-import FullscreenButton from './FullscreenButton';
-import Viewer from './Viewer';
-import ProgressBar from './ProgressBar';
-import PagingButton from './PagingButton';
-import shallowEqualObject from './shallow-equal-object';
 import toggleFullscreen from 'toggle-fullscreen';
+import FullscreenButton from './FullscreenButton';
+import FullscreenIcon from './FullscreenIcon';
+import PagingButton from './PagingButton';
+import Preview from './Preview';
+import ProgressBar from './ProgressBar';
+import shallowEqualObject from './shallow-equal-object';
+import styles from './styles';
+import Viewer from './Viewer';
+
+import {Props} from "../index";
 
 const fullscreenChange = toggleFullscreen.fullscreenChange;
 const isFullscreen = toggleFullscreen.isFullscreen;
@@ -19,10 +20,9 @@ const isFullscreen = toggleFullscreen.isFullscreen;
  * @class
  */
 export default class SlideShow extends React.Component<Props, State> {
+  static defaultProps: object;
   state: State;
-  props: Props;
   timestamp: number;
-  static defaultProps: Object;
 
   /**
    * constructor
@@ -65,7 +65,7 @@ export default class SlideShow extends React.Component<Props, State> {
    * updates image src, page, and progress.
    */
   componentWillMount() {
-    const images: Array<string> = this.props.images;
+    const images: string[] = this.props.images;
     if (this.isEmptyArray(this.props.images)) {
       return;
     }
@@ -77,7 +77,7 @@ export default class SlideShow extends React.Component<Props, State> {
     this.setState({
       src: images[0],
       index: 0,
-      progress: progress,
+      progress,
       preview: 0,
       previewIndex: 0,
       isFullScreen: false,
@@ -161,25 +161,28 @@ export default class SlideShow extends React.Component<Props, State> {
 
   onMouseMoveProgressBar = (e: any) => {
     const nextIndex = this.calcProgressIndex(e);
+    if (nextIndex === undefined || nextIndex === null) {
+      return;
+    }
     this.setState({
       preview: 1,
       previewIndex: nextIndex,
     });
   };
 
-  onMouseLeaveProgressBar = (e: MouseEvent) => {
+  onMouseLeaveProgressBar = (e: React.MouseEvent<HTMLDivElement>) => {
     this.setState({
       preview: 0,
     });
   };
 
   onChangeFullScreen = () => {
-    const element: Object = document.getElementsByClassName(
+    const element: any = document.getElementsByClassName(
       `${this.props.className}-wrapper`,
     )[0];
     const fn = () => {
       const isFullScreen = isFullscreen();
-      this.setState({isFullScreen: isFullScreen});
+      this.setState({isFullScreen});
       if (isFullScreen) {
         document.addEventListener('keydown', this.keydownEvent);
         element.style.width = '70%';
@@ -213,7 +216,7 @@ export default class SlideShow extends React.Component<Props, State> {
     }
   };
 
-  calcProgressIndex = (e: SyntheticMouseEvent<HTMLElement>): number | void => {
+  calcProgressIndex = (e: any): number | void => {
     const parent = e.currentTarget.parentElement;
     if (!parent) {
       return;
@@ -246,7 +249,7 @@ export default class SlideShow extends React.Component<Props, State> {
     return progress;
   };
 
-  isEmptyArray = (arr: Array<string>): boolean => {
+  isEmptyArray = (arr: string[]): boolean => {
     return arr === undefined || arr === null || arr.length === 0;
   };
 
@@ -255,8 +258,8 @@ export default class SlideShow extends React.Component<Props, State> {
     const image = this.props.images[index];
     this.setState({
       src: image,
-      index: index,
-      progress: progress,
+      index,
+      progress,
     });
     this.props.pageWillUpdate(index, image);
   };
@@ -355,17 +358,6 @@ SlideShow.defaultProps = {
  * @property {function} pageWillUpdate
  * @property {React.Element<any>} children
  */
-export type Props = {
-  style: Object,
-  images: Array<string>,
-  prevIcon: React.Element<any>,
-  nextIcon: React.Element<any>,
-  withTimestamp: boolean,
-  pageWillUpdate: (index: number, image: string) => void,
-  showFullscreenIcon: boolean,
-  className: string,
-  children: React.Element<any>,
-};
 
 /**
  * @typedef {Object} State
@@ -383,4 +375,5 @@ export type State = {
   preview: number,
   previewIndex: number,
   isFullScreen: boolean,
+  [key: string]: string | number | boolean
 };

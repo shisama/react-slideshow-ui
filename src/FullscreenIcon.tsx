@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {pure} from 'recompose';
 
@@ -8,11 +7,11 @@ import {pure} from 'recompose';
  * @param props
  * @return {DOM}
  */
-export default pure<{isFullScreen: boolean}>(function({
+export default pure<{isFullScreen: boolean}>(({
   isFullScreen,
 }: {
   isFullScreen: boolean,
-}) {
+}) => {
   if (isFullScreen) {
     return (
       <svg id="no-fullscreen" width="15" height="15" viewBox="0 0 612 612">

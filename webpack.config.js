@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   entry: {
     'slideshow': [
-      path.resolve(__dirname, 'src/demo/index.js')
+      path.resolve(__dirname, 'src/demo/index.tsx')
     ]
   },
   output: {
@@ -25,12 +25,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: 'babel-loader?cacheDirectory',
+        test: /\.tsx?$/,
+        use: 'ts-loader',
       }
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx'],
   },
 };

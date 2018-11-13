@@ -1,9 +1,8 @@
-// @flow
 import * as React from 'react';
 import {pure} from 'recompose';
 
 type Props = {
-  images: Array<string>,
+  images: string[],
   imgClassName: string,
   isFullScreen: boolean,
   opacity: number,
@@ -26,25 +25,25 @@ const PREVIEW = {
 /**
  *
  * @param props
- * @return {XML}
+ * @return {React.ReactNode}
  */
-export default pure<Props>(function({
+export default pure<Props>(({
   images,
   imgClassName,
   isFullScreen,
   opacity,
   previewIndex,
-}: Props) {
+}: Props) => {
   if (!images || images.length === 0) {
     return null;
   }
-  const previews: Array<React.Node> = images.map((img, index) => {
+  const previews: React.ReactNode[] = images.map((img, index) => {
     const display: string = index === previewIndex ? 'inline' : 'none';
     const key: string = `preview-${index}`;
     return (
       <img
         className={key}
-        style={{display: display, width: 200}}
+        style={{display, width: 200}}
         src={img}
         key={key}
       />
@@ -52,14 +51,14 @@ export default pure<Props>(function({
   });
 
   let fullscreenBottom: number = 120;
-  const imgView: ?HTMLElement = document.querySelector(imgClassName);
+  const imgView: HTMLElement | null = document.querySelector(imgClassName);
   if (imgView) {
     fullscreenBottom = window.screen.availHeight - imgView.offsetHeight + 30;
   }
   const bottom: number = isFullScreen ? fullscreenBottom : PREVIEW.bottom;
   const style = Object.assign({}, PREVIEW, {
-    opacity: opacity,
-    bottom: bottom,
+    opacity,
+    bottom,
   });
   return (
     <div style={style}>
