@@ -261,7 +261,9 @@ export default class SlideShow extends React.Component<Props, State> {
       index,
       progress,
     });
-    this.props.pageWillUpdate(index, image);
+    if (this.props.pageWillUpdate) {
+      this.props.pageWillUpdate(index, image);
+    }
   };
 
   /**
