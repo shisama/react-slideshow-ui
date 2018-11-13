@@ -1,13 +1,12 @@
-// @flow
 /**
  * shallow equal
  * @param {Object} prevObj
  * @param {Object} nextObj
  * @private
  */
-function shallowEqualObject(prevObj: Object, nextObj: Object) {
-  const prevKeys: Array<string> = Object.keys(prevObj);
-  const nextKeys: Array<string> = Object.keys(nextObj);
+function shallowEqualObject(prevObj: {[key: string]: any}, nextObj: {[key: string]: any}) {
+  const prevKeys: string[] = Object.keys(prevObj);
+  const nextKeys: string[] = Object.keys(nextObj);
   if (prevKeys.length !== nextKeys.length) {
     return true;
   }

@@ -1,14 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const pkg = require('./package.json');
+const deps = Object.keys(pkg.dependencies);
+deps.push('react-dom');
 
 module.exports = {
   mode: 'production',
   entry: {
-    vendor: [
-      'react',
-      'react-dom',
-      'toggle-fullscreen',
-    ]
+    vendor: deps
   },
   output: {
     path: path.join(__dirname, 'demo'),

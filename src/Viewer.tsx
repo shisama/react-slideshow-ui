@@ -1,12 +1,15 @@
-// @flow
 import * as React from 'react';
 import {onlyUpdateForKeys} from 'recompose';
 
 type Props = {
-  styles: Object,
+  styles: {
+    IMAGE: React.CSSProperties,
+    PREV_ON_CONTENT: React.CSSProperties,
+    NEXT_ON_CONTENT: React.CSSProperties
+  },
   src: string,
-  onClickPrevButton: (e: Event) => void,
-  onClickNextButton: (e: Event) => void,
+  onClickPrevButton: (e: React.MouseEvent<HTMLDivElement>) => void,
+  onClickNextButton: (e: React.MouseEvent<HTMLDivElement>) => void,
   timestamp: number,
   imgClassName: string,
 };
@@ -17,14 +20,14 @@ type Props = {
  * @return {XML}
  */
 export default onlyUpdateForKeys<Props>(['src', 'timestamp', 'imgClassName'])(
-  function({
+  ({
     styles,
     src,
     onClickPrevButton,
     onClickNextButton,
     timestamp,
     imgClassName,
-  }: Props) {
+  }: Props) => {
     let _src = src;
     if (timestamp) {
       _src += `?${timestamp}`;

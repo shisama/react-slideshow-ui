@@ -18,14 +18,18 @@ describe("SlideShow", () => {
         "static/test/page2",
         "static/test/page3"
       ],
-      style: {width: 100}
+      style: {width: 100},
+      withTimestamp: false,
+      pageWillUpdate: () => {return},
+      showFullscreenIcon: false,
+      className: "test"
     };
     const wrapper = shallow(
       <SlideShow
         {...props}
       />
     );
-    expect(wrapper.find("div").at(0).prop("style").width).toBe(100);
+    expect((wrapper.find("div").at(0).prop("style") as any).width).toBe(100);
     props.style = Object.assign({}, props.style, {width: 80});
     wrapper.setProps(props);
     // style object must be immutable
@@ -41,42 +45,27 @@ describe("SlideShow", () => {
           "static/test/page3"
         ]}
         style={{fontWeight: "bold"}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
+        showFullscreenIcon={false}
+        className="test"
       />
     );
-    expect(wrapper.state().src).toBe("static/test/page1");
-    expect(wrapper.state().index).toBe(0);
-  });
-  test("componentWillMount props.images is undefined", () => {
-    const wrapper = shallow(
-      <SlideShow/>
-    );
-    expect(wrapper.state().src).toBe("");
+    expect((wrapper.state() as any).src).toBe("static/test/page1");
+    expect((wrapper.state() as any).index).toBe(0);
   });
 
   test("componentWillMount props.images is empty", () => {
     const wrapper = shallow(
-      <SlideShow images={[]}/>
+      <SlideShow
+        images={[]}
+        style={{fontWeight: "bold"}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
+        showFullscreenIcon={false}
+        className="test"/>
     );
-    expect(wrapper.state().src).toBe("");
-  });
-
-  test("props images is null", () => {
-    const wrapper = shallow(
-      <SlideShow images={null}/>
-    );
-    expect(wrapper.state().src).toBe("");
-  });
-
-  test("pass isFullScreen to FullscreenIcon", () => {
-    const wrapper = shallow(
-      <SlideShow images={[
-        "static/test/page1",
-        "static/test/page2",
-        "static/test/page3"
-      ]}
-      />
-    );
-    expect(wrapper.find(FullscreenIcon).props().isFullScreen).toBeFalsy();
+    expect((wrapper.state() as any).src).toBe("");
   });
 
   test("props showFullscreenIcon is false", () => {
@@ -87,7 +76,11 @@ describe("SlideShow", () => {
           "static/test/page2",
           "static/test/page3"
         ]}
+        style={{fontWeight: "bold"}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
         showFullscreenIcon={false}
+        className="test"
       />
     );
     expect(wrapper.find(FullscreenIcon).exists()).toBeFalsy();
@@ -102,7 +95,11 @@ describe("SlideShow", () => {
           "static/test/page2",
           "static/test/page3"
         ]}
+        style={{fontWeight: "bold"}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
         showFullscreenIcon={true}
+        className="test"
       />
     );
     expect(wrapper.find(FullscreenIcon).exists()).toBeTruthy();
@@ -117,16 +114,20 @@ describe("SlideShow", () => {
           "static/test/page2",
           "static/test/page3"
         ]}
+        style={{fontWeight: "bold"}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
         showFullscreenIcon={true}
+        className="test"
       />
     );
-    expect(wrapper.state().index).toBe(0);
+    expect((wrapper.state() as any).index).toBe(0);
     wrapper.find(PagingButton).at(1).simulate('click');
-    expect(wrapper.state().index).toBe(1);
+    expect((wrapper.state() as any).index).toBe(1);
     wrapper.find(PagingButton).at(1).simulate('click');
-    expect(wrapper.state().index).toBe(2);
+    expect((wrapper.state() as any).index).toBe(2);
     wrapper.find(PagingButton).at(0).simulate('click');
-    expect(wrapper.state().index).toBe(1);
+    expect((wrapper.state() as any).index).toBe(1);
   });
 
   test("mousemove on progress bar", () => {
@@ -139,6 +140,9 @@ describe("SlideShow", () => {
         ]}
         showFullscreenIcon={true}
         style={{width: 500}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
+        className="test"
       />
     );
     wrapper.find(ProgressBar).simulate('mousemove', {
@@ -151,14 +155,14 @@ describe("SlideShow", () => {
             }
           ]
         },
-        getBoundingClientRect: function() {
+        getBoundingClientRect: () => {
           return {
             left: 600
           }
         }
       }
     });
-    expect(wrapper.state().previewIndex).toBe(0);
+    expect((wrapper.state() as any).previewIndex).toBe(0);
 
     wrapper.find(ProgressBar).simulate('mousemove', {
       clientX: 690,
@@ -170,13 +174,13 @@ describe("SlideShow", () => {
             }
           ]
         },
-        getBoundingClientRect: function() {
+        getBoundingClientRect: () => {
           return {
             left: 100
           }
         }
       }
     });
-    expect(wrapper.state().previewIndex).toBe(2);
+    expect((wrapper.state() as any).previewIndex).toBe(2);
   });
 });

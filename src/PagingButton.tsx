@@ -1,14 +1,13 @@
-// @flow
 import * as React from 'react';
 import {pure} from 'recompose';
 import styles from './styles';
 
 type Props = {
-  onClick: (e: Event) => void,
-  children: React.Element<any>,
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
+  children?: React.ReactNode,
 };
 
-export default pure<Props>(function({onClick, children}: Props) {
+export default pure<Props>(({onClick, children}: Props) => {
   return (
     <React.Fragment>
       <button onClick={onClick} style={styles.BUTTON}>

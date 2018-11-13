@@ -15,6 +15,9 @@ describe("Preview", () => {
           "test/image3.png"
         ]}
         previewIndex={0}
+        isFullScreen={false}
+        opacity={1}
+        imgClassName="test"
       />
     );
     expect(wrapper.find('p').text()).toBe('1 / 3');

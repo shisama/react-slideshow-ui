@@ -13,8 +13,11 @@ describe("ProgressBar", () => {
   test("props progress", () => {
     const wrapper = mount(
       <ProgressBar
-        styles={styles}
+        style={styles}
         progress={progress}
+        onClick={() => {return}}
+        onMouseMove={() => {return}}
+        onMouseLeave={() => {return}}
       />
     );
     expect(wrapper.find('div').at(1).props().style.width).toBe(progress + "%");
@@ -24,9 +27,11 @@ describe("ProgressBar", () => {
     const spy = sinon.spy();
     const wrapper = mount(
       <ProgressBar
-        styles={styles}
+        style={styles}
         progress={progress}
         onClick={spy}
+        onMouseMove={() => {return}}
+        onMouseLeave={() => {return}}
       />
     );
     expect(spy.called).toBe(false);
@@ -39,9 +44,11 @@ describe("ProgressBar", () => {
     const spy = sinon.spy();
     const wrapper = mount(
       <ProgressBar
-        styles={styles}
+        style={styles}
         progress={progress}
         onMouseMove={spy}
+        onClick={() => {return}}
+        onMouseLeave={() => {return}}
       />
     );
     expect(spy.called).toBe(false);
@@ -53,9 +60,11 @@ describe("ProgressBar", () => {
     const spy = sinon.spy();
     const wrapper = mount(
       <ProgressBar
-        styles={styles}
+        style={styles}
         progress={progress}
         onMouseLeave={spy}
+        onMouseMove={() => {return}}
+        onClick={() => {return}}
       />
     );
     expect(spy.called).toBeFalsy();
