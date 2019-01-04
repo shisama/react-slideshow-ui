@@ -1,6 +1,7 @@
 .idea
 .gitignore
 .nyc_output
+.travis.yml
 _config.yml
 coverage
 demo

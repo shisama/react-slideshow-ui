@@ -6,6 +6,8 @@
 <a href="https://david-dm.org/shisama/react-slideshow-ui/?type=dev"><img src="https://david-dm.org/shisama/react-slideshow-ui/dev-status.svg" alt="devDependency Status"></a>
 [![npm](https://img.shields.io/npm/dt/react-slideshow-ui.svg)](https://www.npmjs.com/package/react-slideshow-ui)
 
+[![Build Status](https://secure.travis-ci.org/shisama/react-slideshow-ui.png?branch=master)](http://travis-ci.org/shisama/react-slideshow-ui)
+
 React UI Component for slideshow like [SlideShare](https://www.slideshare.net/) or [SpeakerDeck](https://speakerdeck.com/).
 
 [![NPM](https://nodei.co/npm/react-slideshow-ui.png?downloads=true&stars=true)](https://nodei.co/npm/react-slideshow-ui/) 
