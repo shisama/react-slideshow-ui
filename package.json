@@ -43,7 +43,6 @@
   },
   "dependencies": {
     "react": "^16.8.0",
-    "recompose": "^0.30.0",
     "toggle-fullscreen": "^0.3.1"
   },
   "devDependencies": {

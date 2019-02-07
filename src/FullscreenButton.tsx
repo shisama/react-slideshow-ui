@@ -11,7 +11,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys<Props>(['children'])(({
+export default ({
   onClick,
   children,
 }: Props) => {
@@ -31,4 +31,4 @@ export default onlyUpdateForKeys<Props>(['children'])(({
       </button>
     </div>
   );
-});
+};

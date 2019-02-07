@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {pure} from 'recompose';
 import styles from './styles';
 
 type Props = {
@@ -7,7 +6,7 @@ type Props = {
   children?: React.ReactNode,
 };
 
-export default pure<Props>(({onClick, children}: Props) => {
+export default ({onClick, children}: Props) => {
   return (
     <React.Fragment>
       <button onClick={onClick} style={styles.BUTTON}>
@@ -15,4 +14,4 @@ export default pure<Props>(({onClick, children}: Props) => {
       </button>
     </React.Fragment>
   );
-});
+};

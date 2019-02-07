@@ -1,9 +1,9 @@
-import React from 'react';
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import React from 'react';
+import sinon from 'sinon';
 import ProgressBar from '../src/ProgressBar';
 import styles from '../src/styles';
-import sinon from 'sinon';
 
 configure({adapter: new Adapter()});
 

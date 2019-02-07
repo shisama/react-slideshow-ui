@@ -1,6 +1,6 @@
-import * as React from 'react';
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import * as React from 'react';
 import Preview from '../src/Preview';
 
 configure({adapter: new Adapter()});

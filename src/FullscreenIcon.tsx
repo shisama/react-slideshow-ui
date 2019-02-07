@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {pure} from 'recompose';
 
 /**
  * Icon for fullscreen switch button
@@ -7,7 +6,7 @@ import {pure} from 'recompose';
  * @param props
  * @return {DOM}
  */
-export default pure<{isFullScreen: boolean}>(({
+export default ({
   isFullScreen,
 }: {
   isFullScreen: boolean,
@@ -37,4 +36,4 @@ export default pure<{isFullScreen: boolean}>(({
       </svg>
     );
   }
-});
+};

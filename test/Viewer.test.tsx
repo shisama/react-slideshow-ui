@@ -1,9 +1,9 @@
-import React from 'react';
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Viewer from '../src/Viewer';
-import styles from '../src/styles';
+import React from 'react';
 import sinon from 'sinon';
+import styles from '../src/styles';
+import Viewer from '../src/Viewer';
 
 configure({adapter: new Adapter()});
 

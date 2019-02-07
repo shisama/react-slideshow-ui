@@ -1,8 +1,9 @@
-import * as React from 'react';
+
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import PagingButton from '../src/PagingButton';
+import * as React from 'react';
 import sinon from 'sinon';
+import PagingButton from '../src/PagingButton';
 
 configure({adapter: new Adapter()});
 

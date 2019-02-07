@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {onlyUpdateForKeys} from 'recompose';
 
 type Props = {
   style?: React.CSSProperties,
@@ -14,7 +13,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default onlyUpdateForKeys<Props>(['progress'])(({
+export default ({
   style,
   onClick,
   onMouseMove,
@@ -37,4 +36,4 @@ export default onlyUpdateForKeys<Props>(['progress'])(({
       />
     </div>
   );
-});
+};

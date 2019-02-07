@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {pure} from 'recompose';
 
 type Props = {
   images: string[],
@@ -27,7 +26,7 @@ const PREVIEW = {
  * @param props
  * @return {React.ReactNode}
  */
-export default pure<Props>(({
+export default ({
   images,
   imgClassName,
   isFullScreen,
@@ -68,4 +67,4 @@ export default pure<Props>(({
       </p>
     </div>
   );
-});
+};
