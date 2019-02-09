@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {onlyUpdateForKeys} from 'recompose';
 
 type Props = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void,

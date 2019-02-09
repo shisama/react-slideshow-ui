@@ -51,7 +51,6 @@
     "@types/jest": "23.3.14",
     "@types/react": "16.8.2",
     "@types/react-dom": "16.8.0",
-    "@types/recompose": "0.27.1",
     "@types/sinon": "5.0.7",
     "browser-env": "3.2.5",
     "enzyme": "3.8.0",
