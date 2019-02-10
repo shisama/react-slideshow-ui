@@ -1,4 +1,4 @@
-import {configure, shallow} from 'enzyme';
+import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import sinon from 'sinon';
@@ -11,7 +11,7 @@ const progress = 30;
 
 describe("ProgressBar", () => {
   test("props progress", () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ProgressBar
         style={styles}
         progress={progress}
@@ -25,7 +25,7 @@ describe("ProgressBar", () => {
 
   test("click event", () => {
     const spy = sinon.spy();
-    const wrapper = shallow(
+    const wrapper = mount(
       <ProgressBar
         style={styles}
         progress={progress}
@@ -42,7 +42,7 @@ describe("ProgressBar", () => {
 
   test("mousemove event", () => {
     const spy = sinon.spy();
-    const wrapper = shallow(
+    const wrapper = mount(
       <ProgressBar
         style={styles}
         progress={progress}
@@ -58,7 +58,7 @@ describe("ProgressBar", () => {
 
   test("mouseleave event", () => {
     const spy = sinon.spy();
-    const wrapper = shallow(
+    const wrapper = mount(
       <ProgressBar
         style={styles}
         progress={progress}

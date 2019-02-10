@@ -6,7 +6,7 @@ import * as React from 'react';
  * @param props
  * @return {DOM}
  */
-export default ({
+const FullscreenIcon = ({
   isFullScreen,
 }: {
   isFullScreen: boolean,
@@ -37,3 +37,5 @@ export default ({
     );
   }
 };
+
+export default React.memo(FullscreenIcon);

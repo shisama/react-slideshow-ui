@@ -10,7 +10,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default ({
+const FullscreenButton = ({
   onClick,
   children,
 }: Props) => {
@@ -31,3 +31,5 @@ export default ({
     </div>
   );
 };
+
+export default FullscreenButton;

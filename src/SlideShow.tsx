@@ -5,7 +5,6 @@ import FullscreenIcon from './FullscreenIcon';
 import PagingButton from './PagingButton';
 import Preview from './Preview';
 import ProgressBar from './ProgressBar';
-import shallowEqualObject from './shallow-equal-object';
 import styles from './styles';
 import Viewer from './Viewer';
 
@@ -82,35 +81,6 @@ export default class SlideShow extends React.Component<Props, State> {
       previewIndex: 0,
       isFullScreen: false,
     });
-  }
-
-  /**
-   * shouldComponentUpdate
-   * @param {Props} nextProps
-   * @param {State} nextState
-   * @return {boolean}
-   */
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
-    if (shallowEqualObject(this.props, nextProps)) {
-      return true;
-    }
-
-    if (shallowEqualObject(this.state, nextState)) {
-      return true;
-    }
-
-    if (this.props.images.length !== nextProps.images.length) {
-      return true;
-    }
-
-    for (let i = 0; i < this.props.images.length; i++) {
-      const prev = this.props.images[i];
-      const next = nextProps.images[i];
-      if (prev !== next) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**

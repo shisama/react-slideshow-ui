@@ -18,7 +18,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default ({
+const ViewerComponent = ({
   styles,
   src,
   onClickPrevButton,
@@ -39,3 +39,11 @@ export default ({
     </div>
   );
 };
+
+const areEqual = (prevProps: Props, nextProps: Props) => {
+  return prevProps.imgClassName === nextProps.imgClassName &&
+    prevProps.src === nextProps.src &&
+    prevProps.timestamp === nextProps.timestamp;
+}
+
+export default React.memo(ViewerComponent, areEqual);

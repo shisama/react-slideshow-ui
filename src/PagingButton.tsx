@@ -6,7 +6,7 @@ type Props = {
   children?: React.ReactNode,
 };
 
-export default ({onClick, children}: Props) => {
+const PagingButton = ({onClick, children}: Props) => {
   return (
     <React.Fragment>
       <button onClick={onClick} style={styles.BUTTON}>
@@ -15,3 +15,5 @@ export default ({onClick, children}: Props) => {
     </React.Fragment>
   );
 };
+
+export default PagingButton;

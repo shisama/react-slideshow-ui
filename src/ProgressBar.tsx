@@ -13,7 +13,7 @@ type Props = {
  * @param props
  * @return {XML}
  */
-export default ({
+const ProgressBarComponent = ({
   style,
   onClick,
   onMouseMove,
@@ -37,3 +37,7 @@ export default ({
     </div>
   );
 };
+
+const areEqual = (prevProps: Props, nextProps: Props) => prevProps.progress === nextProps.progress;
+
+export default React.memo(ProgressBarComponent, areEqual);

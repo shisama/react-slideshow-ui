@@ -26,7 +26,7 @@ const PREVIEW = {
  * @param props
  * @return {React.ReactNode}
  */
-export default ({
+const Preview = ({
   images,
   imgClassName,
   isFullScreen,
@@ -68,3 +68,24 @@ export default ({
     </div>
   );
 };
+
+const areEqual = (prevProps: Props, nextProps: Props) => {
+  if (prevProps.images.length !== nextProps.images.length) {
+    return false;
+  }
+  for (let i = 0; i < prevProps.images.length; i++) {
+    const prevImage = prevProps.images[i];
+    const nextImage = nextProps.images[i];
+    if (prevImage !== nextImage) {
+      return false;
+    }
+  }
+  return (
+    prevProps.imgClassName === nextProps.imgClassName &&
+    prevProps.isFullScreen === nextProps.isFullScreen &&
+    prevProps.opacity === nextProps.opacity &&
+    prevProps.previewIndex === nextProps.opacity
+  );
+}
+
+export default React.memo(Preview, areEqual);
