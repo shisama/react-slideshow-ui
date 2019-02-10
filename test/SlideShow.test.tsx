@@ -1,10 +1,10 @@
-import React from 'react';
 import {configure, shallow} from 'enzyme';
-import SlideShow from '../src/SlideShow';
 import Adapter from 'enzyme-adapter-react-16';
+import React from 'react';
+import SlideShow from '../src/SlideShow';
 
-import FullscreenIcon from '../src/FullscreenIcon';
 import FullscreenButton from '../src/FullscreenButton';
+import FullscreenIcon from '../src/FullscreenIcon';
 import PagingButton from '../src/PagingButton';
 import ProgressBar from '../src/ProgressBar';
 

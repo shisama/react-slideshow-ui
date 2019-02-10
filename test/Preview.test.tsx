@@ -1,4 +1,4 @@
-import {configure, mount} from 'enzyme';
+import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
 import Preview from '../src/Preview';
@@ -7,7 +7,7 @@ configure({adapter: new Adapter()});
 
 describe("Preview", () => {
   test("preview index props", () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Preview
         images={[
           "test/image1.png",
