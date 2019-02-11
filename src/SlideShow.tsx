@@ -62,7 +62,7 @@ export default class SlideShow extends React.Component<Props, State> {
    * updates states with props to render first view.
    * updates image src, page, and progress.
    */
-  componentWillMount() {
+  componentDidMount() {
     const images: string[] = this.props.images;
     if (isEmptyArray(this.props.images)) {
       return;
