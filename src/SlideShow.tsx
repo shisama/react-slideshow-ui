@@ -1,5 +1,7 @@
 import * as React from 'react';
-import toggleFullscreen from 'toggle-fullscreen';
+import toggleFullscreen, { fullscreenChange, isFullscreen } from 'toggle-fullscreen';
+import { isEmptyArray } from './arrayutils';
+import calcProgress from './calcProgress';
 import FullscreenButton from './FullscreenButton';
 import FullscreenIcon from './FullscreenIcon';
 import PagingButton from './PagingButton';
@@ -9,9 +11,6 @@ import styles from './styles';
 import Viewer from './Viewer';
 
 import {Props} from "../index";
-
-const fullscreenChange = toggleFullscreen.fullscreenChange;
-const isFullscreen = toggleFullscreen.isFullscreen;
 
 /**
  * This class named SlideShow is the React component that allows you
@@ -65,7 +64,7 @@ export default class SlideShow extends React.Component<Props, State> {
    */
   componentWillMount() {
     const images: string[] = this.props.images;
-    if (this.isEmptyArray(this.props.images)) {
+    if (isEmptyArray(this.props.images)) {
       return;
     }
     let progress = Math.ceil(100 / images.length);
@@ -88,7 +87,7 @@ export default class SlideShow extends React.Component<Props, State> {
    * updates image src and page to move previous page.
    */
   onClickPrevButton = () => {
-    if (this.isEmptyArray(this.props.images)) {
+    if (isEmptyArray(this.props.images)) {
       return;
     }
 
@@ -197,7 +196,7 @@ export default class SlideShow extends React.Component<Props, State> {
     const clickPosition = Math.floor((progressWidth / barWidth) * 100);
     let nextIndex = 0;
     for (let i = 0; i < this.props.images.length; i++) {
-      const checkWidth = this.calcProgress(i);
+      const checkWidth = calcProgress(i, this.props.images.length);
       if (clickPosition >= checkWidth) {
         nextIndex = i;
       }
@@ -205,26 +204,8 @@ export default class SlideShow extends React.Component<Props, State> {
     return nextIndex;
   };
 
-  /**
-   *
-   * @param {number} page
-   * @returns {number}
-   */
-  calcProgress = (page: number): number => {
-    const base = 100 / this.props.images.length;
-    const progress = Math.ceil(base * page);
-    if (progress > 100) {
-      return 100;
-    }
-    return progress;
-  };
-
-  isEmptyArray = (arr: string[]): boolean => {
-    return arr === undefined || arr === null || arr.length === 0;
-  };
-
   updatePageState = (index: number) => {
-    const progress = this.calcProgress(index + 1);
+    const progress = calcProgress(index + 1, this.props.images.length);
     const image = this.props.images[index];
     this.setState({
       src: image,
