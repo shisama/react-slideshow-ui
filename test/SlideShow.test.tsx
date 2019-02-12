@@ -1,6 +1,8 @@
 import {configure, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import toJSON from 'enzyme-to-json';
 import React from 'react';
+import renderer from 'react-test-renderer';
 import SlideShow from '../src/SlideShow';
 
 import FullscreenButton from '../src/FullscreenButton';
@@ -24,20 +26,16 @@ describe("SlideShow", () => {
       showFullscreenIcon: false,
       className: "test"
     };
-    const wrapper = shallow(
+    const tree = renderer.create(
       <SlideShow
         {...props}
       />
-    );
-    expect((wrapper.find("div").at(0).prop("style") as any).width).toBe(100);
-    props.style = Object.assign({}, props.style, {width: 80});
-    wrapper.setProps(props);
-    // style object must be immutable
-    expect(wrapper.find("div").at(0).prop("style").width).toBe(100);
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   test("props images", () => {
-    const wrapper = shallow(
+    const tree = renderer.create(
       <SlideShow
         images={[
           "static/test/page1",
@@ -50,13 +48,12 @@ describe("SlideShow", () => {
         showFullscreenIcon={false}
         className="test"
       />
-    );
-    expect((wrapper.state() as any).src).toBe("static/test/page1");
-    expect((wrapper.state() as any).index).toBe(0);
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   test("componentWillMount props.images is empty", () => {
-    const wrapper = shallow(
+    const tree = renderer.create(
       <SlideShow
         images={[]}
         style={{fontWeight: "bold"}}
@@ -64,12 +61,12 @@ describe("SlideShow", () => {
         pageWillUpdate={() => {return}}
         showFullscreenIcon={false}
         className="test"/>
-    );
-    expect((wrapper.state() as any).src).toBe("");
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   test("props showFullscreenIcon is false", () => {
-    const wrapper = shallow(
+    const tree = renderer.create(
       <SlideShow
         images={[
           "static/test/page1",
@@ -82,13 +79,12 @@ describe("SlideShow", () => {
         showFullscreenIcon={false}
         className="test"
       />
-    );
-    expect(wrapper.find(FullscreenIcon).exists()).toBeFalsy();
-    expect(wrapper.find(FullscreenButton).exists()).toBeFalsy();
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   test("props showFullscreenIcon is true", () => {
-    const wrapper = shallow(
+    const tree = renderer.create(
       <SlideShow
         images={[
           "static/test/page1",
@@ -101,9 +97,8 @@ describe("SlideShow", () => {
         showFullscreenIcon={true}
         className="test"
       />
-    );
-    expect(wrapper.find(FullscreenIcon).exists()).toBeTruthy();
-    expect(wrapper.find(FullscreenButton).exists()).toBeTruthy();
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   test("click button to move page", () => {
@@ -121,13 +116,9 @@ describe("SlideShow", () => {
         className="test"
       />
     );
-    expect((wrapper.state() as any).index).toBe(0);
     wrapper.find(PagingButton).at(1).simulate('click');
-    expect((wrapper.state() as any).index).toBe(1);
     wrapper.find(PagingButton).at(1).simulate('click');
-    expect((wrapper.state() as any).index).toBe(2);
-    wrapper.find(PagingButton).at(0).simulate('click');
-    expect((wrapper.state() as any).index).toBe(1);
+    expect(toJSON(wrapper)).toMatchSnapshot();
   });
 
   test("mousemove on progress bar", () => {
@@ -162,8 +153,23 @@ describe("SlideShow", () => {
         }
       }
     });
-    expect((wrapper.state() as any).previewIndex).toBe(0);
-
+    expect(toJSON(wrapper)).toMatchSnapshot();
+  });
+ test("mousemove on progress bar2", () => {
+    const wrapper = shallow(
+      <SlideShow
+        images={[
+          "static/test/page1",
+          "static/test/page2",
+          "static/test/page3"
+        ]}
+        showFullscreenIcon={true}
+        style={{width: 500}}
+        withTimestamp={false}
+        pageWillUpdate={() => {return}}
+        className="test"
+      />
+    );
     wrapper.find(ProgressBar).simulate('mousemove', {
       clientX: 690,
       currentTarget: {
@@ -181,6 +187,6 @@ describe("SlideShow", () => {
         }
       }
     });
-    expect((wrapper.state() as any).previewIndex).toBe(2);
+    expect(toJSON(wrapper)).toMatchSnapshot();
   });
 });
