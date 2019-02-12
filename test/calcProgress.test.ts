@@ -1,4 +1,4 @@
-import calcProgress from '../src/calcProgress';
+import { calcProgress, calcProgressIndex } from '../src/calcProgress';
 
 test('calcProgress', () => {
   expect(calcProgress(1, 3)).toEqual(34);

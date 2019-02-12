@@ -1,7 +1,7 @@
 import * as React from 'react';
 import toggleFullscreen, { fullscreenChange, isFullscreen } from 'toggle-fullscreen';
 import { isEmptyArray } from './arrayutils';
-import calcProgress from './calcProgress';
+import { calcProgress, calcProgressIndex } from './calcProgress';
 import FullscreenButton from './FullscreenButton';
 import FullscreenIcon from './FullscreenIcon';
 import PagingButton from './PagingButton';
@@ -121,7 +121,7 @@ export default class SlideShow extends React.Component<Props, State> {
    * @param {MouseEvent} e
    */
   onClickProgressBar = (e: any) => {
-    const nextIndex = this.calcProgressIndex(e);
+    const nextIndex = calcProgressIndex(e, this.props.images.length);
     if (nextIndex === undefined || nextIndex === null) {
       return;
     }
@@ -129,7 +129,7 @@ export default class SlideShow extends React.Component<Props, State> {
   };
 
   onMouseMoveProgressBar = (e: any) => {
-    const nextIndex = this.calcProgressIndex(e);
+    const nextIndex = calcProgressIndex(e, this.props.images.length);
     if (nextIndex === undefined || nextIndex === null) {
       return;
     }
@@ -183,25 +183,6 @@ export default class SlideShow extends React.Component<Props, State> {
     } else if (e.key === 'Escape' || e.keyCode === 27) {
       this.onChangeFullScreen();
     }
-  };
-
-  calcProgressIndex = (e: any): number | void => {
-    const parent = e.currentTarget.parentElement;
-    if (!parent) {
-      return;
-    }
-    const barWidth = parent.children[0].offsetWidth;
-    const progressWidth =
-      e.clientX - e.currentTarget.getBoundingClientRect().left;
-    const clickPosition = Math.floor((progressWidth / barWidth) * 100);
-    let nextIndex = 0;
-    for (let i = 0; i < this.props.images.length; i++) {
-      const checkWidth = calcProgress(i, this.props.images.length);
-      if (clickPosition >= checkWidth) {
-        nextIndex = i;
-      }
-    }
-    return nextIndex;
   };
 
   updatePageState = (index: number) => {
