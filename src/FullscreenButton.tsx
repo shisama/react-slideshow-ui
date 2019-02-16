@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
 type Props = {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
-  children?: React.ReactNode,
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  children?: React.ReactNode;
 };
 
 /**
@@ -10,19 +10,16 @@ type Props = {
  * @param props
  * @return {XML}
  */
-const FullscreenButton = ({
-  onClick,
-  children,
-}: Props) => {
+const FullscreenButton = ({ onClick, children }: Props) => {
   return (
     <div>
       <button
         style={{
-          backgroundColor: 'transparent',
-          borderStyle: 'none',
-          position: 'absolute',
+          backgroundColor: "transparent",
+          borderStyle: "none",
+          position: "absolute",
           right: 10,
-          top: 5,
+          top: 5
         }}
         onClick={onClick}
       >

@@ -1,11 +1,11 @@
-import {configure, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import React from 'react';
-import sinon from 'sinon';
-import ProgressBar from '../src/ProgressBar';
-import styles from '../src/styles';
+import { configure, mount } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import React from "react";
+import sinon from "sinon";
+import ProgressBar from "../src/ProgressBar";
+import styles from "../src/styles";
 
-configure({adapter: new Adapter()});
+configure({ adapter: new Adapter() });
 
 const progress = 30;
 
@@ -15,12 +15,23 @@ describe("ProgressBar", () => {
       <ProgressBar
         style={styles}
         progress={progress}
-        onClick={() => {return}}
-        onMouseMove={() => {return}}
-        onMouseLeave={() => {return}}
+        onClick={() => {
+          return;
+        }}
+        onMouseMove={() => {
+          return;
+        }}
+        onMouseLeave={() => {
+          return;
+        }}
       />
     );
-    expect(wrapper.find('div').at(1).props().style.width).toBe(progress + "%");
+    expect(
+      wrapper
+        .find("div")
+        .at(1)
+        .props().style.width
+    ).toBe(progress + "%");
   });
 
   test("click event", () => {
@@ -30,13 +41,23 @@ describe("ProgressBar", () => {
         style={styles}
         progress={progress}
         onClick={spy}
-        onMouseMove={() => {return}}
-        onMouseLeave={() => {return}}
+        onMouseMove={() => {
+          return;
+        }}
+        onMouseLeave={() => {
+          return;
+        }}
       />
     );
     expect(spy.called).toBe(false);
-    wrapper.find('div').at(0).simulate('click');
-    wrapper.find('div').at(0).simulate('click');
+    wrapper
+      .find("div")
+      .at(0)
+      .simulate("click");
+    wrapper
+      .find("div")
+      .at(0)
+      .simulate("click");
     expect(spy.callCount).toBe(2);
   });
 
@@ -47,12 +68,19 @@ describe("ProgressBar", () => {
         style={styles}
         progress={progress}
         onMouseMove={spy}
-        onClick={() => {return}}
-        onMouseLeave={() => {return}}
+        onClick={() => {
+          return;
+        }}
+        onMouseLeave={() => {
+          return;
+        }}
       />
     );
     expect(spy.called).toBe(false);
-    wrapper.find('div').at(0).simulate('mousemove');
+    wrapper
+      .find("div")
+      .at(0)
+      .simulate("mousemove");
     expect(spy.called).toBe(true);
   });
 
@@ -63,12 +91,19 @@ describe("ProgressBar", () => {
         style={styles}
         progress={progress}
         onMouseLeave={spy}
-        onMouseMove={() => {return}}
-        onClick={() => {return}}
+        onMouseMove={() => {
+          return;
+        }}
+        onClick={() => {
+          return;
+        }}
       />
     );
     expect(spy.called).toBeFalsy();
-    wrapper.find('div').at(0).simulate('mouseleave');
+    wrapper
+      .find("div")
+      .at(0)
+      .simulate("mouseleave");
     expect(spy.called).toBeTruthy();
   });
 });

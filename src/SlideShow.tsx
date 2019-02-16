@@ -1,16 +1,20 @@
-import * as React from 'react';
-import toggleFullscreen, { fullscreenChange, isFullscreen } from 'toggle-fullscreen';
-import { isEmptyArray } from './arrayutils';
-import { calcProgress, calcProgressIndex } from './calcProgress';
-import FullscreenButton from './FullscreenButton';
-import FullscreenIcon from './FullscreenIcon';
-import PagingButton from './PagingButton';
-import Preview from './Preview';
-import ProgressBar from './ProgressBar';
-import styles from './styles';
-import Viewer from './Viewer';
+import * as React from "react";
+import toggleFullscreen, {
+  fullscreenChange,
+  isFullscreen
+} from "toggle-fullscreen";
+import { isEmptyArray } from "./arrayutils";
+import { calcProgress, calcProgressIndex } from "./calcProgress";
+import FullscreenButton from "./FullscreenButton";
+import FullscreenIcon from "./FullscreenIcon";
+import PagingButton from "./PagingButton";
+import Preview from "./Preview";
+import ProgressBar from "./ProgressBar";
+import styles from "./styles";
+import Viewer from "./Viewer";
 
-import {Props} from "../index";
+// eslint-disable-next-line no-unused-vars
+import { Props } from "../index";
 
 /**
  * This class named SlideShow is the React component that allows you
@@ -48,12 +52,12 @@ export default class SlideShow extends React.Component<Props, State> {
     }
 
     this.state = {
-      src: '',
+      src: "",
       index: 0,
       progress: 0,
       preview: 0,
       previewIndex: 0,
-      isFullScreen: false,
+      isFullScreen: false
     };
   }
 
@@ -78,7 +82,7 @@ export default class SlideShow extends React.Component<Props, State> {
       progress,
       preview: 0,
       previewIndex: 0,
-      isFullScreen: false,
+      isFullScreen: false
     });
   }
 
@@ -128,36 +132,36 @@ export default class SlideShow extends React.Component<Props, State> {
     this.updatePageState(nextIndex);
   };
 
-  onMouseMoveProgressBar = (e: any) => {
+  onMouseMoveProgressBar = (e: React.MouseEvent<HTMLDivElement>) => {
     const nextIndex = calcProgressIndex(e, this.props.images.length);
     if (nextIndex === undefined || nextIndex === null) {
       return;
     }
     this.setState({
       preview: 1,
-      previewIndex: nextIndex,
+      previewIndex: nextIndex
     });
   };
 
-  onMouseLeaveProgressBar = (e: React.MouseEvent<HTMLDivElement>) => {
+  onMouseLeaveProgressBar = () => {
     this.setState({
-      preview: 0,
+      preview: 0
     });
   };
 
   onChangeFullScreen = () => {
     const element: any = document.getElementsByClassName(
-      `${this.props.className}-wrapper`,
+      `${this.props.className}-wrapper`
     )[0];
     const fn = () => {
       const isFullScreen = isFullscreen();
-      this.setState({isFullScreen});
+      this.setState({ isFullScreen });
       if (isFullScreen) {
-        document.addEventListener('keydown', this.keydownEvent);
-        element.style.width = '70%';
+        document.addEventListener("keydown", this.keydownEvent);
+        element.style.width = "70%";
       } else {
-        document.removeEventListener('keydown', this.keydownEvent);
-        element.style.width = '100%';
+        document.removeEventListener("keydown", this.keydownEvent);
+        element.style.width = "100%";
       }
     };
     Promise.all([toggleFullscreen(element), fullscreenChange(fn)]);
@@ -166,21 +170,21 @@ export default class SlideShow extends React.Component<Props, State> {
   keydownEvent = (e: KeyboardEvent) => {
     e.preventDefault();
     if (
-      e.key === 'ArrowUp' ||
-      e.key === 'ArrowLeft' ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowLeft" ||
       e.keyCode === 37 ||
       e.keyCode === 38
     ) {
       this.onClickPrevButton();
     } else if (
-      e.key === 'ArrowDown' ||
-      e.key === 'ArrowRight' ||
+      e.key === "ArrowDown" ||
+      e.key === "ArrowRight" ||
       e.keyCode === 39 ||
       e.keyCode === 40 ||
       e.keyCode === 32
     ) {
       this.onClickNextButton();
-    } else if (e.key === 'Escape' || e.keyCode === 27) {
+    } else if (e.key === "Escape" || e.keyCode === 27) {
       this.onChangeFullScreen();
     }
   };
@@ -191,7 +195,7 @@ export default class SlideShow extends React.Component<Props, State> {
     this.setState({
       src: image,
       index,
-      progress,
+      progress
     });
     if (this.props.pageWillUpdate) {
       this.props.pageWillUpdate(index, image);
@@ -207,7 +211,7 @@ export default class SlideShow extends React.Component<Props, State> {
       <div style={styles.ROOT} className={this.props.className}>
         <div
           className={`${this.props.className}-wrapper`}
-          style={{margin: 'auto'}}
+          style={{ margin: "auto" }}
         >
           <Viewer
             imgClassName={`${this.props.className}-image`}
@@ -276,11 +280,11 @@ SlideShow.defaultProps = {
     </svg>
   ),
   withTimestamp: false,
-  pageWillUpdate: (index: number, image: string) => {
+  pageWillUpdate: () => {
     return;
   },
-  className: 'slideshow',
-  showFullscreenIcon: true,
+  className: "slideshow",
+  showFullscreenIcon: true
 };
 /**
  * @typedef {Object} Props
@@ -303,11 +307,11 @@ SlideShow.defaultProps = {
  * @property {boolean} isFullScreen
  */
 export type State = {
-  src: string,
-  index: number,
-  progress: number,
-  preview: number,
-  previewIndex: number,
-  isFullScreen: boolean,
-  [key: string]: string | number | boolean
+  src: string;
+  index: number;
+  progress: number;
+  preview: number;
+  previewIndex: number;
+  isFullScreen: boolean;
+  [key: string]: string | number | boolean;
 };

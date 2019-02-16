@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 /**
  * Icon for fullscreen switch button
@@ -6,11 +6,7 @@ import * as React from 'react';
  * @param props
  * @return {DOM}
  */
-const FullscreenIcon = ({
-  isFullScreen,
-}: {
-  isFullScreen: boolean,
-}) => {
+const FullscreenIcon = ({ isFullScreen }: { isFullScreen: boolean }) => {
   if (isFullScreen) {
     return (
       <svg id="no-fullscreen" width="15" height="15" viewBox="0 0 612 612">

@@ -1,16 +1,16 @@
-import * as React from 'react';
+import * as React from "react";
 
 type Props = {
   styles: {
-    IMAGE: React.CSSProperties,
-    PREV_ON_CONTENT: React.CSSProperties,
-    NEXT_ON_CONTENT: React.CSSProperties
-  },
-  src: string,
-  onClickPrevButton: (e: React.MouseEvent<HTMLDivElement>) => void,
-  onClickNextButton: (e: React.MouseEvent<HTMLDivElement>) => void,
-  timestamp: number,
-  imgClassName: string,
+    IMAGE: React.CSSProperties;
+    PREV_ON_CONTENT: React.CSSProperties;
+    NEXT_ON_CONTENT: React.CSSProperties;
+  };
+  src: string;
+  onClickPrevButton: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClickNextButton: (e: React.MouseEvent<HTMLDivElement>) => void;
+  timestamp: number;
+  imgClassName: string;
 };
 
 /**
@@ -24,7 +24,7 @@ const ViewerComponent = ({
   onClickPrevButton,
   onClickNextButton,
   timestamp,
-  imgClassName,
+  imgClassName
 }: Props) => {
   let _src = src;
   if (timestamp) {
@@ -33,7 +33,7 @@ const ViewerComponent = ({
 
   return (
     <div style={styles.IMAGE}>
-      <img className={imgClassName} src={_src} style={{width: '100%'}} />
+      <img className={imgClassName} src={_src} style={{ width: "100%" }} />
       <div onClick={onClickPrevButton} style={styles.PREV_ON_CONTENT} />
       <div onClick={onClickNextButton} style={styles.NEXT_ON_CONTENT} />
     </div>
@@ -41,9 +41,11 @@ const ViewerComponent = ({
 };
 
 const areEqual = (prevProps: Props, nextProps: Props) => {
-  return prevProps.imgClassName === nextProps.imgClassName &&
+  return (
+    prevProps.imgClassName === nextProps.imgClassName &&
     prevProps.src === nextProps.src &&
-    prevProps.timestamp === nextProps.timestamp;
-}
+    prevProps.timestamp === nextProps.timestamp
+  );
+};
 
 export default React.memo(ViewerComponent, areEqual);

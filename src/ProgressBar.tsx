@@ -1,11 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
 
 type Props = {
-  style?: React.CSSProperties,
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void,
-  onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void,
-  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => void,
-  progress: number,
+  style?: React.CSSProperties;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => void;
+  progress: number;
 };
 
 /**
@@ -18,7 +18,7 @@ const ProgressBarComponent = ({
   onClick,
   onMouseMove,
   onMouseLeave,
-  progress,
+  progress
 }: Props) => {
   return (
     <div
@@ -29,15 +29,16 @@ const ProgressBarComponent = ({
     >
       <div
         style={{
-          backgroundColor: '#007bb6',
-          height: '100%',
-          width: `${progress}%`,
+          backgroundColor: "#007bb6",
+          height: "100%",
+          width: `${progress}%`
         }}
       />
     </div>
   );
 };
 
-const areEqual = (prevProps: Props, nextProps: Props) => prevProps.progress === nextProps.progress;
+const areEqual = (prevProps: Props, nextProps: Props) =>
+  prevProps.progress === nextProps.progress;
 
 export default React.memo(ProgressBarComponent, areEqual);

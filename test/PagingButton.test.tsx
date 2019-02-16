@@ -1,23 +1,18 @@
+import { configure, shallow } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import * as React from "react";
+import sinon from "sinon";
+import PagingButton from "../src/PagingButton";
 
-import {configure, shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import * as React from 'react';
-import sinon from 'sinon';
-import PagingButton from '../src/PagingButton';
+configure({ adapter: new Adapter() });
 
-configure({adapter: new Adapter()});
-
-describe('PagingButton', () => {
-  test('click event', () => {
+describe("PagingButton", () => {
+  test("click event", () => {
     const spy = sinon.spy();
-    const wrapper = shallow(
-      <PagingButton
-        onClick={spy}
-      />
-    );
+    const wrapper = shallow(<PagingButton onClick={spy} />);
     expect(spy.called).toBeFalsy();
-    wrapper.find('button').simulate('click');
-    wrapper.find('button').simulate('click');
+    wrapper.find("button").simulate("click");
+    wrapper.find("button").simulate("click");
     expect(spy.callCount).toBe(2);
-  })
+  });
 });

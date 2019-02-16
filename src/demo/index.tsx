@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import SlideShow from '../SlideShow';
+import React from "react";
+import ReactDOM from "react-dom";
+import SlideShow from "../SlideShow";
 
 /**
  * entry point class for demo
@@ -14,11 +14,11 @@ class App extends React.Component {
     return (
       <div>
         <SlideShow
-          style={{width: 400, left: '40%', top: 50}}
+          style={{ width: 400, left: "40%", top: 50 }}
           images={[
-            './img/example1.png',
-            './img/example2.png',
-            './img/example3.png',
+            "./img/example1.png",
+            "./img/example2.png",
+            "./img/example3.png"
           ]}
           withTimestamp={true}
           pageWillUpdate={(index, image) => {
@@ -32,4 +32,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('slideshow'));
+ReactDOM.render(<App />, document.getElementById("slideshow"));

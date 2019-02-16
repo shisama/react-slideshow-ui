@@ -32,4 +32,4 @@ const calcProgressIndex = (e: any, numberOfImages: number): number | void => {
   return nextIndex;
 };
 
-export {calcProgress, calcProgressIndex};
+export { calcProgress, calcProgressIndex };

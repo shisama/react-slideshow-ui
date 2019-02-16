@@ -1,6 +1,6 @@
-import { calcProgress, calcProgressIndex } from '../src/calcProgress';
+import { calcProgress } from "../src/calcProgress";
 
-test('calcProgress', () => {
+test("calcProgress", () => {
   expect(calcProgress(1, 3)).toEqual(34);
   expect(calcProgress(2, 3)).toEqual(67);
   expect(calcProgress(3, 3)).toEqual(100);
