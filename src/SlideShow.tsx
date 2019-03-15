@@ -150,9 +150,9 @@ export default class SlideShow extends React.Component<Props, State> {
   };
 
   onChangeFullScreen = () => {
-    const element: any = document.getElementsByClassName(
+    const element = document.getElementsByClassName(
       `${this.props.className}-wrapper`
-    )[0];
+    )[0] as HTMLElement;
     const fn = () => {
       const isFullScreen = isFullscreen();
       this.setState({ isFullScreen });
