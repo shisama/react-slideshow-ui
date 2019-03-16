@@ -74,3 +74,5 @@ IE11
 ## License
 This project is licensed under the terms of the
 [MIT license](https://github.com/shisama/react-slideshow/blob/master/LICENSE)
+
+  {rootdir:/demo/index.tsx}
