@@ -73,7 +73,7 @@
     "prettier": "1.16.4",
     "prop-types": "15.7.2",
     "react-dom": "16.8.6",
-    "react-hot-loader": "4.8.0",
+    "react-hot-loader": "4.8.1",
     "react-test-renderer": "16.8.6",
     "rimraf": "2.6.3",
     "sinon": "7.3.1",
