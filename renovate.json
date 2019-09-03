@@ -3,7 +3,5 @@
     "config:base"
   ],
   "labels": ["renovate"],
-  "minor": {
-    "groupName": "all dependencies"
-  }
+  "schedule": "monthly"
 }
