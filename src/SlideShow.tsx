@@ -16,8 +16,8 @@ import Viewer from "./Viewer";
 interface Props {
   style: any;
   images: string[];
-  prevIcon: React.ReactNode;
-  nextIcon: React.ReactNode;
+  prevIcon?: React.ReactNode;
+  nextIcon?: React.ReactNode;
   withTimestamp?: boolean;
   pageWillUpdate?: (index: number, image: string) => void;
   showFullscreenIcon?: boolean;
