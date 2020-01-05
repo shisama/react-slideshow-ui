@@ -41,7 +41,7 @@ export default class SlideShow extends React.Component<Props, State> {
 
     if (props.style) {
       for (const key in props.style) {
-        if (props.style.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(props.style, key)) {
           styles.ROOT[key] = props.style[key];
         }
       }

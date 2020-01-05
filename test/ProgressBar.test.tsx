@@ -26,12 +26,17 @@ describe("ProgressBar", () => {
         }}
       />
     );
-    expect(
-      wrapper
-        .find("div")
-        .at(1)
-        .props().style.width
-    ).toBe(progress + "%");
+    const props = wrapper
+      .find("div")
+      .at(1)
+      .props();
+    if (!props) {
+      throw Error();
+    }
+    if (!props.style) {
+      throw Error();
+    }
+    expect(props.style.width).toBe(progress + "%");
   });
 
   test("click event", () => {

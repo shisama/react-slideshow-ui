@@ -13,6 +13,7 @@ const _imgClassName = "testImage";
 
 describe("Viewer", () => {
   test("props src", () => {
+    const timestamp = Math.floor(Date.now() / 1000);
     const wrapper = mount(
       <Viewer
         src={_src}
@@ -23,11 +24,11 @@ describe("Viewer", () => {
         onClickNextButton={() => {
           return;
         }}
-        timestamp={null}
+        timestamp={timestamp}
         imgClassName="test"
       />
     );
-    expect(wrapper.find("img").props().src).toBe(_src);
+    expect(wrapper.find("img").props().src).toBe(`${_src}?${timestamp}`);
   });
 
   test("props src & timestamp", () => {
