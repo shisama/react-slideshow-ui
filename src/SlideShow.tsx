@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import toggleFullscreen, {
   fullscreenChange,
   isFullscreen
@@ -13,8 +13,28 @@ import ProgressBar from "./ProgressBar";
 import styles from "./styles";
 import Viewer from "./Viewer";
 
-// eslint-disable-next-line no-unused-vars
-import { Props } from "../index";
+interface Props {
+  style: any;
+  images: string[];
+  prevIcon: React.ReactNode;
+  nextIcon: React.ReactNode;
+  withTimestamp?: boolean;
+  pageWillUpdate?: (index: number, image: string) => void;
+  showFullscreenIcon?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+  [key: string]: any;
+}
+
+interface State {
+  src: string;
+  index: number;
+  progress: number;
+  preview: number;
+  previewIndex: number;
+  isFullScreen: boolean;
+  [key: string]: string | number | boolean;
+}
 
 /**
  * This class named SlideShow is the React component that allows you
@@ -22,9 +42,37 @@ import { Props } from "../index";
  * @class
  */
 export default class SlideShow extends React.Component<Props, State> {
-  static defaultProps: object;
   state: State;
   timestamp: number;
+  static defaultProps = {
+    arrowButtonStyle: styles.ARROW_BUTTON,
+    style: {},
+    images: [],
+    prevIcon: (
+      <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
+        <path
+          fill="#fff"
+          d="M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z"
+          transform="translate(0 1)"
+        />
+      </svg>
+    ),
+    nextIcon: (
+      <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
+        <path
+          fill="#fff"
+          d="M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z"
+          transform="translate(0 1)"
+        />
+      </svg>
+    ),
+    withTimestamp: false,
+    pageWillUpdate: () => {
+      return;
+    },
+    className: "slideshow",
+    showFullscreenIcon: true
+  };
 
   /**
    * constructor
@@ -256,62 +304,3 @@ export default class SlideShow extends React.Component<Props, State> {
     );
   }
 }
-
-SlideShow.defaultProps = {
-  arrowButtonStyle: styles.ARROW_BUTTON,
-  style: {},
-  images: [],
-  prevIcon: (
-    <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
-      <path
-        fill="#fff"
-        d="M4 0l-4 3 4 3v-6zm0 3l4 3v-6l-4 3z"
-        transform="translate(0 1)"
-      />
-    </svg>
-  ),
-  nextIcon: (
-    <svg style={styles.ARROW_BUTTON} viewBox="0 0 8 8">
-      <path
-        fill="#fff"
-        d="M0 0v6l4-3-4-3zm4 3v3l4-3-4-3v3z"
-        transform="translate(0 1)"
-      />
-    </svg>
-  ),
-  withTimestamp: false,
-  pageWillUpdate: () => {
-    return;
-  },
-  className: "slideshow",
-  showFullscreenIcon: true
-};
-/**
- * @typedef {Object} Props
- * @property {Object} style
- * @property {Array<string>} images
- * @property {React.Element<any>} prevIcon
- * @property {React.Element<any>} nextIcon
- * @property {boolean} withTimestamp
- * @property {function} pageWillUpdate
- * @property {React.Element<any>} children
- */
-
-/**
- * @typedef {Object} State
- * @property {string} src
- * @property {number} index
- * @property {number} progress
- * @property {number} preview
- * @property {number} previewIndex
- * @property {boolean} isFullScreen
- */
-export type State = {
-  src: string;
-  index: number;
-  progress: number;
-  preview: number;
-  previewIndex: number;
-  isFullScreen: boolean;
-  [key: string]: string | number | boolean;
-};
