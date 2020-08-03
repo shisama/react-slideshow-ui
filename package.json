@@ -55,7 +55,7 @@
     "@types/sinon": "7.0.13",
     "@typescript-eslint/eslint-plugin": "2.14.0",
     "@typescript-eslint/parser": "2.14.0",
-    "browser-env": "3.2.6",
+    "browser-env": "3.3.0",
     "cache-loader": "4.1.0",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.15.2",
