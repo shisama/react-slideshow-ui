@@ -46,7 +46,7 @@
     "toggle-fullscreen": "^0.4.2"
   },
   "devDependencies": {
-    "@types/enzyme": "3.10.3",
+    "@types/enzyme": "3.10.8",
     "@types/enzyme-adapter-react-16": "1.0.5",
     "@types/jest": "24.9.1",
     "@types/react": "16.9.44",
@@ -57,7 +57,7 @@
     "@typescript-eslint/parser": "2.14.0",
     "browser-env": "3.2.6",
     "cache-loader": "4.1.0",
-    "enzyme": "3.10.0",
+    "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "enzyme-to-json": "3.4.3",
     "eslint": "6.8.0",
